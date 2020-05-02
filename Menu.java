@@ -1,24 +1,14 @@
-import java.awt.Button;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Scrollbar;
+package main_app;
+
+import java.awt.*;
+import java.sql.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -28,6 +18,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+
+import draw.FoodItem;  
 
 
 public class Menu extends JPanel {
@@ -64,9 +56,8 @@ public class Menu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				bill bill = new bill(0,"","",foodList);
-				
-//				bill bill = new bill(0, "", "", foodList);
 				bill.setVisible(true);
+				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			}
 		});
 		namePanel();
@@ -82,51 +73,10 @@ public class Menu extends JPanel {
 //		contentPane.add(layerPane);
 		menuLayer.setLayout(new CardLayout(0, 0));
 
-		setLayeredMenuPanel(chickenPanel);
-		PreparedStatement stmt  =c.prepareStatement("SELECT * FROM Menu WHERE idFood LIKE 'C%'");
-		ResultSet result = stmt.executeQuery();
-		int y=0;
-		while(result.next()) {
-			FoodItem tFood = new FoodItem(result.getString("idFood"),result.getString("name"),result.getInt("price"),y);
-			tFood.setIcon("Image\\"+result.getString("name")+".png");
-			chickenPanel.add(tFood);
-			y+=130;
-		}
-
-		setLayeredMenuPanel(beveragePanel);
-		stmt  =c.prepareStatement("SELECT * FROM Menu WHERE idFood LIKE 'D%'");
-		result = stmt.executeQuery();
-		y=0;
-		while(result.next()) {
-			FoodItem tFood = new FoodItem(result.getString("idFood"),result.getString("name"),result.getInt("price"),y);
-			tFood.setIcon("Image\\"+result.getString("name")+".png");
-			beveragePanel.add(tFood);
-			y+=130;
-		}
-
-		setLayeredMenuPanel(burgerPanel);
-		stmt  =c.prepareStatement("SELECT * FROM Menu WHERE idFood LIKE 'B%'");
-		result = stmt.executeQuery();
-		y=0;
-		while(result.next()) {
-			FoodItem tFood = new FoodItem(result.getString("idFood"),result.getString("name"),result.getInt("price"),y);
-			tFood.setIcon("Image\\"+result.getString("name")+".png");
-			burgerPanel.add(tFood);
-			y+=130;
-		}
-		
-		setLayeredMenuPanel(pizzaPanel);
-		stmt  =c.prepareStatement("SELECT * FROM Menu WHERE idFood LIKE 'P%'");
-		result = stmt.executeQuery();
-		y=0;
-		while(result.next()) {
-			FoodItem tFood = new FoodItem(result.getString("idFood"),result.getString("name"),result.getInt("price"),y);
-			tFood.setIcon("Image\\"+result.getString("name")+".png");
-			pizzaPanel.add(tFood);
-			y+=130;
-		}
-		
-		
+		addMenuPanel(c,chickenPanel,"'C%'");
+		addMenuPanel(c,beveragePanel,"'D%'");
+		addMenuPanel(c,burgerPanel, "'B%'");
+		addMenuPanel(c,pizzaPanel,"'P%'");	
 	}
 	
 	public void setLayeredMenuPanel(JPanel p) {
@@ -218,6 +168,27 @@ public class Menu extends JPanel {
 			arr.add(result.getString(select));
 		}
 		return arr;
+	}
+	
+	private void addMenuPanel(Connection c, JPanel panel, String rule) {
+		setLayeredMenuPanel(panel);
+		PreparedStatement stmt;
+		try {
+			stmt = c.prepareStatement("SELECT * FROM Menu WHERE idFood LIKE" + rule);
+			ResultSet result = stmt.executeQuery();
+			int y=0;
+			while(result.next()) {
+				FoodItem tFood = new FoodItem(result.getString("idFood"),result.getString("name"),result.getInt("price"),y);
+				tFood.setIcon("Image\\"+result.getString("name")+".png");
+				panel.add(tFood);
+				y+=130;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 	public static ArrayList<String> Select (String select, String tableName, String condition) throws SQLException{
 		Connection c = Connect();
