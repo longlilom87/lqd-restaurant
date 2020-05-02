@@ -36,7 +36,7 @@ public class Menu extends JPanel {
 	JLabel name = new JLabel("LQD");
 	
 	static int total = 0;
-//	static ArrayList<FoodItem> foodList = FoodItem.foodList;
+	static ArrayList<FoodItem> foodList = FoodItem.foodList;
 	
 	static JLayeredPane menuLayer = new JLayeredPane();
 	JPanel chickenPanel = new JPanel();
@@ -63,7 +63,10 @@ public class Menu extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				bill bill = new bill(0,"","",foodList);
 				
+//				bill bill = new bill(0, "", "", foodList);
+				bill.setVisible(true);
 			}
 		});
 		namePanel();
