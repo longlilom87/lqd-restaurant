@@ -1,3 +1,5 @@
+package draw;
+
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -21,26 +23,37 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import cate_list.Table;
+import main_app.Frame;
+import main_app.Menu;
+import main_app.tablescreen;
+
 public class drawTable extends JPanel{
 
 	public drawTable() {
 		setLayout(null);
 		
+		// Aligning color explanation box
+//		int available = 200;
+//		int reserved = available+100;
+//		int text = 1150;
+//		int colortext = text-80;
+		
 		JLabel lblAvailable = new JLabel("Available");
 		lblAvailable.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblAvailable.setBounds(456, 164, 123, 82);
+		lblAvailable.setBounds(1150, 200, 123, 82);
 		add(lblAvailable);
 		
 		JLabel lblReserved = new JLabel("Reserved");
 		lblReserved.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblReserved.setBounds(456, 273, 123, 82);
+		lblReserved.setBounds(1150, 300, 123, 82);
 		add(lblReserved);
 		
 		JTextField textField = new JTextField();
 		textField.setForeground(SystemColor.menu);
 		textField.setBackground(Color.GREEN);
 		textField.setEditable(false);
-		textField.setBounds(376, 197, 54, 22);
+		textField.setBounds(1070, 200, 54, 82);
 		add(textField);
 		textField.setColumns(10);
 		
@@ -49,13 +62,12 @@ public class drawTable extends JPanel{
 		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		textField_1.setBackground(Color.BLACK);
-		textField_1.setBounds(376, 306, 54, 22);
+		textField_1.setBounds(1070, 300, 54, 82);
 		add(textField_1);
 		
-		
-		
+	
 		Choice choice = new Choice();
-		choice.setBounds(170, 535, 123, 25);
+		choice.setBounds(790, 530, 123, 25);
 		add(choice);
 		
 		List<Table> tablelist = getTablelist();
@@ -70,7 +82,7 @@ public class drawTable extends JPanel{
 				repaint();
 			}
 		});
-		btnBlank.setBounds(376, 532, 97, 25);
+		btnBlank.setBounds(990, 530, 97, 25);
 		add(btnBlank);
 		
 		JButton btnCustomer = new JButton("Customer");
@@ -80,7 +92,7 @@ public class drawTable extends JPanel{
 				repaint();
 			}
 		});
-		btnCustomer.setBounds(376, 570, 97, 25);
+		btnCustomer.setBounds(990, 570, 97, 25);
 		add(btnCustomer);
 		
 		JButton bDelivery = new JButton("Delivery");
@@ -98,7 +110,7 @@ public class drawTable extends JPanel{
 				Frame.homeLayer.revalidate();
 			}
 		});
-		bDelivery.setBounds(376,600,97,25);
+		bDelivery.setBounds(990,610,97,25);
 		add(bDelivery);
 		
 		
@@ -144,6 +156,8 @@ public class drawTable extends JPanel{
 		int n = 4;
 		int size = 80;
 		int radius = 50;
+		int borderx = 650;   //align the table colors
+		int bordery = 120;
 		super.paintComponent(g);
 		for (int i=0;i<tablelist.size();i++) {
 			int x = circleCenter(i, size, tablelist);
@@ -151,11 +165,11 @@ public class drawTable extends JPanel{
 				if (tablelist.get(i).getY()==0) {
 					g.setColor(Color.green);
 				} else g.setColor(Color.BLACK);
-				g.fillOval(i*size-checkLine(i,n,size), y, radius, radius);
+				g.fillOval(i*size-checkLine(i,n,size)+borderx, y+bordery, radius, radius);
 				g.setColor(Color.BLUE);
 				Font font = new Font("Verdana", Font.BOLD, 20);
 				g.setFont(font);
-				g.drawString(String.valueOf(tablelist.get(i).getX()), x-checkLine(i,n,size), y+76);
+				g.drawString(String.valueOf(tablelist.get(i).getX()), x-checkLine(i,n,size)+borderx, y+76+bordery);
 			
 		}
 		
