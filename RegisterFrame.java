@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.EventQueue;
 
@@ -18,6 +17,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPasswordField;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -31,7 +31,8 @@ public class RegisterFrame extends JFrame{
 	private JLabel lblNewLabel_4;
 	private JPasswordField Pass1;
 	private JPasswordField Pass2;
-
+	
+	ArrayList<User> userList = new ArrayList<>();
 	/**
 	 * Launch the application.
 	 * @throws SQLException 
@@ -43,6 +44,7 @@ public class RegisterFrame extends JFrame{
 				"	 userpassword varchar(14),\r\n" + 
 				"	 Login_Role varchar(20 ) );");
 		create.executeUpdate();
+		
 		PreparedStatement stmt = Conn.prepareStatement("SELECT * FROM Authentication_Login;");
 		ResultSet r = stmt.executeQuery();
 		while(r.next()) {
@@ -76,8 +78,15 @@ public class RegisterFrame extends JFrame{
 		}
 		return connection;
 	}
-	public RegisterFrame() {
+	public RegisterFrame() throws SQLException {
 		initialize();
+		
+		Connection Conn = Connect();
+		PreparedStatement stmt = Conn.prepareStatement("SELECT * FROM Authentication_Login;");
+		ResultSet r = stmt.executeQuery();
+		while(r.next()) {
+			userList.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role")));
+		}
 	}
 
 	/**
@@ -88,7 +97,7 @@ public class RegisterFrame extends JFrame{
 		frame.getContentPane().setBackground(new Color(192, 192, 192));
 		frame.setBackground(new Color(173, 216, 230));
 		frame.setBounds(450, 40, 537, 600);
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Register");
@@ -103,14 +112,14 @@ public class RegisterFrame extends JFrame{
 		frame.getContentPane().add(username);
 		username.setColumns(10);
 		
-		JComboBox Role = new JComboBox();
-		Role.setBounds(132, 357, 272, 29);
-		frame.getContentPane().add(Role);
-		Role.addItem("Manager");
-		Role.addItem("Customer");
-		Role.addItem("Chef");
+//		JComboBox Role = new JComboBox();
+//		Role.setBounds(132, 357, 272, 29);
+//		frame.getContentPane().add(Role);
+//		Role.addItem("Manager");
+//		Role.addItem("Customer");
+//		Role.addItem("Chef");
 		
-		lblNewLabel_1 = new JLabel("UserName");
+		lblNewLabel_1 = new JLabel("Username");
 		lblNewLabel_1.setBounds(132, 121, 111, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 		
@@ -122,19 +131,39 @@ public class RegisterFrame extends JFrame{
 		lblNewLabel_3.setBounds(132, 259, 111, 14);
 		frame.getContentPane().add(lblNewLabel_3);
 		
-		lblNewLabel_4 = new JLabel("Role ");
-		lblNewLabel_4.setBounds(132, 332, 111, 14);
-		frame.getContentPane().add(lblNewLabel_4);
-		
 		JButton btnNewButton = new JButton("Create ");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean bl = true;
+				String pass = Pass1.getText();
+				if(username.getText().equals("") || Pass1.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Your username or password is empty");
+					bl = false;
+					return;
+				}
+				else {
+					for(User t: userList) {
+						if(t.getUsername().equals(username.getText())) {
+							JOptionPane.showMessageDialog(null, "Please choose another username");
+							bl=false;
+							return;
+						}
+					}
+					if(Pass1.getText().equals(Pass2.getText())) bl = true;
+					else{
+						bl = false;
+						JOptionPane.showMessageDialog(null, "Your password and confirm password are different");
+					}
+				}
 				
-			try {
-				insert(username.getText(), Pass1.getText(), Role.getSelectedItem().toString());
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+				if (bl) {
+					try {
+						insert(username.getText(), Pass1.getText(), "Customer");
+						JOptionPane.showMessageDialog(null, "Your account is created. Now please log in");
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 			
