@@ -10,11 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 import java.awt.Font;
-import java.awt.Window;
 
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -84,14 +84,14 @@ public class LoginFrame extends JFrame{
 	
 	public static ArrayList<User> check() throws SQLException{
 		Connection c = Connect();
-		PreparedStatement stmt = c.prepareStatement("SELECT username,userpassword,Login_Role FROM Authentication_Login;" );
+		PreparedStatement stmt = c.prepareStatement("SELECT * FROM Authentication_Login;" );
 		ResultSet r = stmt.executeQuery();
 		
 		ArrayList<User> arr = new ArrayList<>();
 		
 		while(r.next() ) {
 			System.out.println("User: "+r.getString("username")+" pass: "+r.getString("userpassword"));
-			arr.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role")));
+			arr.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role"),r.getString("name"),r.getString("address")));
 		}
 		return arr;
 	}
@@ -182,8 +182,7 @@ public class LoginFrame extends JFrame{
 					
 					if (test==1) {
 						dispose();
-						Window.switchPane(new drawTable());
-						JOptionPane.showMessageDialog(null, "ok");
+						Window.switchPane(new customerscreen());
 					}else JOptionPane.showMessageDialog(null, "Incorrect");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

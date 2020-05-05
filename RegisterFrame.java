@@ -24,7 +24,7 @@ import java.awt.event.ActionEvent;
 public class RegisterFrame extends JFrame{
 
 	public JFrame frame;
-	private JTextField username;
+	private JTextField username,nameField,addressField;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
@@ -39,16 +39,19 @@ public class RegisterFrame extends JFrame{
 	 */
 	public static void main(String[] args) throws SQLException {
 		Connection Conn = Connect();
+		
 		PreparedStatement create = Conn.prepareStatement("CREATE TABLE IF NOT EXISTS Authentication_Login (" + 
 				"     username varchar(100)  Unique,\r\n" + 
 				"	 userpassword varchar(14),\r\n" + 
-				"	 Login_Role varchar(20 ) );");
+				"	 Login_Role varchar(20 ),"
+				+ "name varchar(100),"
+				+ "address varchar(100) );");
 		create.executeUpdate();
 		
 		PreparedStatement stmt = Conn.prepareStatement("SELECT * FROM Authentication_Login;");
 		ResultSet r = stmt.executeQuery();
 		while(r.next()) {
-			System.out.println(r.getString("username")+" "+r.getString("userpassword")+" "+r.getString("Login_Role"));
+			System.out.println(r.getString("username")+" "+r.getString("userpassword")+" "+r.getString("Login_Role")+" "+r.getString("name")+" "+r.getString("address"));
 		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -85,7 +88,7 @@ public class RegisterFrame extends JFrame{
 		PreparedStatement stmt = Conn.prepareStatement("SELECT * FROM Authentication_Login;");
 		ResultSet r = stmt.executeQuery();
 		while(r.next()) {
-			userList.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role")));
+			userList.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role"),r.getString("name"),r.getString("address")));
 		}
 	}
 
@@ -108,9 +111,19 @@ public class RegisterFrame extends JFrame{
 		frame.getContentPane().add(lblNewLabel);
 		
 		username = new JTextField();
-		username.setBounds(132, 146, 272, 29);
+		username.setBounds(132, 250, 272, 29);
 		frame.getContentPane().add(username);
 		username.setColumns(10);
+		
+		nameField = new JTextField();
+		nameField.setBounds(132, 110, 272, 29);
+		frame.getContentPane().add(nameField);
+		nameField.setColumns(10);
+		
+		addressField = new JTextField();
+		addressField.setBounds(132, 185, 272, 29);
+		frame.getContentPane().add(addressField);
+		addressField.setColumns(10);
 		
 //		JComboBox Role = new JComboBox();
 //		Role.setBounds(132, 357, 272, 29);
@@ -120,16 +133,24 @@ public class RegisterFrame extends JFrame{
 //		Role.addItem("Chef");
 		
 		lblNewLabel_1 = new JLabel("Username");
-		lblNewLabel_1.setBounds(132, 121, 111, 14);
+		lblNewLabel_1.setBounds(132, 225, 111, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("Password");
-		lblNewLabel_2.setBounds(132, 189, 79, 14);
+		lblNewLabel_2.setBounds(132, 290, 79, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("Confirm Password");
-		lblNewLabel_3.setBounds(132, 259, 111, 14);
+		lblNewLabel_3.setBounds(132, 355, 111, 14);
 		frame.getContentPane().add(lblNewLabel_3);
+		
+		JLabel name = new JLabel("Your name");
+		name.setBounds(132, 85, 65, 14);
+		frame.getContentPane().add(name);
+		
+		JLabel address = new JLabel("Address");
+		address.setBounds(132,150,50,14);
+		frame.getContentPane().add(address);
 		
 		JButton btnNewButton = new JButton("Create ");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -158,7 +179,7 @@ public class RegisterFrame extends JFrame{
 				
 				if (bl) {
 					try {
-						insert(username.getText(), Pass1.getText(), "Customer");
+						insert(username.getText(), Pass1.getText(), "Customer",nameField.getText(),addressField.getText());
 						JOptionPane.showMessageDialog(null, "Your account is created. Now please log in");
 					} catch (SQLException e1) {
 						e1.printStackTrace();
@@ -183,22 +204,24 @@ public class RegisterFrame extends JFrame{
 		frame.getContentPane().add(btnNewButton_1);
 		
 		Pass1 = new JPasswordField();
-		Pass1.setBounds(135, 219, 269, 29);
+		Pass1.setBounds(132, 315, 269, 29);
 		frame.getContentPane().add(Pass1);
 		
 		Pass2 = new JPasswordField();
-		Pass2.setBounds(132, 288, 272, 33);
+		Pass2.setBounds(132, 380, 272, 33);
 		frame.getContentPane().add(Pass2);
 
 	}
 
-	   public void insert(String username,String userpassword,String Login_Role) throws SQLException {
-			String sql = "INSERT INTO Authentication_Login(username,userpassword, Login_Role) VALUES(?,?,?)";
+	   public void insert(String username,String userpassword,String Login_Role,String name,String address) throws SQLException {
+			String sql = "INSERT INTO Authentication_Login(username,userpassword, Login_Role,name,address) VALUES(?,?,?,?,?)";
           Connection  c = Connect();
 		PreparedStatement stmt = c.prepareStatement(sql);
 		stmt.setString(1, username);
 		stmt.setString(2, userpassword);
 	    stmt.setString(3, Login_Role);
+	    stmt.setString(4, name);
+	    stmt.setString(5, address);
         stmt.executeUpdate();
         
 

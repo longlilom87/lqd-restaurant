@@ -82,8 +82,12 @@ public class FoodItem extends JPanel{
 		add(minusButton);
 		
 		setLayout(null);
-		setBounds(20,y, Frame.getW() * 3 / 4-50,130);
+		setBounds(20,y, Window.getW() * 3 / 4-50,130);
 		setBackground(new Color(255, 250, 205));
+	}
+	
+	public void setY(int valueY) {
+		setBounds(20,valueY,Window.getW() * 3 / 4-50,130);
 	}
 	
 	public FoodItem(String id, String n, int p) {
@@ -127,7 +131,7 @@ public class FoodItem extends JPanel{
 		add(minusButton);
 		
 		setLayout(null);
-		setBounds(20,y, Frame.getW() * 3 / 4-50,130);
+		setBounds(20,y, Window.getW() * 3 / 4-50,130);
 		setBackground(new Color(255, 250, 205));
 		temp+=130;
 	}
@@ -139,7 +143,7 @@ public class FoodItem extends JPanel{
 		g.drawImage(new ImageIcon(scale).getImage(), 50, 10, null);
 		
 		g.setColor(new Color(107, 142, 35));
-		g.drawRoundRect(25,5, Frame.getW() * 3 / 4-100,123, 70,70);
+		g.drawRoundRect(25,5, Window.getW() * 3 / 4-100,123, 70,70);
 		
 //		g.setColor(Color.LIGHT_GRAY);
 		g.setFont(new Font("Jokerman",Font.TRUETYPE_FONT,60));
@@ -152,21 +156,7 @@ public class FoodItem extends JPanel{
 		g.drawString(""+qty, 860, 75);
 //		g.drawImage(image,0,0,null);
 	}
-	
-	public static void add(FoodItem f) {
-		foodList.add(f);
-		System.out.println("foodList after adding");
-		for(FoodItem t: foodList) System.out.println(t);
-	}
-	public static void remove(FoodItem f) {
-		foodList.remove(f);
-		System.out.println("foodList after removing");
-		for(FoodItem t: foodList) System.out.println(t);
-	}
-	public static ArrayList<FoodItem> getFoodList() {
-		return foodList;
-	}
-	
+
 	public String toString() {
 		return "ID:"+this.idFood+" Name:"+this.getName()+" Price:"+this.getPrice();
 	}
@@ -192,7 +182,6 @@ public class FoodItem extends JPanel{
 //	public void setImage (ImageIcon i) {
 //		this.image = i;
 //	}
-	public String getFoodString() { return foodString;}
 
 	public void setIcon(String path) {
 		 this.path = path;

@@ -1,11 +1,14 @@
 
 public class User {
 	String username = null, password = null, role=null;
+	String name,address;
 	
-	public User(String u, String p,String r) {
+	public User(String u, String p,String r,String n, String a) {
 		username = u;
 		password = p;
 		role = r;
+		name = n;
+		address = a;
 	}
 
 	public String toString() {
@@ -35,6 +38,12 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
+	public void Logout() {
+		username = null;
+		password = null;
+		role = null;
+		name = null;
+		address = null;
+	}
 	
 }

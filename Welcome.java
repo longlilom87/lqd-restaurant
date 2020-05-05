@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class Welcome extends JPanel{
 	
     private JPanel barPanel = new JPanel();
-	Button bLogin,bSignup,bMenu;
+	private Button bLogin,bSignup,bMenu;
 //	private static JPanel welcomePanel = new JPanel();
 	
 	public Welcome() {
@@ -69,6 +69,7 @@ public class Welcome extends JPanel{
 //				Menu.switchPane(new drawTable());
 			}
 		});
+		
 	}
 	
 	private void setupPanel(JPanel p,Color c) {

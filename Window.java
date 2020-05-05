@@ -3,6 +3,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -64,5 +65,10 @@ public class Window extends JFrame {
 	
 	public static void main(String[] args) throws SQLException {
 		new Window();
+		
+//		Connection c =Menu.Connect();
+//		Menu.Update("INSERT INTO Menu values ('O203','Cheese fries',25);");
+//		Menu.Update("INSERT INTO Menu values ('O102','Chocolate cupcake',23);");
+//		Menu.Update("INSERT INTO Menu values ('O103','Taco',14);");
 	}
 }
