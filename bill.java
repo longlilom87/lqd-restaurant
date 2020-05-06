@@ -1,4 +1,4 @@
-
+package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import draw.FoodItem;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -16,6 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
 
 public class bill extends JFrame {
 
@@ -58,7 +67,7 @@ public class bill extends JFrame {
 	
 	
 	public bill(int id, String name, String address, ArrayList<FoodItem> foodList) {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 492, 734);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -66,12 +75,40 @@ public class bill extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnPrint = new JButton("Print");
-		btnPrint.setForeground(new Color(240, 255, 255));
-		btnPrint.setBackground(new Color(30, 144, 255));
-		btnPrint.setFont(new Font("VnFujiyama2", Font.BOLD, 16));
-		btnPrint.setBounds(155, 548, 152, 57);
-		contentPane.add(btnPrint);
+		JButton btnOrder = new JButton("Order Now!");
+		btnOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i=writeID();
+				
+				try {
+					Connection c = Menu.Connect();
+					
+					
+					for (FoodItem t : foodList) {
+						String to_delivery = "insert into Delivery (id,name,food,unit,address,status) values (?,?,?,?,?,?)";
+						PreparedStatement st = c.prepareStatement(to_delivery);
+						st.setInt(1, i + 1);
+						st.setString(2, name);
+						st.setString(3, t.getName());
+						st.setLong(4, t.getQty());
+						st.setString(5, address);
+						st.setInt(6, 0);
+						st.executeUpdate();
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
+				
+				
+			}
+		});
+		btnOrder.setForeground(new Color(240, 255, 255));
+		btnOrder.setBackground(new Color(107, 142, 35));
+		btnOrder.setFont(new Font("VnFujiyama2", Font.BOLD, 16));
+		btnOrder.setBounds(155, 548, 152, 57);
+		contentPane.add(btnOrder);
 		
 		txtYourName = new JTextArea();
 		txtYourName.setBackground(Color.WHITE);
@@ -103,7 +140,7 @@ public class bill extends JFrame {
 		
 		textField_2 = new JTextArea();
 		textField_2.setForeground(Color.BLACK);
-		textField_2.setText("#"+id);
+		textField_2.setText("#"+writeID());
 		textField_2.setFont(new Font("Trebuchet MS", Font.PLAIN, 45));
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
@@ -170,5 +207,23 @@ public class bill extends JFrame {
 		txtPriceLabel.setBounds(301, 310, 49, 22);
 		contentPane.add(txtPriceLabel);
 		txtPriceLabel.setColumns(10);
+	}
+	
+	public int writeID()  {
+		int i=0;
+		Connection c;
+		try {
+			c = Menu.Connect();
+			String query2 = "select max (id) from Delivery";
+			Statement st2 = c.createStatement();
+			ResultSet rs = st2.executeQuery(query2);
+			while (rs.next()) {
+				i = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return i;
 	}
 }

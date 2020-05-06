@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+//chung 1 package thi bo dong nay
 import cate_list.Order;
 
 import java.awt.Font;
@@ -74,8 +75,7 @@ public class chefscreen extends JFrame {
 				    	JOptionPane.showMessageDialog(null,"Please choose a line to perform action");
 				    }
 				    else {
-				    	Class.forName("org.sqlite.JDBC");
-						c = DriverManager.getConnection("jdbc:sqlite:order.db");
+				    	c= Menu.Connect();
 						String change = "update Delivery set status =1 where id="
 								+ orderTable.getModel().getValueAt(i, 0).toString();
 						PreparedStatement st = c.prepareStatement(change);
@@ -105,8 +105,7 @@ public class chefscreen extends JFrame {
 		ArrayList<Order> delivery = new ArrayList<Order>();
 		try {
 
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:order.db");
+			c= Menu.Connect();
 			String Table = "select * from Delivery where status =0";
 			PreparedStatement st = c.prepareStatement(Table);
 			ResultSet rs = st.executeQuery();
@@ -147,6 +146,8 @@ public class chefscreen extends JFrame {
 			model.addRow(row);
 		}
 		return model;
-
+		
+	
 	}
+	
 }

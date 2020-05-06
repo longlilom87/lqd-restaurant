@@ -1,3 +1,5 @@
+package main_app;
+
 
 import java.awt.EventQueue;
 
@@ -9,17 +11,22 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
+
+import draw.drawTable;
+import cate_list.User;
 import java.awt.Font;
+
 
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 import java.util.ArrayList;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginFrame extends JFrame{
 
@@ -30,7 +37,7 @@ public class LoginFrame extends JFrame{
 	private JTextField txtLogin_1;
 	private JLabel Password;
 	private JLabel Validation;
-	
+	public static String nameCustomer = "Guest";
 	static ArrayList<User> arr;
 //	public static void main(String[] args) throws SQLException {
 //		Connection c = Connect();
@@ -84,14 +91,14 @@ public class LoginFrame extends JFrame{
 	
 	public static ArrayList<User> check() throws SQLException{
 		Connection c = Connect();
-		PreparedStatement stmt = c.prepareStatement("SELECT * FROM Authentication_Login;" );
+		PreparedStatement stmt = c.prepareStatement("SELECT username,userpassword,Login_Role FROM Authentication_Login;" );
 		ResultSet r = stmt.executeQuery();
 		
 		ArrayList<User> arr = new ArrayList<>();
 		
 		while(r.next() ) {
 			System.out.println("User: "+r.getString("username")+" pass: "+r.getString("userpassword"));
-			arr.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role"),r.getString("name"),r.getString("address")));
+			arr.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role")));
 		}
 		return arr;
 	}
@@ -135,6 +142,15 @@ public class LoginFrame extends JFrame{
 		username.setColumns(10);
 		
 		password = new JPasswordField();
+		password.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent key) {
+				if (key.getKeyCode()==KeyEvent.VK_ENTER) {
+					login();
+					 
+				}
+			}
+		});
 		password.setBounds(158, 115, 219, 29);
 		getContentPane().add(password);
 		
@@ -167,27 +183,8 @@ public class LoginFrame extends JFrame{
 		txtLogin_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				login();
 				
-				try {
-					arr = check();
-					int test=0;
-					for(User t : arr) {
-						System.out.println("Checklogin "+t);
-						if ((t.getUsername().equals(username.getText())) && t.getPassword().equals(password.getText())) {
-							test=1;
-							break;
-						}
-						else test=0;
-					}
-					
-					if (test==1) {
-						dispose();
-						Window.switchPane(new customerscreen());
-					}else JOptionPane.showMessageDialog(null, "Incorrect");
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		txtLogin_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -223,6 +220,32 @@ public class LoginFrame extends JFrame{
 		Validation.setForeground(new Color(255, 255, 255));
 		Validation.setBounds(158, 155, 219, 14);
 		getContentPane().add(Validation);
+	}
+	
+	public void login() {
+		try {
+			arr = check();
+			int test=0;
+			for(User t : arr) {
+				System.out.println("Checklogin "+t);
+				if ((t.getUsername().equals(username.getText())) && t.getPassword().equals(password.getText())) {
+					test=1;
+					break;
+				}
+				else test=0;
+			}
+			
+			if (test==1) {
+				dispose();
+				Window.switchPane(new drawTable());
+				ArrayList<String> name = Menu.Select("name","Authentication_Login","username='"+username.getText()+"'");
+				nameCustomer=name.get(0);
+				JOptionPane.showMessageDialog(null, "ok");
+			}else JOptionPane.showMessageDialog(null, "Incorrect");
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 //	public void Change() {
