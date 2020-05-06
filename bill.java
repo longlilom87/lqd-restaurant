@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -8,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import draw.FoodItem;
 
 import javax.swing.JButton;
 import java.awt.Font;

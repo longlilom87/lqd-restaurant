@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -10,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 //chung 1 package thi bo dong nay
-import cate_list.Order;
 
 import java.awt.Font;
 import java.awt.Label;

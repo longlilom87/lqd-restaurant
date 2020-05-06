@@ -1,5 +1,3 @@
-package main_app;
-
 
 import java.awt.EventQueue;
 
@@ -9,24 +7,24 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 
-import draw.drawTable;
-import cate_list.User;
-import java.awt.Font;
+import TestLong.Menu;
 
+import java.awt.Font;
 
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 import java.util.ArrayList;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class LoginFrame extends JFrame{
 
@@ -38,6 +36,7 @@ public class LoginFrame extends JFrame{
 	private JLabel Password;
 	private JLabel Validation;
 	public static String nameCustomer = "Guest";
+	
 	static ArrayList<User> arr;
 //	public static void main(String[] args) throws SQLException {
 //		Connection c = Connect();
@@ -106,12 +105,14 @@ public class LoginFrame extends JFrame{
 	public LoginFrame() throws SQLException {
 		initialize();
 		
-		Connection c = Connect();
-		PreparedStatement create = c.prepareStatement("CREATE TABLE IF NOT EXISTS Authentication_Login (" + 
-				"     username varchar(100)  Unique,\r\n" + 
-				"	 userpassword varchar(14),\r\n" + 
-				"	 Login_Role varchar(20 ) );");
-		create.executeUpdate();
+//		Connection c = Connect();
+//		PreparedStatement create = c.prepareStatement("CREATE TABLE IF NOT EXISTS Authentication_Login (" + 
+//				"     username varchar(100)  Unique,\r\n" + 
+//				"	 userpassword varchar(14),\r\n" + 
+//				"	 Login_Role varchar(20 ),"
+//				+ "name varchar(100),"
+//				+ " );");
+//		create.executeUpdate();
 		
 //		PreparedStatement insert = c.prepareStatement("INSERT INTO Authentication_Login (username, userpassword, Login_Role) values ('QuinLeaderr156', '1234231', 'Manager'),('DuckDuck', 'anhiuem123', 'Chef'),('Q_Dragon', 'nhantobanh', 'Customer');\r\n" + 
 //				"");
@@ -144,7 +145,7 @@ public class LoginFrame extends JFrame{
 		password = new JPasswordField();
 		password.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent key) {  //Bam Enter de dang nhap
+			public void keyPressed(KeyEvent key) {
 				if (key.getKeyCode()==KeyEvent.VK_ENTER) {
 					login();
 					 
@@ -184,7 +185,6 @@ public class LoginFrame extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				login();
-				
 			}
 		});
 		txtLogin_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -238,8 +238,8 @@ public class LoginFrame extends JFrame{
 			
 			if (test==1) {
 				dispose();
-				Window.switchPane(new drawTable());
-				JOptionPane.showMessageDialog(null, "ok");
+				Window.switchPane(new customerscreen());
+				ArrayList<String> name = Menu.Select("name","Authentication_Login","username='"+username.getText()+"'");
 			}else JOptionPane.showMessageDialog(null, "Incorrect");
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

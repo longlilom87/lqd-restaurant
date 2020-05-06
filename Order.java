@@ -1,4 +1,3 @@
-package cate_list;
 
 import java.sql.*;
 

@@ -63,7 +63,6 @@ public class Welcome extends JPanel{
 		bMenu = new Button("Menu");
 		bMenu.setBounds(900, 0, 100, 100);
 		bMenu.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				Menu.switchPane(new drawTable());

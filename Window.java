@@ -45,7 +45,7 @@ public class Window extends JFrame {
 		menuButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				switchPane(new drawTable());
+				switchPane(new customerscreen());
 			}
 		});
 //		fr.add(menuButton);

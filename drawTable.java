@@ -1,4 +1,3 @@
-package draw;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -21,11 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import cate_list.Table;
-
-import main_app.Menu;
-import main_app.Window;
 
 public class drawTable extends JPanel {
 

@@ -45,5 +45,7 @@ public class User {
 		name = null;
 		address = null;
 	}
-	
+	public String getName() {
+		return name;
+	}
 }
