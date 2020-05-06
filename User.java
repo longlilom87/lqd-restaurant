@@ -2,6 +2,7 @@
 public class User {
 	String username = null, password = null, role=null;
 	String name,address;
+	String tableID = null;
 	
 	public User(String u, String p,String r,String n, String a) {
 		username = u;
@@ -47,5 +48,17 @@ public class User {
 	}
 	public String getName() {
 		return name;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public String getTableID() {
+		return tableID;
+	}
+
+	public void setTableID(String tableID) {
+		this.tableID = tableID;
 	}
 }
