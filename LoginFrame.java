@@ -91,14 +91,14 @@ public class LoginFrame extends JFrame{
 	
 	public static ArrayList<User> check() throws SQLException{
 		Connection c = Connect();
-		PreparedStatement stmt = c.prepareStatement("SELECT username,userpassword,Login_Role FROM Authentication_Login;" );
+		PreparedStatement stmt = c.prepareStatement("SELECT * FROM Authentication_Login;" );
 		ResultSet r = stmt.executeQuery();
 		
 		ArrayList<User> arr = new ArrayList<>();
 		
 		while(r.next() ) {
 			System.out.println("User: "+r.getString("username")+" pass: "+r.getString("userpassword"));
-			arr.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role")));
+			arr.add(new User(r.getString("username"),r.getString("userpassword"),r.getString("Login_Role"),r.getString("name"),r.getString("address")));
 		}
 		return arr;
 	}
@@ -144,7 +144,7 @@ public class LoginFrame extends JFrame{
 		password = new JPasswordField();
 		password.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent key) {
+			public void keyPressed(KeyEvent key) {  //Bam Enter de dang nhap
 				if (key.getKeyCode()==KeyEvent.VK_ENTER) {
 					login();
 					 
@@ -229,6 +229,7 @@ public class LoginFrame extends JFrame{
 			for(User t : arr) {
 				System.out.println("Checklogin "+t);
 				if ((t.getUsername().equals(username.getText())) && t.getPassword().equals(password.getText())) {
+					nameCustomer=t.getName();
 					test=1;
 					break;
 				}
@@ -238,8 +239,6 @@ public class LoginFrame extends JFrame{
 			if (test==1) {
 				dispose();
 				Window.switchPane(new drawTable());
-				ArrayList<String> name = Menu.Select("name","Authentication_Login","username='"+username.getText()+"'");
-				nameCustomer=name.get(0);
 				JOptionPane.showMessageDialog(null, "ok");
 			}else JOptionPane.showMessageDialog(null, "Incorrect");
 		} catch (SQLException e1) {

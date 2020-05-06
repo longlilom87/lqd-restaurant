@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+//chung package thi bo dong nay
 import draw.FoodItem;
 
 public class Menu extends JPanel {
