@@ -15,8 +15,13 @@ import javax.swing.border.BevelBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+
+import net.proteanit.sql.DbUtils;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ManagerFrame extends JFrame {
 
@@ -26,13 +31,23 @@ public class ManagerFrame extends JFrame {
 	private JTextField txtMenu;
 	private JTextField txtTable;
 	private JTextField txtBill;
-	private JTable table;
-	private JTable table_1;
+	private JTextField textField;
+	private JTable table_2;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException { 
+		Connection conne = Connect();
+//		PreparedStatement create = conne.prepareStatement("CREATE TABLE IF NOT EXISTS Res_table (" + 
+//				"     tableID int PRIMARY KEY,\r\n" + 
+//				"	  Table_status int,\r\n );");
+//		create.executeUpdate();
+		PreparedStatement stmt = conne.prepareStatement("SELECT * FROM Res_table;");
+//		ResultSet rs = stmt.executeQuery();
+
+
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -45,11 +60,30 @@ public class ManagerFrame extends JFrame {
 			}
 		});
 	}
+	
+	
+	public static Connection Connect() throws SQLException {
+		Connection connection = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			String url = "jdbc:sqlite:Restaurant.db";
+			connection = DriverManager.getConnection(url);
+			System.out.println("ConnectJDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println("ERROR :"+e.getMessage()+"/n"+e.getClass()+"/n"+e.getCause());
+			e.printStackTrace();
+		}
+		return connection;
+	}
+
+
 
 	/**
 	 * Create the frame.
 	 */
 	public ManagerFrame() {
+	
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1366, 768);
 		contentPane = new JPanel();
@@ -68,6 +102,23 @@ public class ManagerFrame extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		txtAboutUs = new JTextField();
+		txtAboutUs.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				try {
+				Connection connection= Connect();
+				String query = "SELECT * FROM Authentication_Login;";
+				PreparedStatement	stmt = connection.prepareStatement(query);
+				ResultSet rs1 = stmt.executeQuery();
+				table_2.setModel(DbUtils.resultSetToTableModel(rs1));
+			} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				
+			
+			}}
+				
+		});
 		txtAboutUs.setEditable(false);
 		txtAboutUs.setBackground(Color.LIGHT_GRAY);
 		txtAboutUs.setHorizontalAlignment(SwingConstants.CENTER);
@@ -94,12 +145,6 @@ public class ManagerFrame extends JFrame {
 		txtEmployee.setColumns(10);
 		
 		txtMenu = new JTextField();
-		txtMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-		});
 		txtMenu.setEditable(false);
 		txtMenu.setText("Menu");
 		txtMenu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -110,6 +155,27 @@ public class ManagerFrame extends JFrame {
 		txtMenu.setColumns(10);
 		
 		txtTable = new JTextField();
+		txtTable.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+			
+				try {
+					Connection connection= Connect();
+					String query = "SELECT * FROM Res_table;";
+				 PreparedStatement	stmt = connection.prepareStatement(query);
+					ResultSet rs = stmt.executeQuery();
+					table_2.setModel(DbUtils.resultSetToTableModel(rs));
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				}
+			
+				
+				
+				
+				
+			}
+		});
 		txtTable.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		txtTable.setEditable(false);
 		txtTable.setHorizontalAlignment(SwingConstants.CENTER);
@@ -130,7 +196,25 @@ public class ManagerFrame extends JFrame {
 		contentPane.add(txtBill);
 		txtBill.setColumns(10);
 		
-
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(34, 220, 986, 412);
+		contentPane.add(scrollPane);
+		
+		table_2 = new JTable();
+		scrollPane.setViewportView(table_2);
+		
+		JButton btnNewButton = new JButton("Update");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Update update ;
+				update = new Update();
+				update.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(1044, 547, 120, 85);
+		contentPane.add(btnNewButton);
+		
+		
 		
 		
 	}
