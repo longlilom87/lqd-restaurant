@@ -43,7 +43,7 @@ public class customerscreen extends JPanel{
 		barPanel2.add(bLogout);
 		
 		bInfo = new Button("Your informatio");
-		bInfo.setBounds(900, 0, 50, 50);
+		bInfo.setBounds(900, 0, 100, 50);
 		bInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -67,14 +67,14 @@ public class customerscreen extends JPanel{
 		add(layer);
 		
 		infoPanel = new JPanel();
-		setLayerPanel(infoPanel,Color.black);
+		setLayerPanel(infoPanel);
+		
 		
 	}
 	
-	private void setLayerPanel(JPanel p,Color c) {
+	private void setLayerPanel(JPanel p) {
 		p.setBounds(0,0,Window.getW(), Window.getH()-100);
 		p.setLayout(null);
-		p.setBackground(c);
 	}
 	
 	private void switchPane(JPanel p) {

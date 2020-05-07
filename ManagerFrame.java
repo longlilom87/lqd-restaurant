@@ -97,6 +97,7 @@ public class ManagerFrame extends JFrame {
 		txtMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 			}
 		});
 		txtMenu.setEditable(false);

@@ -45,7 +45,10 @@ public class Window extends JFrame {
 		menuButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				switchPane(new customerscreen());
+//				switchPane(new customerscreen());
+				bill bill = new bill(0,new User("gfwag","fwag","rgqg","regwe","fawf"), Menu.foodList);
+				bill.setVisible(true);
+				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			}
 		});
 //		fr.add(menuButton);
@@ -65,7 +68,7 @@ public class Window extends JFrame {
 	
 	public static void main(String[] args) throws SQLException {
 		new Window();
-		
+		System.out.println("W = "+Window.getW()+" H = "+Window.getH());
 //		Connection c =Menu.Connect();
 //		Menu.Update("INSERT INTO Menu values ('O203','Cheese fries',25);");
 //		Menu.Update("INSERT INTO Menu values ('O102','Chocolate cupcake',23);");

@@ -18,6 +18,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -70,7 +71,9 @@ public class drawTable extends JPanel {
 
 		List<Table> tablelist = getTablelist();
 		for (int i = 0; i < tablelist.size(); i++) {
-			choice.add(Integer.toString(tablelist.get(i).getX()));
+			Table t = tablelist.get(i);
+			System.out.println("Table = "+t+" Xtable = "+t.getX()+" ToString: "+Integer.toString(t.getX()));
+			choice.add(Integer.toString(t.getX()));
 		}
 
 //		JButton btnBlank = new JButton("Blank");
@@ -86,13 +89,22 @@ public class drawTable extends JPanel {
 		JButton btnCustomer = new JButton("Choose Table");
 		btnCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				user.setTableID(choice.getSelectedItem());
+				for(Table t: tablelist) {
+					if(Integer.toString(t.getX()).equals(choice.getSelectedItem())) {
+						if(t.getY()==1) {
+							JOptionPane.showMessageDialog(null, "Please choose another table");
+							return;
+						}
+					}
+				}
 				try {
 					Window.switchPane(new Menu());
+					user.setTableID(choice.getSelectedItem());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				update(choice.getSelectedItem(), 1);
 				repaint();
 			}

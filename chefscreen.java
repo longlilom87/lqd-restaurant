@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -9,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import cate_list.Order;
 
 //chung 1 package thi bo dong nay
 
@@ -130,7 +128,7 @@ public class chefscreen extends JFrame {
 
 	public DefaultTableModel createTableModel() {
 		delivery = delivery();
-		String[] column = { "id", "name", "food", "unit", "address", "status" };
+		String[] column = { "id", "name", "food", "unit", "tableID", "status" };
 		Object[] row = new Object[6];
 		DefaultTableModel model = new DefaultTableModel(0, column.length);
 
