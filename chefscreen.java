@@ -1,3 +1,4 @@
+package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -7,6 +8,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import cate_list.Order;
 
 //chung 1 package thi bo dong nay
 
@@ -27,6 +30,7 @@ public class chefscreen extends JFrame {
 	private JScrollBar scrollBar;
 	private JScrollPane scrollPane;
 	private JButton btnDone;
+	static ArrayList<Order> delivery;
 
 	/**
 	 * Launch the application.
@@ -69,17 +73,18 @@ public class chefscreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int i = orderTable.getSelectedRow();
-				    if (i<0) {
-				    	JOptionPane.showMessageDialog(null,"Please choose a line to perform action");
-				    }
-				    else {
-				    	c= Menu.Connect();
-						String change = "update Delivery set status =1 where id="
-								+ orderTable.getModel().getValueAt(i, 0).toString();
+
+					if (i < 0) {
+						JOptionPane.showMessageDialog(null, "Please choose a line to perform action");
+					} else {
+						c = Menu.Connect();
+						String change = "update Delivery set status =1 where id='" + item(i, 0) + "' and name ='"
+								+ item(i, 1) + "' and food ='" + item(i, 2) + "'";
 						PreparedStatement st = c.prepareStatement(change);
 						st.executeUpdate();
 						orderTable.setModel(createTableModel()); // updateTable()
-				    }
+					}
+
 				} catch (Exception err) {
 					System.out.println(err);
 				}
@@ -88,7 +93,7 @@ public class chefscreen extends JFrame {
 
 		});
 		contentPane.add(btnDone);
-		
+
 		JLabel lblTodaysOrders = new JLabel("TODAY'S ORDERS");
 		lblTodaysOrders.setFont(new Font(".VnArial", Font.BOLD, 60));
 		lblTodaysOrders.setBounds(152, 44, 547, 62);
@@ -101,7 +106,7 @@ public class chefscreen extends JFrame {
 		ArrayList<Order> delivery = new ArrayList<Order>();
 		try {
 
-			c= Menu.Connect();
+			c = Menu.Connect();
 			String Table = "select * from Delivery where status =0";
 			PreparedStatement st = c.prepareStatement(Table);
 			ResultSet rs = st.executeQuery();
@@ -119,8 +124,12 @@ public class chefscreen extends JFrame {
 
 	}
 
+	private String item(int i, int a) {
+		return orderTable.getValueAt(i, a).toString();
+	}
+
 	public DefaultTableModel createTableModel() {
-		ArrayList<Order> delivery = delivery();
+		delivery = delivery();
 		String[] column = { "id", "name", "food", "unit", "address", "status" };
 		Object[] row = new Object[6];
 		DefaultTableModel model = new DefaultTableModel(0, column.length);
@@ -142,8 +151,7 @@ public class chefscreen extends JFrame {
 			model.addRow(row);
 		}
 		return model;
-		
-	
+
 	}
-	
+
 }
