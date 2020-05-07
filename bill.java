@@ -68,7 +68,7 @@ public class bill extends JFrame {
 	 */
 	
 	
-	public bill(int id, ArrayList<User> user, ArrayList<FoodItem> foodList) {
+	public bill(int id, User user, ArrayList<FoodItem> foodList) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 492, 734);
 		contentPane = new JPanel();
@@ -80,21 +80,20 @@ public class bill extends JFrame {
 		JButton btnOrder = new JButton("Order Now!");
 		btnOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i=writeID();
+				
 				
 				try {
 					Connection c = Menu.Connect();
-					
-					
+					int i=writeID();
 					for (FoodItem t : foodList) {
 						String to_delivery = "insert into Delivery (id,name,food,unit,address,status) values (?,?,?,?,?,?)";
 						PreparedStatement st = c.prepareStatement(to_delivery);
-						st.setInt(1, writeID());
-						st.setString(2, user.get(0).getName());
+						st.setInt(1, i+1);
+						st.setString(2, user.getName());
 						st.setString(3, t.getName());
 						st.setLong(4, t.getQty());
-						if (user.get(0).getTableID()!=null) {
-							st.setString(5, user.get(0).getTableID());
+						if (user.getTableID()!=null) {
+							st.setString(5, user.getTableID());
 						}
 						else st.setString(5, "Delivery");
 						st.setInt(6, 0);
@@ -119,16 +118,16 @@ public class bill extends JFrame {
 		txtYourName.setBackground(Color.WHITE);
 		txtYourName.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		txtYourName.setEditable(false);
-		txtYourName.setText("Your Name: "+user.get(0).getName());
+		txtYourName.setText("Your Name: "+user.getName());
 		txtYourName.setBounds(44, 125, 306, 57);
 		contentPane.add(txtYourName);
 		txtYourName.setColumns(10);
 		
 		textAddress = new JTextArea();
-		if (user.get(0).getTableID() !=null) {
-			textAddress.setText("Table: "+ user.get(0).getTableID());
+		if (user.getTableID() !=null) {
+			textAddress.setText("Table: "+ user.getTableID());
 		}
-		else textAddress.setText("Address: "+ user.get(0).getAddress());
+		else textAddress.setText("Address: "+ user.getAddress());
 		textAddress.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		textAddress.setEditable(false);
 		textAddress.setLineWrap(true);
@@ -148,7 +147,8 @@ public class bill extends JFrame {
 		
 		textField_2 = new JTextArea();
 		textField_2.setForeground(Color.BLACK);
-		textField_2.setText("#"+writeID());
+		id = writeID()+1;
+		textField_2.setText("#"+id);
 		textField_2.setFont(new Font("Trebuchet MS", Font.PLAIN, 45));
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
@@ -177,12 +177,12 @@ public class bill extends JFrame {
 		txtUnits.setColumns(10);
 		
 		int line = 346;
-		for (FoodItem i: foodList) {
-			System.out.println(i);
+		for (FoodItem f: foodList) {
+			System.out.println(f);
 			txtFoodGoesHere = new JTextArea();
 			txtFoodGoesHere.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			txtFoodGoesHere.setEditable(false);
-			txtFoodGoesHere.setText(i.getName());
+			txtFoodGoesHere.setText(f.getName());
 			txtFoodGoesHere.setBounds(44, line, 101, 22);
 			contentPane.add(txtFoodGoesHere);
 			txtFoodGoesHere.setColumns(10);
@@ -191,14 +191,14 @@ public class bill extends JFrame {
 			textQty = new JTextArea();
 			textQty.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			textQty.setEditable(false);
-			textQty.setText(""+i.getQty());
+			textQty.setText(""+f.getQty());
 			textQty.setBounds(185, line, 65, 22);
 			contentPane.add(textQty);
 			textQty.setColumns(10);
 			
 			txtPrice = new JTextArea();
 			txtPrice.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			txtPrice.setText(""+i.getPrice()*i.getQty());
+			txtPrice.setText(""+f.getPrice()*f.getQty());
 			txtPrice.setBounds(301, line, 65, 22);
 			contentPane.add(txtPrice);
 			txtPrice.setColumns(10);
@@ -232,6 +232,6 @@ public class bill extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return i+1;
+		return i;
 	}
 }

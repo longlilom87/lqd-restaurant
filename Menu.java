@@ -315,7 +315,7 @@ public class Menu extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				bill bill = new bill(0,LoginFrame.arr, foodList);
+				bill bill = new bill(0,LoginFrame.user, foodList);
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			}
