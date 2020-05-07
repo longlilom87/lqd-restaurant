@@ -33,6 +33,10 @@ public class ManagerFrame extends JFrame {
 	private JTextField txtBill;
 	private JTextField textField;
 	private JTable table_2;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -95,6 +99,7 @@ public class ManagerFrame extends JFrame {
 		panel.setBackground(Color.ORANGE);
 		panel.setBounds(0, 0, 1370, 103);
 		contentPane.add(panel);
+		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome .....  ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -105,6 +110,9 @@ public class ManagerFrame extends JFrame {
 		txtAboutUs.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
+				btnNewButton_1.setVisible(true);
+				btnNewButton.setVisible(false);
+
 				try {
 				Connection connection= Connect();
 				String query = "SELECT * FROM Authentication_Login;";
@@ -117,7 +125,7 @@ public class ManagerFrame extends JFrame {
 				
 			
 			}}
-				
+			
 		});
 		txtAboutUs.setEditable(false);
 		txtAboutUs.setBackground(Color.LIGHT_GRAY);
@@ -158,13 +166,16 @@ public class ManagerFrame extends JFrame {
 		txtTable.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-			
+				btnNewButton.setVisible(true);
+				btnNewButton_1.setVisible(false);
 				try {
 					Connection connection= Connect();
 					String query = "SELECT * FROM Res_table;";
 				 PreparedStatement	stmt = connection.prepareStatement(query);
 					ResultSet rs = stmt.executeQuery();
 					table_2.setModel(DbUtils.resultSetToTableModel(rs));
+				
+					
 				} catch (SQLException e1) {
 					
 					e1.printStackTrace();
@@ -203,16 +214,43 @@ public class ManagerFrame extends JFrame {
 		table_2 = new JTable();
 		scrollPane.setViewportView(table_2);
 		
-		JButton btnNewButton = new JButton("Update");
+		panel_2 = new JPanel();
+		panel_2.setBackground(Color.PINK);
+		panel_2.setBounds(1031, 220, 257, 412);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		btnNewButton = new JButton("Up Table");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Update update ;
-				update = new Update();
-				update.setVisible(true);
+				Uptable uptable;
+				uptable = new Uptable();
+				uptable.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(1044, 547, 120, 85);
-		contentPane.add(btnNewButton);
+		btnNewButton.setBounds(55, 65, 109, 99);
+		panel_2.add(btnNewButton);
+		btnNewButton.setVisible(false);
+		
+		
+		btnNewButton_1 = new JButton("Up cus");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				Upcustomer upcus;
+				upcus = new Upcustomer();
+				upcus.setVisible(true);
+			}
+			
+		});
+		btnNewButton_1.setBounds(55, 65, 109, 99);
+		panel_2.add(btnNewButton_1);
+		btnNewButton_1.setVisible(false);
+		
+		
+		
+		
+	
 		
 		
 		
