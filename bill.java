@@ -1,3 +1,5 @@
+package main_app;
+
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import cate_list.User;
+import draw.FoodItem;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -64,7 +68,7 @@ public class bill extends JFrame {
 	 */
 	
 	
-	public bill(int id, String name, String address, ArrayList<FoodItem> foodList) {
+	public bill(int id, ArrayList<User> user, ArrayList<FoodItem> foodList) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 492, 734);
 		contentPane = new JPanel();
@@ -85,11 +89,14 @@ public class bill extends JFrame {
 					for (FoodItem t : foodList) {
 						String to_delivery = "insert into Delivery (id,name,food,unit,address,status) values (?,?,?,?,?,?)";
 						PreparedStatement st = c.prepareStatement(to_delivery);
-						st.setInt(1, i + 1);
-						st.setString(2, name);
+						st.setInt(1, writeID());
+						st.setString(2, user.get(0).getName());
 						st.setString(3, t.getName());
 						st.setLong(4, t.getQty());
-						st.setString(5, address);
+						if (user.get(0).getTableID()!=null) {
+							st.setString(5, user.get(0).getTableID());
+						}
+						else st.setString(5, "Delivery");
 						st.setInt(6, 0);
 						st.executeUpdate();
 					}
@@ -112,13 +119,16 @@ public class bill extends JFrame {
 		txtYourName.setBackground(Color.WHITE);
 		txtYourName.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		txtYourName.setEditable(false);
-		txtYourName.setText("Your Name: "+name);
+		txtYourName.setText("Your Name: "+user.get(0).getName());
 		txtYourName.setBounds(44, 125, 306, 57);
 		contentPane.add(txtYourName);
 		txtYourName.setColumns(10);
 		
 		textAddress = new JTextArea();
-		textAddress.setText("Address: "+ address);
+		if (user.get(0).getTableID() !=null) {
+			textAddress.setText("Table: "+ user.get(0).getTableID());
+		}
+		else textAddress.setText("Address: "+ user.get(0).getAddress());
 		textAddress.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		textAddress.setEditable(false);
 		textAddress.setLineWrap(true);
@@ -222,6 +232,6 @@ public class bill extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return i;
+		return i+1;
 	}
 }

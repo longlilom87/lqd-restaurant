@@ -1,3 +1,5 @@
+package main_app;
+
 //import java.awt.Button;
 //import java.awt.CardLayout;
 //import java.awt.Color;
@@ -275,6 +277,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import draw.FoodItem;
+
 //import draw.FoodItem;  
 
 
@@ -311,7 +315,7 @@ public class Menu extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				bill bill = new bill(0,"","",foodList);
+				bill bill = new bill(0,LoginFrame.arr, foodList);
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			}
@@ -465,7 +469,6 @@ public class Menu extends JPanel {
 		ResultSet result = stmt.executeQuery();
 		
 		ArrayList<String> arr = new ArrayList<String>();
-		
 		while(result.next()) {
 			System.out.println(result.getString(select));
 			arr.add(result.getString(select));
@@ -473,7 +476,7 @@ public class Menu extends JPanel {
 		return arr;
 	}
 	
-	private static void switchPane(JPanel p) {
+	static void switchPane(JPanel p) {
 		menuLayer.removeAll();
 		menuLayer.add(p);
 		menuLayer.repaint();
