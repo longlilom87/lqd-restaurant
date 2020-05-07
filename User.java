@@ -3,6 +3,7 @@ public class User {
 	String username = null, password = null, role=null;
 	String name,address;
 	String tableID = null;
+	int reward;
 	
 	public User(String u, String p,String r,String n, String a) {
 		username = u;
@@ -61,4 +62,13 @@ public class User {
 	public void setTableID(String tableID) {
 		this.tableID = tableID;
 	}
+
+	public int getReward() {
+		return reward;
+	}
+
+	public void setReward(int reward) {
+		this.reward = reward;
+	}
+	
 }
