@@ -12,8 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 
-import TestLong.Menu;
-
 import java.awt.Font;
 
 import javax.swing.SwingConstants;
@@ -35,8 +33,8 @@ public class LoginFrame extends JFrame{
 	private JTextField txtLogin_1;
 	private JLabel Password;
 	private JLabel Validation;
-	public static String nameCustomer = "Guest";
-	
+
+	public static User user;
 	static ArrayList<User> arr;
 //	public static void main(String[] args) throws SQLException {
 //		Connection c = Connect();
@@ -229,7 +227,7 @@ public class LoginFrame extends JFrame{
 			for(User t : arr) {
 				System.out.println("Checklogin "+t);
 				if ((t.getUsername().equals(username.getText())) && t.getPassword().equals(password.getText())) {
-					nameCustomer=t.getName();
+					user = new User(t.getUsername(),t.getPassword(),t.getRole(),t.getName(),t.getAddress());
 					test=1;
 					break;
 				}

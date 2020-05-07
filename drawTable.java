@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 
 public class drawTable extends JPanel {
 
+	User user = LoginFrame.user;
+	
 	public drawTable() {
 		setLayout(null);
 
@@ -41,7 +43,7 @@ public class drawTable extends JPanel {
 		lblAvailable.setBounds(text, available, 123, 82);
 		add(lblAvailable);
 
-		JLabel lblReserved = new JLabel("Reserved");
+		JLabel lblReserved = new JLabel("Serving");
 		lblReserved.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblReserved.setBounds(text, reserved, 123, 82);
 		add(lblReserved);
@@ -71,19 +73,26 @@ public class drawTable extends JPanel {
 			choice.add(Integer.toString(tablelist.get(i).getX()));
 		}
 
-		JButton btnBlank = new JButton("Blank");
-		btnBlank.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				update(choice.getSelectedItem(), 0);
-				repaint();
-			}
-		});
-		btnBlank.setBounds(button, ybutton, 97, 25);
-		add(btnBlank);
+//		JButton btnBlank = new JButton("Blank");
+//		btnBlank.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				update(choice.getSelectedItem(), 0);
+//				repaint();
+//			}
+//		});
+//		btnBlank.setBounds(button, ybutton, 97, 25);
+//		add(btnBlank);
 
-		JButton btnCustomer = new JButton("Customer");
+		JButton btnCustomer = new JButton("Choose Table");
 		btnCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				user.setTableID(choice.getSelectedItem());
+				try {
+					Window.switchPane(new Menu());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				update(choice.getSelectedItem(), 1);
 				repaint();
 			}

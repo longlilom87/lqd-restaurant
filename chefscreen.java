@@ -80,8 +80,6 @@ public class chefscreen extends JFrame {
 						st.executeUpdate();
 						orderTable.setModel(createTableModel()); // updateTable()
 				    }
-					
-
 				} catch (Exception err) {
 					System.out.println(err);
 				}
