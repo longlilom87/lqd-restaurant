@@ -1,4 +1,3 @@
-package main_app;
 
 
 import java.awt.BorderLayout;
@@ -6,11 +5,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import cate_list.User;
-import draw.FoodItem;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -21,6 +19,8 @@ import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +33,6 @@ public class bill extends JFrame {
 	private JPanel contentPane;
 	private JTextArea txtYourName;
 	private JTextArea textAddress;
-	private JTextArea textPhone;
 	private JTextArea textField_2;
 	private JTextArea txtPrice;
 	private static String name, address, food;
@@ -44,46 +43,90 @@ public class bill extends JFrame {
 	private JTextArea txtFoodGoesHere;
 	private JTextArea textQty;
 	private JTextField txtPriceLabel;
+	JButton btnOrder = new JButton("Order Now!");
+	JButton bPay = new JButton("Cash");
+	static boolean cash = false;
 	
-	
-
+	private JPanel panel = new JPanel();
+	private int yButton = 548,yTxtName = 125,yTxtAddress = 190;
+	private int ytextField2 = 24,yTxtOrders = 258,yTxtUnits = 310,line=305;
+	static ArrayList<FoodItem> payFoodList = Menu.payFoodList;
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					bill frame = new bill(id, name, address, food, unit, price);
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
 	 */
-	
+public void scroll(int value) {
+//		yButton++;
+//		yTxtName++;
+//		yTxtAddress++;
+//		ytextField2++;
+//		yTxtOrders++;
+//		yTxtUnits++;
+//		line++;
+		
+//		btnOrder.setBounds(155, yButton-value, 152, 57);
+		txtYourName.setBounds(44, yTxtName-value, 306, 57);
+		textAddress.setBounds(44, yTxtAddress-value, 351, 57);
+		textField_2.setBounds(46, ytextField2-value, 152, 57);
+		
+		txtUnits.setBounds(185, yTxtOrders-value, 65, 22);
+		txtOrders.setBounds(44, yTxtOrders-value, 65, 22);
+		txtPriceLabel.setBounds(301, yTxtOrders-value, 49, 22);
+		
+		panel.setBounds(0, line-value,  492, 734);
+	}
 	
 	public bill(int id, User user, ArrayList<FoodItem> foodList) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 492, 734);
+		setBounds(0,0, 492, 734);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		contentPane.setBounds(0, -500, 492, 734);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnOrder = new JButton("Order Now!");
 		btnOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean bl = false;
+				for(FoodItem t: foodList) {
+					for(FoodItem p: payFoodList) {
+						if(p.getName().equals(t.getName())) {
+							System.out.println("Same name");
+							int q = p.getQty();
+							payFoodList.remove(p);
+							payFoodList.add(new FoodItem(t.getName(),t.getPrice(),q+t.getQty()));
+							bl = true;
+							break;
+						}
+					}
+					if(payFoodList.size()==0|| bl == false) payFoodList.add(t);
+				}
 				
+				foodList.clear();
+//				Menu.burgerPanel = new JPanel();
+				JPanel burgerPanel,chickenPanel,beveragePanel,pizzaPanel;
 				
+				burgerPanel = Menu.burgerPanel;
+				chickenPanel = Menu.chickenPanel;
+				beveragePanel = Menu.beveragePanel;
+				pizzaPanel = Menu.pizzaPanel;
+				
+				burgerPanel = new JPanel();
+				chickenPanel = new JPanel();
+				beveragePanel = new JPanel();
+				pizzaPanel = new JPanel();
 				try {
 					Connection c = Menu.Connect();
+					Menu.addMenuPanel(c, burgerPanel, "'B%'");
+					Menu.addMenuPanel (c, chickenPanel, "'C%'");
+					Menu.addMenuPanel(c, beveragePanel, "'D%'");
+					Menu.addMenuPanel(c, pizzaPanel, "'P%'");
+					
 					int i=writeID();
 					for (FoodItem t : foodList) {
 						String to_delivery = "insert into Delivery (id,name,food,unit,address,status) values (?,?,?,?,?,?)";
@@ -104,22 +147,38 @@ public class bill extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	
-				
+				dispose();
 				
 			}
 		});
 		btnOrder.setForeground(new Color(240, 255, 255));
 		btnOrder.setBackground(new Color(107, 142, 35));
 		btnOrder.setFont(new Font("VnFujiyama2", Font.BOLD, 16));
-		btnOrder.setBounds(155, 548, 152, 57);
-		contentPane.add(btnOrder);
+		btnOrder.setBounds(155, yButton, 152, 57);
+		
+		bPay.setForeground(new Color(240, 255, 255));
+		bPay.setBackground(new Color(107, 142, 35));
+		bPay.setFont(new Font("VnFujiyama2", Font.BOLD, 16));
+		bPay.setBounds(155, yButton, 152, 57);
+		bPay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CreditCard cc = new CreditCard();
+				cc.setVisible(true);
+				dispose();
+				System.exit(0); //sau khi nhấn bPay thì đóng cửa sổ Bill
+			}
+		});
+		
+		if(!cash) contentPane.add(btnOrder);
+		else contentPane.add(bPay);
 		
 		txtYourName = new JTextArea();
 		txtYourName.setBackground(Color.WHITE);
 		txtYourName.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		txtYourName.setEditable(false);
 		txtYourName.setText("Your Name: "+user.getName());
-		txtYourName.setBounds(44, 125, 306, 57);
+		txtYourName.setBounds(44, yTxtName, 306, 57);
 		contentPane.add(txtYourName);
 		txtYourName.setColumns(10);
 		
@@ -133,17 +192,8 @@ public class bill extends JFrame {
 		textAddress.setLineWrap(true);
 		textAddress.setColumns(10);
 		textAddress.setBackground(Color.WHITE);
-		textAddress.setBounds(44, 190, 351, 57);
+		textAddress.setBounds(44, yTxtAddress, 351, 57);
 		contentPane.add(textAddress);
-		
-		textPhone = new JTextArea();
-		textPhone.setText("Phone: ");
-		textPhone.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		textPhone.setEditable(false);
-		textPhone.setColumns(10);
-		textPhone.setBackground(Color.WHITE);
-		textPhone.setBounds(44, 260, 306, 37);
-		contentPane.add(textPhone);
 		
 		textField_2 = new JTextArea();
 		textField_2.setForeground(Color.BLACK);
@@ -153,17 +203,15 @@ public class bill extends JFrame {
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBackground(Color.WHITE);
-		textField_2.setBounds(46, 24, 152, 57);
+		textField_2.setBounds(46, ytextField2, 152, 57);
 		contentPane.add(textField_2);
-		
-		
 		
 		txtOrders = new JTextField();
 		txtOrders.setEditable(false);
 		txtOrders.setHorizontalAlignment(SwingConstants.CENTER);
 		txtOrders.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtOrders.setText("Order(s)");
-		txtOrders.setBounds(44, 310, 65, 22);
+		txtOrders.setBounds(44, 258, 65, 22);
 		contentPane.add(txtOrders);
 		txtOrders.setColumns(10);
 		
@@ -172,19 +220,24 @@ public class bill extends JFrame {
 		txtUnits.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUnits.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtUnits.setText("Unit(s)");
-		txtUnits.setBounds(185, 310, 65, 22);
+		txtUnits.setBounds(185, 258, 65, 22);
 		contentPane.add(txtUnits);
 		txtUnits.setColumns(10);
 		
-		int line = 346;
+		panel.setLayout(null);
+		panel.setBounds(0, line, 492, 734);
+		panel.setBackground(Color.white);
+		add(panel);
+		int sl = 0;
+		int y=0;
 		for (FoodItem f: foodList) {
 			System.out.println(f);
 			txtFoodGoesHere = new JTextArea();
 			txtFoodGoesHere.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			txtFoodGoesHere.setEditable(false);
 			txtFoodGoesHere.setText(f.getName());
-			txtFoodGoesHere.setBounds(44, line, 101, 22);
-			contentPane.add(txtFoodGoesHere);
+			txtFoodGoesHere.setBounds(44, y, 101, 22);
+			panel.add(txtFoodGoesHere);
 			txtFoodGoesHere.setColumns(10);
 			
 			
@@ -192,27 +245,39 @@ public class bill extends JFrame {
 			textQty.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			textQty.setEditable(false);
 			textQty.setText(""+f.getQty());
-			textQty.setBounds(185, line, 65, 22);
-			contentPane.add(textQty);
+			textQty.setBounds(185, y, 65, 22);
+			panel.add(textQty);
 			textQty.setColumns(10);
 			
 			txtPrice = new JTextArea();
 			txtPrice.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			txtPrice.setText(""+f.getPrice()*f.getQty());
-			txtPrice.setBounds(301, line, 65, 22);
-			contentPane.add(txtPrice);
+			txtPrice.setBounds(301, y, 65, 22);
+			panel.add(txtPrice);
 			txtPrice.setColumns(10);
 			
-			line = line + txtFoodGoesHere.getFont().getSize()+10;
+			y=y + txtFoodGoesHere.getFont().getSize()+10;
+			sl++;
 		}
 		
+		JScrollBar scroll = new JScrollBar();
+		scroll.setBounds(460, 0, 15, 700);
+		if(sl>9)
+			getContentPane().add(scroll);
+		scroll.addAdjustmentListener(new AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				scroll(scroll.getValue());
+			}
+		});
+//		scroll.setMaximum(maximum);
 		
 		txtPriceLabel = new JTextField();
 		txtPriceLabel.setEditable(false);
 		txtPriceLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtPriceLabel.setText("Price");
-		txtPriceLabel.setBounds(301, 310, 49, 22);
+		txtPriceLabel.setBounds(301, 258, 49, 22);
 		contentPane.add(txtPriceLabel);
 		txtPriceLabel.setColumns(10);
 	}
