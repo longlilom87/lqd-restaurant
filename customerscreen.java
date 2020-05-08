@@ -22,6 +22,8 @@ public class customerscreen extends JPanel{
 		setLayout(null);
 		setBackground(new Color(255, 250, 205));
 		
+//		barPanel.set
+		
 		barPanel2.setBounds(10, 10, Window.getW()-35, 80);
 		barPanel2.setLayout(null);
 		barPanel2.setBackground(Color.white);
