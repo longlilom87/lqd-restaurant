@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cate_list.User;
-import main_app.RegisterFrame;
 import java.sql.*;
 
 import javax.swing.JButton;

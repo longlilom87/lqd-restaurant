@@ -45,10 +45,14 @@ public class Window extends JFrame {
 		menuButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				switchPane(new customerscreen());
-				bill bill = new bill(0,new User("gfwag","fwag","rgqg","regwe","fawf"), Menu.foodList);
-				bill.setVisible(true);
-				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+				CreditCard cc;
+				try {
+					cc = new CreditCard();
+					cc.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 //		fr.add(menuButton);
