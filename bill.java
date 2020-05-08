@@ -166,6 +166,7 @@ public void scroll(int value) {
 				CreditCard cc = new CreditCard();
 				cc.setVisible(true);
 				dispose();
+				System.exit(0); //sau khi nhấn bPay thì đóng cửa sổ Bill
 			}
 		});
 		
