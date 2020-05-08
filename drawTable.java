@@ -97,6 +97,7 @@ public class drawTable extends JPanel {
 					}
 				}
 				try {
+					Menu.bl=true;
 					Window.switchPane(new Menu());
 					user.setTableID(choice.getSelectedItem());
 				} catch (SQLException e1) {
@@ -117,6 +118,7 @@ public class drawTable extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Window.homeLayer.removeAll();
 				try {
+					Menu.bl=true;
 					Window.homeLayer.add(new Menu());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

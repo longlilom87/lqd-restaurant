@@ -236,7 +236,8 @@ public class LoginFrame extends JFrame{
 			
 			if (test==1) {
 				dispose();
-				Window.switchPane(new customerscreen());
+				if(user.getRole().equals("Customer")) Window.switchPane(new customerscreen());
+				else if(user.getRole().equals("Chef")) Window.switchPane(new chefscreen());
 				ArrayList<String> name = Menu.Select("name","Authentication_Login","username='"+username.getText()+"'");
 			}else JOptionPane.showMessageDialog(null, "Incorrect");
 		} catch (SQLException e1) {

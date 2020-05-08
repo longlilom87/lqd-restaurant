@@ -60,7 +60,6 @@ public class FoodItem extends JPanel{
 				repaint();
 			}
 		});
-		add(plusButton);
 		
 		minusButton.setBounds(800, 50, 30, 30);
 		minusButton.addActionListener(new ActionListener() {
@@ -79,7 +78,10 @@ public class FoodItem extends JPanel{
 				
 			}
 		});
-		add(minusButton);
+		if(Menu.bl==true) {
+			add(plusButton);
+			add(minusButton);
+		}
 		
 		setLayout(null);
 		setBounds(20,y, Window.getW() * 3 / 4-50,130);
@@ -109,7 +111,6 @@ public class FoodItem extends JPanel{
 				repaint();
 			}
 		});
-		add(plusButton);
 		
 		minusButton.setBounds(800, 50, 30, 30);
 		minusButton.addActionListener(new ActionListener() {
@@ -128,7 +129,11 @@ public class FoodItem extends JPanel{
 				
 			}
 		});
-		add(minusButton);
+
+		if(Menu.bl==true) {
+			add(plusButton);
+			add(minusButton);
+		}
 		
 		setLayout(null);
 		setBounds(20,y, Window.getW() * 3 / 4-50,130);
@@ -153,7 +158,7 @@ public class FoodItem extends JPanel{
 		g.drawString(""+this.getPrice(), 500, 110);
 		
 		g.setFont(new Font("Arial",Font.BOLD,30));
-		g.drawString(""+qty, 860, 75);
+		if(Menu.bl==true) g.drawString(""+qty, 860, 75);
 //		g.drawImage(image,0,0,null);
 	}
 

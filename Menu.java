@@ -24,6 +24,7 @@ public class Menu extends JPanel {
 	
 	JPanel namePanel = new JPanel();
 	JLabel name = new JLabel("LQD");
+	public static boolean bl;
 	
 	static int total = 0;
 	static ArrayList<FoodItem> foodList = FoodItem.foodList;
@@ -37,20 +38,21 @@ public class Menu extends JPanel {
 	static JPanel homePanel = new JPanel();
 	
 	Button btnQuin = new Button("Burger");
-	Button bChicken,bBeverage,bPizza,bBurger,bMenu,Cash,bPay;
+	Button bChicken,bBeverage,bPizza,Cash,bPay,bBack;
 	
 	public Menu() throws SQLException {
 		setLayout(null);
 		setBounds(0,0,Window.getW(),Window.getH());
 		
 		Cash = new Button("Order");
-		add(Cash);
 		add(namePanel);
 		add(menuLayer);
 		Cash.setBounds(1250, 0, 100, 50);
 		Cash.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				bill.cash = false;
+				
 				bill bill = new bill(0,LoginFrame.user, foodList);
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -58,7 +60,12 @@ public class Menu extends JPanel {
 		});
 		
 		bPay = new Button("Cash");
-		add(bPay);
+		if(bl == true) {
+			add(Cash);
+			add(bPay);
+		}
+		namePanel();
+		Layer();
 		bPay.setBounds(1000, 0, 100, 50);
 		bPay.addActionListener(new ActionListener() {
 			@Override
@@ -142,6 +149,16 @@ public class Menu extends JPanel {
 				switchPane(pizzaPanel);
 			}
 		});
+		
+		bBack = new Button("Back");
+		bBack.setBounds(69, 300, 75, 25);
+		bBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Window.switchPane(new Welcome());
+			}
+		});
+		if(Menu.bl==false) namePanel.add(bBack);
 		
 		name.setBounds(60, 0, 300, 100);
 		name.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 50));

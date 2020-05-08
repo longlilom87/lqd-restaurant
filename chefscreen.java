@@ -21,9 +21,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.sql.*;
 
-public class chefscreen extends JFrame {
+public class chefscreen extends JPanel {
 
-	private JPanel contentPane;
+//	private JPanel contentPane;
 	private JTable table;
 	private JTable table_1;
 	private JTable orderTable;
@@ -52,12 +52,16 @@ public class chefscreen extends JFrame {
 	 * Create the frame.
 	 */
 	public chefscreen() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 861, 621);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setBounds(100, 100, 861, 621);
+//		contentPane = new JPanel();
+//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		contentPane.setBounds(100, 100, 861, 621);
+//		setContentPane(contentPane);
+//		contentPane.setLayout(null);
+		
+		setBounds(0,0,861,621);
+		setLayout(null);
 
 		orderTable = new JTable(createTableModel()) {
 			@Override
@@ -68,7 +72,8 @@ public class chefscreen extends JFrame {
 		orderTable.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		orderTable.setBounds(46, 133, 750, 299);
 		orderTable.setRowHeight(orderTable.getRowHeight()+5);
-		contentPane.add(orderTable);
+//		contentPane.
+		add(orderTable);
 		 
 		//add column header
 		for (int i=0; i<column.length;i++) {
@@ -106,17 +111,20 @@ public class chefscreen extends JFrame {
 			}
 
 		});
-		contentPane.add(btnDone);
+//		contentPane.
+		add(btnDone);
 
 		JLabel lblTodaysOrders = new JLabel("TODAY'S ORDERS");
 		lblTodaysOrders.setFont(new Font(".VnArial", Font.BOLD, 60));
 		lblTodaysOrders.setBounds(orderTable.getWidth()/2-250, 44, 547, 62);
-		contentPane.add(lblTodaysOrders);
+//		contentPane.
+		add(lblTodaysOrders);
 		
 		JScrollPane js=new JScrollPane(orderTable);
 		js.setBounds(100, 130, 600, 300);
 		js.setVisible(true);
-		contentPane.add(js);
+//		contentPane.
+		add(js);
 		
 	
 		
