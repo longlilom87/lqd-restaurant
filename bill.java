@@ -163,10 +163,15 @@ public void scroll(int value) {
 		bPay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CreditCard cc = new CreditCard();
-				cc.setVisible(true);
+				CreditCard cc;
+				try {
+					cc = new CreditCard();
+					cc.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				dispose();
-				System.exit(0); //sau khi nhấn bPay thì đóng cửa sổ Bill
 			}
 		});
 		

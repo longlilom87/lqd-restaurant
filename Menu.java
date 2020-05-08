@@ -69,8 +69,7 @@ public class Menu extends JPanel {
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				
-				for(FoodItem t : foodList) System.out.println("FoodList: "+t);
-				for(FoodItem t : payFoodList) System.out.println("PayList: "+t+" qty = "+t.getQty());
+				for(FoodItem t : payFoodList) total = total+t.getPrice()*t.getQty();
 			}
 		});
 		
@@ -183,7 +182,7 @@ public class Menu extends JPanel {
 		ArrayList<String> arr = new ArrayList<String>();
 		
 		while(result.next()) {
-			System.out.println(result.getString(select));
+//			System.out.println(result.getString(select));
 			arr.add(result.getString(select));
 		}
 		return arr;
