@@ -72,7 +72,6 @@ public class drawTable extends JPanel {
 		List<Table> tablelist = getTablelist();
 		for (int i = 0; i < tablelist.size(); i++) {
 			Table t = tablelist.get(i);
-			System.out.println("Table = "+t+" Xtable = "+t.getX()+" ToString: "+Integer.toString(t.getX()));
 			choice.add(Integer.toString(t.getX()));
 		}
 
