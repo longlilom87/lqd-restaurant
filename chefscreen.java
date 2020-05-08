@@ -1,3 +1,4 @@
+package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -6,8 +7,11 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import cate_list.Order;
 
 //chung 1 package thi bo dong nay
 
@@ -29,7 +33,7 @@ public class chefscreen extends JFrame {
 	private JScrollPane scrollPane;
 	private JButton btnDone;
 	static ArrayList<Order> delivery;
-
+	String[] column= { "id", "name", "food", "unit", "TableID", "status" };
 	/**
 	 * Launch the application.
 	 */
@@ -57,10 +61,24 @@ public class chefscreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		orderTable = new JTable(createTableModel());
+		orderTable = new JTable(createTableModel()) {
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
 		orderTable.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		orderTable.setBounds(46, 133, 750, 299);
+		orderTable.setRowHeight(orderTable.getRowHeight()+5);
 		contentPane.add(orderTable);
+		 
+		//add column header
+		for (int i=0; i<column.length;i++) {
+			JTableHeader header = orderTable.getTableHeader();
+			TableColumn col = header.getColumnModel().getColumn(i);
+			col.setHeaderValue(column[i]);
+			header.repaint();
+		}
 
 		btnDone = new JButton("Done");
 		btnDone.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -94,9 +112,16 @@ public class chefscreen extends JFrame {
 
 		JLabel lblTodaysOrders = new JLabel("TODAY'S ORDERS");
 		lblTodaysOrders.setFont(new Font(".VnArial", Font.BOLD, 60));
-		lblTodaysOrders.setBounds(152, 44, 547, 62);
+		lblTodaysOrders.setBounds(orderTable.getWidth()/2-250, 44, 547, 62);
 		contentPane.add(lblTodaysOrders);
-
+		
+		JScrollPane js=new JScrollPane(orderTable);
+		js.setBounds(100, 130, 600, 300);
+		js.setVisible(true);
+		contentPane.add(js);
+		
+	
+		
 	}
 
 	public ArrayList<Order> delivery() {
@@ -128,16 +153,10 @@ public class chefscreen extends JFrame {
 
 	public DefaultTableModel createTableModel() {
 		delivery = delivery();
-		String[] column = { "id", "name", "food", "unit", "tableID", "status" };
-		Object[] row = new Object[6];
+		
+		Object[] row = new Object[column.length];
 		DefaultTableModel model = new DefaultTableModel(0, column.length);
 
-		// add column name
-		for (int i = 0; i < column.length; i++) {
-			row[i] = column[i];
-
-		}
-		model.addRow(row);
 		// add row
 		for (int i = 0; i < delivery.size(); i++) {
 			row[0] = delivery.get(i).getId();
@@ -147,7 +166,11 @@ public class chefscreen extends JFrame {
 			row[4] = delivery.get(i).getAddress();
 			row[5] = delivery.get(i).getStatus();
 			model.addRow(row);
+			
 		}
+	
+		
+		
 		return model;
 
 	}
