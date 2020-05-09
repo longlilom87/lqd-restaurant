@@ -1,7 +1,6 @@
 
-
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -14,6 +13,8 @@ import javax.swing.table.TableModel;
 
 
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.List;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,7 @@ public class chefscreen extends JPanel {
 	private JScrollPane scrollPane;
 	private JButton btnDone;
 	static ArrayList<Order> delivery;
+	String Welcome;
 	String[] column= { "id", "name", "food", "unit", "TableID", "status" };
 	/**
 	 * Launch the application.
@@ -60,32 +62,32 @@ public class chefscreen extends JPanel {
 //		setContentPane(contentPane);
 //		contentPane.setLayout(null);
 		
-		setBounds(0,0,861,621);
+		setBounds(0,0 ,1366, 768);
 		setLayout(null);
-
-		orderTable = new JTable(createTableModel()) {
-			@Override
-		    public boolean isCellEditable(int row, int column) {
-		       return false;
-		    }
-		};
-		orderTable.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		orderTable.setBounds(46, 133, 750, 299);
-		orderTable.setRowHeight(orderTable.getRowHeight()+5);
+		
+		
+		String todaysOrder= "TODAY'S ORDERS";
+		JLabel lblTodaysOrders = new JLabel(todaysOrder,SwingConstants.CENTER);
+		lblTodaysOrders.setFont(new Font(".VnArial", Font.BOLD, 60));
+		lblTodaysOrders.setBounds(100, 44, 600, 62);
 //		contentPane.
-		add(orderTable);
-		 
-		//add column header
-		for (int i=0; i<column.length;i++) {
-			JTableHeader header = orderTable.getTableHeader();
-			TableColumn col = header.getColumnModel().getColumn(i);
-			col.setHeaderValue(column[i]);
-			header.repaint();
-		}
-
+		add(lblTodaysOrders);
+		
+		if (User.getName()==null) {
+			
+			Welcome= "Guest";
+		} else Welcome= User.getName();
+		
+		JLabel lblWelcome = new JLabel("Welcome, "+ Welcome,SwingConstants.CENTER);
+		lblWelcome.setFont(new Font(".VnArial", Font.BOLD, 20));
+		lblWelcome.setBounds(Window.getW()-500, 44, 600, 62);
+//		contentPane.
+		add(lblWelcome,SwingConstants.CENTER);
+		
+		int btnDonex= (lblTodaysOrders.getX()+lblWelcome.getX())/2;
 		btnDone = new JButton("Done");
 		btnDone.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		btnDone.setBounds(324, 459, 207, 79);
+		btnDone.setBounds(btnDonex, Window.getH()-200, 207, 79);
 		btnDone.addActionListener(new ActionListener() {
 			private Connection c = null;
 
@@ -113,17 +115,24 @@ public class chefscreen extends JPanel {
 		});
 //		contentPane.
 		add(btnDone);
+	    
 
-		JLabel lblTodaysOrders = new JLabel("TODAY'S ORDERS");
-		lblTodaysOrders.setFont(new Font(".VnArial", Font.BOLD, 60));
-		lblTodaysOrders.setBounds(orderTable.getWidth()/2-250, 44, 547, 62);
-//		contentPane.
-		add(lblTodaysOrders);
-		
+		orderTable = new JTable(createTableModel());
+		orderTable.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		orderTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 30));
+		orderTable.setRowHeight(60);
+		 
+		//add column header
+		for (int i=0; i<column.length;i++) {
+			JTableHeader header = orderTable.getTableHeader();
+			TableColumn col = header.getColumnModel().getColumn(i);
+			col.setHeaderValue(column[i]);
+			header.repaint();
+		}
+
 		JScrollPane js=new JScrollPane(orderTable);
-		js.setBounds(100, 130, 600, 300);
+		js.setBounds(0, 130, Window.getW()-20, btnDone.getY()-200);
 		js.setVisible(true);
-//		contentPane.
 		add(js);
 		
 	
@@ -159,7 +168,6 @@ public class chefscreen extends JPanel {
 
 	public DefaultTableModel createTableModel() {
 		delivery = delivery();
-		
 		Object[] row = new Object[column.length];
 		DefaultTableModel model = new DefaultTableModel(0, column.length);
 
@@ -174,8 +182,6 @@ public class chefscreen extends JPanel {
 			model.addRow(row);
 			
 		}
-	
-		
 		
 		return model;
 
