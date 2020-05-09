@@ -1,7 +1,8 @@
 
 public class User {
 	String username = null, password = null, role=null;
-	String name,address;
+	String name;
+	String address;
 	String tableID = null;
 	int reward;
 	
@@ -12,7 +13,7 @@ public class User {
 		name = n;
 		address = a;
 	}
-
+	
 	public String toString() {
 		return this.getUsername()+" "+this.getPassword()+" "+this.getRole();
 	}

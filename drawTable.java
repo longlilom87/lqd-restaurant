@@ -27,6 +27,7 @@ public class drawTable extends JPanel {
 	User user = LoginFrame.user;
 	
 	public drawTable() {
+		setBounds(0,Window.getH()/6,1000,1000);
 		setLayout(null);
 
 		// Aligning color explanation box

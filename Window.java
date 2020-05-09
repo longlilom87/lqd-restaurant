@@ -30,7 +30,8 @@ public class Window extends JFrame {
 		fr.setExtendedState(JFrame.MAXIMIZED_BOTH); // Full screen
 
 		homeLayer.setBounds(0, 0, getW(), getH());
-		homeLayer.setLayout(new CardLayout(0,0));
+//		homeLayer.setLayout(new CardLayout(0,0));
+		homeLayer.setLayout(null);
 
 		fr.add(homeLayer);
 		

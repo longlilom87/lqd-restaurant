@@ -113,6 +113,7 @@ public class CreditCard extends JFrame {
 		
 		JButton bOK = new JButton("OK");
 		bOK.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		bOK.setBackground(new Color(143, 188, 143));
 		bOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				balance = balance - Menu.total;

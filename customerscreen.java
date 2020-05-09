@@ -39,12 +39,13 @@ public class customerscreen extends JPanel{
 		bLogout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				LoginFrame.user.Logout();
 				Window.switchPane(new Welcome());
 			}
 		});
 		barPanel2.add(bLogout);
 		
-		bInfo = new Button("Your informatio");
+		bInfo = new Button("Profile");
 		bInfo.setBounds(900, 0, 100, 50);
 		bInfo.addActionListener(new ActionListener() {
 			@Override

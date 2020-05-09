@@ -9,9 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-
-
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -73,10 +70,10 @@ public class chefscreen extends JPanel {
 //		contentPane.
 		add(lblTodaysOrders);
 		
-		if (User.getName()==null) {
+		if (LoginFrame.user.getName()==null) {
 			
 			Welcome= "Guest";
-		} else Welcome= User.getName();
+		} else Welcome= LoginFrame.user.getName();
 		
 		JLabel lblWelcome = new JLabel("Welcome, "+ Welcome,SwingConstants.CENTER);
 		lblWelcome.setFont(new Font(".VnArial", Font.BOLD, 20));

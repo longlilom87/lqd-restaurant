@@ -83,6 +83,7 @@ public void scroll(int value) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0, 492, 734);
 		setResizable(false);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -107,7 +108,6 @@ public void scroll(int value) {
 					if(payFoodList.size()==0|| bl == false) payFoodList.add(t);
 				}
 				
-				foodList.clear();
 //				Menu.burgerPanel = new JPanel();
 				JPanel burgerPanel,chickenPanel,beveragePanel,pizzaPanel;
 				
@@ -148,7 +148,7 @@ public void scroll(int value) {
 					e1.printStackTrace();
 				}	
 				dispose();
-				
+				foodList.clear();
 			}
 		});
 		btnOrder.setForeground(new Color(240, 255, 255));

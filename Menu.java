@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -51,6 +52,11 @@ public class Menu extends JPanel {
 		Cash.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(foodList.size()==0) {
+					JOptionPane.showMessageDialog(null, "Please order");
+					return;
+				}
+				
 				bill.cash = false;
 				
 				bill bill = new bill(0,LoginFrame.user, foodList);
@@ -71,6 +77,10 @@ public class Menu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				System.out.println("CASH");
+				if(payFoodList.size()==0) {
+					JOptionPane.showMessageDialog(null, "You haven't order anything to pay");
+					return;
+				}
 				bill.cash = true;
 				bill bill = new bill(0,LoginFrame.user,payFoodList);
 				bill.setVisible(true);

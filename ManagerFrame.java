@@ -91,13 +91,12 @@ public class ManagerFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1366, 768);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 250, 205));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(107, 142, 35));
+		panel.setBackground(Color.ORANGE);
 		panel.setBounds(0, 0, 1370, 103);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -216,8 +215,8 @@ public class ManagerFrame extends JFrame {
 		scrollPane.setViewportView(table_2);
 		
 		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 250, 205));
-		panel_2.setBounds(1030, 220, 257, 412);
+		panel_2.setBackground(Color.PINK);
+		panel_2.setBounds(1031, 220, 257, 412);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
