@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import cate_list.User;
+
 import java.sql.*;
 
 import javax.swing.JButton;
@@ -32,7 +34,6 @@ public class Upcustomer extends JFrame {
 	private JTextField newaddress;
 	private JTextField account;
 
-	ArrayList<User> userList = new ArrayList<>();
 	private JTextField txtDone;
 	private JButton btnNewButton_3;
 
@@ -42,13 +43,13 @@ public class Upcustomer extends JFrame {
 	public static void main(String[] args) throws SQLException {
 		Connection Conn = Connect();
 		
-		PreparedStatement create = Conn.prepareStatement("CREATE TABLE IF NOT EXISTS Authentication_Login (" + 
-				"     username varchar(100)  Unique,\r\n" + 
-				"	 userpassword varchar(14),\r\n" + 
-				"	 Login_Role varchar(20 ),"
-				+ "name varchar(100),"
-				+ "address varchar(100) );");
-		create.executeUpdate();
+		//PreparedStatement create = Conn.prepareStatement("CREATE TABLE IF NOT EXISTS Authentication_Login (" + 
+		//		"     username varchar(100)  Unique,\r\n" + 
+		//		"	 userpassword varchar(14),\r\n" + 
+		//		"	 Login_Role varchar(20 ),"
+		//		+ "name varchar(100),"
+		//		+ "address varchar(100) );");
+		//create.executeUpdate();
 		
 		PreparedStatement stmt = Conn.prepareStatement("SELECT * FROM Authentication_Login;");
 		ResultSet r = stmt.executeQuery();
@@ -90,6 +91,7 @@ public class Upcustomer extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 100, 700, 500);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 250, 205));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -106,11 +108,11 @@ public class Upcustomer extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(120, 169, 123, 22);
+		btnNewButton.setBounds(120, 202, 123, 22);
 		contentPane.add(btnNewButton);
 		
 		newpass = new JTextField();
-		newpass.setBounds(264, 169, 254, 22);
+		newpass.setBounds(264, 202, 254, 22);
 		contentPane.add(newpass);
 		newpass.setColumns(10);
 		
@@ -127,11 +129,11 @@ public class Upcustomer extends JFrame {
 			
 			}
 		});
-		btnNewButton_1.setBounds(120, 252, 123, 23);
+		btnNewButton_1.setBounds(120, 273, 123, 23);
 		contentPane.add(btnNewButton_1);
 		
 		newname = new JTextField();
-		newname.setBounds(264, 252, 254, 22);
+		newname.setBounds(264, 273, 254, 22);
 		contentPane.add(newname);
 		newname.setColumns(10);
 		
@@ -158,11 +160,11 @@ public class Upcustomer extends JFrame {
 		JLabel SelectAccount = new JLabel("Account ");
 		SelectAccount.setBackground(Color.WHITE);
 		SelectAccount.setHorizontalAlignment(SwingConstants.CENTER);
-		SelectAccount.setBounds(120, 82, 123, 35);
+		SelectAccount.setBounds(120, 143, 123, 35);
 		contentPane.add(SelectAccount);
 		
 		account = new JTextField();
-		account.setBounds(264, 89, 254, 28);
+		account.setBounds(264, 143, 254, 28);
 		contentPane.add(account);
 		account.setColumns(10);
 		
@@ -177,6 +179,11 @@ public class Upcustomer extends JFrame {
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnNewButton_3.setBounds(295, 398, 143, 29);
 		contentPane.add(btnNewButton_3);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(107, 142, 35));
+		panel.setBounds(0, 0, 684, 71);
+		contentPane.add(panel);
 		
 		
 	}
