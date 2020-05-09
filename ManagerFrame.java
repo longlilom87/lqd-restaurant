@@ -32,7 +32,7 @@ public class ManagerFrame extends JFrame {
 	private JTextField txtTable;
 	private JTextField txtBill;
 	private JTextField textField;
-	private JTable table_2;
+	public static JTable table_2;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JButton btnNewButton;
@@ -224,8 +224,13 @@ public class ManagerFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Uptable uptable;
-				uptable = new Uptable();
-				uptable.setVisible(true);
+				try {
+					uptable = new Uptable();
+					uptable.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setBounds(55, 65, 109, 99);
