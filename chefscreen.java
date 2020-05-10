@@ -1,17 +1,17 @@
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.List;
 import java.awt.event.ActionEvent;
@@ -27,10 +27,11 @@ public class chefscreen extends JPanel {
 	private JTable orderTable;
 	private JScrollBar scrollBar;
 	private JScrollPane scrollPane;
-	private JButton btnDone;
+	private JButton btnDone, btnRefresh;
 	static ArrayList<Order> delivery;
-	String Welcome;
-	String[] column= { "id", "name", "food", "unit", "TableID", "status" };
+
+	String[] column = { "id", "name", "food", "unit", "TableID", "status" };
+
 	/**
 	 * Launch the application.
 	 */
@@ -58,33 +59,47 @@ public class chefscreen extends JPanel {
 //		contentPane.setBounds(100, 100, 861, 621);
 //		setContentPane(contentPane);
 //		contentPane.setLayout(null);
-		
-		setBounds(0,0 ,1366, 768);
+
+		setBounds(0, 0, Window.getW(), Window.getH());
 		setLayout(null);
+
+		JPanel W = new JPanel(new BorderLayout());
+		W.setVisible(true);
+		W.setBackground(new Color(107, 142, 35));
+		W.setBounds(Window.getW()-900, 10, 800, 100);
+		add(W);
 		
+		JLabel name = new JLabel("LQD");
+		name.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 50));
+		name.setBounds(60, 10, 200, 100);
+		name.setForeground(Color.white);
+		name.setVisible(true);
+		add(name);
 		
-		String todaysOrder= "TODAY'S ORDERS";
-		JLabel lblTodaysOrders = new JLabel(todaysOrder,SwingConstants.CENTER);
+		JPanel greenLine = new JPanel(new BorderLayout(40,30));
+	    greenLine.setBackground(new Color(107, 142, 35));
+	    greenLine.setBounds(0,0,Window.getW(),120);
+	    greenLine.setVisible(true);
+	    add(greenLine);
+	  
+		String todaysOrder = "TODAY'S ORDERS";
+		JLabel lblTodaysOrders = new JLabel(todaysOrder, SwingConstants.RIGHT);
 		lblTodaysOrders.setFont(new Font(".VnArial", Font.BOLD, 60));
-		lblTodaysOrders.setBounds(100, 44, 600, 62);
-//		contentPane.
-		add(lblTodaysOrders);
-		
-		if (LoginFrame.user.getName()==null) {
-			
-			Welcome= "Guest";
-		} else Welcome= LoginFrame.user.getName();
-		
-		JLabel lblWelcome = new JLabel("Welcome, "+ Welcome,SwingConstants.CENTER);
+		lblTodaysOrders.setForeground(Color.white);
+		W.add(lblTodaysOrders,BorderLayout.SOUTH);
+
+		JLabel lblWelcome = new JLabel("Welcome, " + LoginFrame.user.getName(), SwingConstants.RIGHT);
 		lblWelcome.setFont(new Font(".VnArial", Font.BOLD, 20));
-		lblWelcome.setBounds(Window.getW()-500, 44, 600, 62);
+		lblWelcome.setBounds(Window.getW() - 500, 44, 600, 62);
+		lblWelcome.setForeground(Color.white);
 //		contentPane.
-		add(lblWelcome,SwingConstants.CENTER);
+		W.add(lblWelcome,BorderLayout.NORTH);
+
 		
-		int btnDonex= (lblTodaysOrders.getX()+lblWelcome.getX())/2;
+		
 		btnDone = new JButton("Done");
 		btnDone.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		btnDone.setBounds(btnDonex, Window.getH()-200, 207, 79);
+		btnDone.setBounds(Window.getW()/2-100, Window.getH() - 200, 207, 79);
 		btnDone.addActionListener(new ActionListener() {
 			private Connection c = null;
 
@@ -101,6 +116,7 @@ public class chefscreen extends JPanel {
 						PreparedStatement st = c.prepareStatement(change);
 						st.executeUpdate();
 						orderTable.setModel(createTableModel()); // updateTable()
+						refreshHeader();
 					}
 
 				} catch (Exception err) {
@@ -112,28 +128,57 @@ public class chefscreen extends JPanel {
 		});
 //		contentPane.
 		add(btnDone);
-	    
+		btnRefresh = new JButton("Refresh");
+		btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		btnRefresh.setBounds(btnDone.getX() + 500, btnDone.getY(), 207, 79);
+		btnRefresh.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Connection c;
+				orderTable.setModel(createTableModel());
+				refreshHeader();
+				try {
+					c = Menu.Connect();
+					String change = "update Delivery set status =0 where status =2";
+					PreparedStatement st = c.prepareStatement(change);
+					st.executeUpdate();
+					c.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		});
+		add(btnRefresh);
+		
+		JButton bLogout = new JButton("Log out");
+		bLogout.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		bLogout.setBounds(btnDone.getX() - 500, btnDone.getY(), 207, 79);
+		bLogout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoginFrame.user.Logout();
+				Window.switchPane(new Welcome());
+			}
+		});
+		add(bLogout);
 
 		orderTable = new JTable(createTableModel());
 		orderTable.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		orderTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 30));
 		orderTable.setRowHeight(60);
-		 
-		//add column header
-		for (int i=0; i<column.length;i++) {
-			JTableHeader header = orderTable.getTableHeader();
-			TableColumn col = header.getColumnModel().getColumn(i);
-			col.setHeaderValue(column[i]);
-			header.repaint();
-		}
 
-		JScrollPane js=new JScrollPane(orderTable);
-		js.setBounds(0, 130, Window.getW()-20, btnDone.getY()-200);
+		// add column header
+		refreshHeader();
+
+		JScrollPane js = new JScrollPane(orderTable);
+		js.setBounds(0, 130, Window.getW() - 20, btnDone.getY() - 200);
 		js.setVisible(true);
 		add(js);
-		
-	
-		
+
 	}
 
 	public ArrayList<Order> delivery() {
@@ -142,7 +187,7 @@ public class chefscreen extends JPanel {
 		try {
 
 			c = Menu.Connect();
-			String Table = "select * from Delivery where status =0";
+			String Table = "select * from Delivery where status =0 or status=2";
 			PreparedStatement st = c.prepareStatement(Table);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -175,13 +220,25 @@ public class chefscreen extends JPanel {
 			row[2] = delivery.get(i).getFood();
 			row[3] = delivery.get(i).getUnit();
 			row[4] = delivery.get(i).getAddress();
-			row[5] = delivery.get(i).getStatus();
+			if (delivery.get(i).getStatus() == 0) {
+				row[5] = "Not yet";
+			} else
+				row[5] = "New";
 			model.addRow(row);
-			
+
 		}
-		
+
 		return model;
 
+	}
+
+	private void refreshHeader() {
+		for (int i = 0; i < column.length; i++) {
+			JTableHeader header = orderTable.getTableHeader();
+			TableColumn col = header.getColumnModel().getColumn(i);
+			col.setHeaderValue(column[i]);
+			header.repaint();
+		}
 	}
 
 }
