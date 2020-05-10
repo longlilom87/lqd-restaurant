@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+
 
 //import draw.FoodItem;  
 
@@ -70,8 +72,6 @@ public class Menu extends JPanel {
 			add(Cash);
 			add(bPay);
 		}
-		namePanel();
-		Layer();
 		bPay.setBounds(1000, 0, 100, 50);
 		bPay.addActionListener(new ActionListener() {
 			@Override
@@ -117,11 +117,16 @@ public class Menu extends JPanel {
 	
 	public void namePanel() {
 		// NAME PANEL
+		namePanel.setBounds(0, 0, 1382/4, 744);
 		namePanel.setLayout(null);
-		namePanel.setBounds(0, 0, Window.getW() / 4, Window.getH());
+//		namePanel.setBounds(0, 0, 1382/4, 744);
 		namePanel.setBackground(new Color(107, 142, 35));
 		
-		btnQuin.setBounds(69, 100, 75, 25);
+		
+		btnQuin.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+		btnQuin.setBackground(new Color(0, 128, 0));
+		
+		btnQuin.setBounds(10, 137, 325, 71);
 		btnQuin.addActionListener(new ActionListener() {
 
 			@Override
@@ -135,8 +140,11 @@ public class Menu extends JPanel {
 				switchPane(burgerPanel);
 			}
 		});
+		
 		bChicken = new Button("Other");
-		bChicken.setBounds(69, 150, 75, 25);
+		bChicken.setBounds(10, 289, 325, 71);
+		bChicken.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+		bChicken.setBackground(new Color(0, 128, 0));
 		bChicken.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +152,9 @@ public class Menu extends JPanel {
 			}
 		});
 		bBeverage = new Button("Beverage");
-		bBeverage.setBounds(69, 200, 75, 25);
+		bBeverage.setBounds(10, 366, 325, 71);
+		bBeverage.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+		bBeverage.setBackground(new Color(0, 128, 0));
 		bBeverage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -152,7 +162,9 @@ public class Menu extends JPanel {
 			}
 		});
 		bPizza = new Button ("Pizza");
-		bPizza.setBounds(69, 250, 75, 25);
+		bPizza.setBounds(10, 212, 325, 71);
+		bPizza.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+		bPizza.setBackground(new Color(0, 128, 0));
 		bPizza.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -161,16 +173,22 @@ public class Menu extends JPanel {
 		});
 		
 		bBack = new Button("Back");
-		bBack.setBounds(69, 300, 75, 25);
+		bBack.setBounds(10, 443, 325, 71);
+		bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+		bBack.setBackground(new Color(0, 128, 0));
 		bBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Window.switchPane(new Welcome());
 			}
 		});
+		
 		if(Menu.bl==false) namePanel.add(bBack);
 		
-		name.setBounds(60, 0, 300, 100);
+		name.setForeground(new Color(255, 255, 255));
+		name.setBackground(new Color(0, 204, 204));
+		
+		name.setBounds(92, 11, 128, 100);
 		name.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 50));
 
 		namePanel.add(name);
@@ -178,6 +196,11 @@ public class Menu extends JPanel {
 		namePanel.add(bBeverage);
 		namePanel.add(bChicken);
 		namePanel.add(btnQuin);
+		
+		Image scale = new ImageIcon("Image/logo.png").getImage().getScaledInstance(50,50, java.awt.Image.SCALE_SMOOTH);
+		JLabel label = new JLabel(new ImageIcon(scale));
+		label.setBounds(193, 62, 50,50);
+		namePanel.add(label);
 	}
 	
 	public static Connection Connect() throws SQLException {

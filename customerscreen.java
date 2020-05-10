@@ -9,10 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,24 +36,13 @@ public class customerscreen extends JPanel {
 	private JTextField nameField, addressField, usernameField;
 	private static Connection c;
 
-	private Button bLogout, bInfo, bOrder;
 	private JLayeredPane layer = new JLayeredPane();
 
 	public customerscreen() {
-//		try {
-//			c = Menu.Connect();
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-
 		setBounds(0, 0, Window.getW(), Window.getH());
 		setLayout(null);
 		setBackground(new Color(255, 250, 205));
 
-//		barPanel.set
-
-		
 		adPanel= new JPanel();
 		adPanel.setLayout(null);
 		adPanel.setBounds(0, 100, Window.getW(), Window.getH());
@@ -101,43 +94,49 @@ public class customerscreen extends JPanel {
 		barPanel.setBackground(new Color(107, 142, 35));
 		add(barPanel);
 
-		bLogout = new Button("Log out");
-		bLogout.setBounds(1050, 15, 50, 50);
-		bLogout.addActionListener(new ActionListener() {
-			@Override
+		JButton lblLogOut = new JButton("Log out");
+		lblLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginFrame.user.Logout();
 				Window.switchPane(new Welcome());
 			}
 		});
-		barPanel2.add(bLogout);
-
-		bInfo = new Button("Profile");
-		bInfo.setBounds(900, 15, 100, 50);
-		bInfo.addActionListener(new ActionListener() {
-			@Override
+		lblLogOut.setForeground(new Color(0, 128, 0));
+		lblLogOut.setFont(new Font("Sylfaen", Font.ITALIC, 30));
+//		lblLogOut.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLogOut.setBackground(new Color(255, 255, 255));
+		lblLogOut.setBounds(1212, 0, 135, 80);
+		
+		barPanel2.add(lblLogOut);
+		
+		JButton lblLogOut_1 = new JButton("Profile");
+		lblLogOut_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adPanel.setVisible(false);
 				switchPane(infoPanel);
 			}
 		});
-		barPanel2.add(bInfo);
-
-		bOrder = new Button("Order");
-		bOrder.setBounds(800, 15, 50, 50);
-		bOrder.addActionListener(new ActionListener() {
-			@Override
+		lblLogOut_1.setForeground(new Color(0, 128, 0));
+		lblLogOut_1.setBackground(new Color(255, 255, 255));
+		lblLogOut_1.setFont(new Font("Sylfaen", Font.ITALIC, 30));
+		lblLogOut_1.setBounds(1078, 0, 135, 80);
+		barPanel2.add(lblLogOut_1);
+		
+		JButton lblLogOut_1_1 = new JButton("Order");
+		lblLogOut_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				Window.switchPane(new drawTable());
 			}
 		});
-		barPanel2.add(bOrder);
+		lblLogOut_1_1.setForeground(new Color(0, 128, 0));
+		lblLogOut_1_1.setBackground(new Color(255, 255, 255));
+		lblLogOut_1_1.setFont(new Font("Sylfaen", Font.ITALIC, 30));
+		lblLogOut_1_1.setBounds(960, 0, 118, 80);
+		barPanel2.add(lblLogOut_1_1);
 
 		layer.setBounds(0, 100, Window.getW(), Window.getH() - 100);
 		layer.setLayout(new CardLayout(0, 0));
 		add(layer);
-
 		
 		infoPanel = new JPanel();
 		infoChangePanel = new JPanel();
@@ -146,6 +145,7 @@ public class customerscreen extends JPanel {
 
 		int xInfo = 406;
 		int yInfo = 98;
+		
 		// INFO PANEL
 		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -184,16 +184,35 @@ public class customerscreen extends JPanel {
 		infoPanel.add(nameInfo);
 
 		Button bChange = new Button("Change...");
+		bChange.setFont(new Font("Berlin Sans FB Demi", Font.BOLD | Font.ITALIC, 35));
+		bChange.setForeground(new Color(255, 255, 255));
+		bChange.setBackground(new Color(0, 128, 0));
 		infoPanel.add(bChange);
-		bChange.setBounds(1000, 500, 100, 50);
+		bChange.setBounds(879, 500, 221, 50);
 		bChange.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				switchPane(infoChangePanel);
 			}
 		});
+		
+		Button bBackAd = new Button("Back");
+		bBackAd.setActionCommand("\r\n");
+		bBackAd.setForeground(Color.WHITE);
+		bBackAd.setFont(new Font("Berlin Sans FB Demi", Font.BOLD | Font.ITALIC, 35));
+		bBackAd.setBackground(new Color(0, 128, 0));
+		bBackAd.setBounds(625, 500, 221, 50);
+		infoPanel.add(bBackAd);
+		bBackAd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("BACK AD");
+				switchPane(adPanel);
+			}
+		});
 
 		int xChange = xInfo;
+		
 		// INFO CHANGE PANEL
 		JLabel nameChangeLabel = new JLabel("Name");
 		nameChangeLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -279,17 +298,6 @@ public class customerscreen extends JPanel {
 		});
 		bBack.setBounds(btnChange,400,150,23);
 		infoChangePanel.add(bBack);
-		
-		JButton bBackAd = new JButton("Back");
-		bBackAd.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("BACK AD");
-				switchPane(adPanel);
-			}
-		});
-		bBackAd.setBounds(btnChange,400,150,23);
-		infoPanel.add(bBackAd);
 	}
 
 	private void setLayerPanel(JPanel p) {
