@@ -37,6 +37,11 @@ public class ManagerFrame extends JFrame {
 	private JPanel panel_2;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
+	private JButton btnNewButton_4;
+	private JButton btnNewButton_5;
+
 
 	/**
 	 * Launch the application.
@@ -91,12 +96,13 @@ public class ManagerFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1366, 768);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 250, 205));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.ORANGE);
+		panel.setBackground(new Color(107, 142, 35));
 		panel.setBounds(0, 0, 1370, 103);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -138,15 +144,22 @@ public class ManagerFrame extends JFrame {
 		
 		txtEmployee = new JTextField();
 		txtEmployee.addMouseListener(new MouseAdapter() {
-			@Override
+			
 			public void mouseClicked(MouseEvent e) {
+				btnNewButton_2.setVisible(true);
+				btnNewButton_3.setVisible(true);
+				btnNewButton.setVisible(false);
+				btnNewButton_1.setVisible(false);
+				table_2.setVisible(false);
+
+
 				
 			}
 		});
 		txtEmployee.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		txtEmployee.setBackground(Color.LIGHT_GRAY);
 		txtEmployee.setEditable(false);
-		txtEmployee.setText("Chef");
+		txtEmployee.setText("Staff");
 		txtEmployee.setHorizontalAlignment(SwingConstants.CENTER);
 		txtEmployee.setBounds(1060, 114, 140, 33);
 		contentPane.add(txtEmployee);
@@ -215,7 +228,7 @@ public class ManagerFrame extends JFrame {
 		scrollPane.setViewportView(table_2);
 		
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.PINK);
+		panel_2.setBackground(new Color(255, 250, 205));
 		panel_2.setBounds(1031, 220, 257, 412);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
@@ -251,6 +264,82 @@ public class ManagerFrame extends JFrame {
 		btnNewButton_1.setBounds(55, 65, 109, 99);
 		panel_2.add(btnNewButton_1);
 		btnNewButton_1.setVisible(false);
+		
+		btnNewButton_4 = new JButton("Up Chef");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UpChef upchef;
+				upchef = new UpChef();
+				upchef.setVisible(true);
+			}
+		});
+		btnNewButton_4.setBounds(57, 65, 107, 99);
+		panel_2.add(btnNewButton_4);
+		btnNewButton_4.setVisible(false);
+		
+		btnNewButton_5 = new JButton("Add New Partner");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UpManager upmana;
+				upmana = new UpManager();
+				upmana.setVisible(true);
+			}
+		});
+		btnNewButton_5.setBounds(55, 65, 109, 99);
+		panel_2.add(btnNewButton_5);
+		btnNewButton_5.setVisible(false);
+		
+		
+	    btnNewButton_2 = new JButton("Manager");
+	    btnNewButton_2.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		btnNewButton_5.setVisible(true);
+	    		btnNewButton_4.setVisible(false);
+	    		table_2.setVisible(true);
+
+				try {
+
+	    		Connection connection= Connect();
+
+				String query = "SELECT * FROM Authentication_Login Where Login_Role ='Manager' ;";
+
+	    		PreparedStatement	stmt = connection.prepareStatement(query);
+	    		ResultSet rs3 = stmt.executeQuery();
+	    		table_2.setModel(DbUtils.resultSetToTableModel(rs3));
+	    	} catch (SQLException e3) {
+	    		e3.printStackTrace();
+
+	    		
+	    	}}
+	    });
+		btnNewButton_2.setBounds(34, 186, 89, 23);
+		contentPane.add(btnNewButton_2);
+		btnNewButton_2.setVisible(false);
+		
+		
+		btnNewButton_3 = new JButton("Chef");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton_4.setVisible(true);
+				btnNewButton_5.setVisible(false);
+				table_2.setVisible(true);
+
+				try {
+					Connection connection= Connect();
+					String query = "SELECT * FROM Authentication_Login Where Login_Role ='Chef' ;";
+					PreparedStatement	stmt = connection.prepareStatement(query);
+					ResultSet rs2 = stmt.executeQuery();
+					table_2.setModel(DbUtils.resultSetToTableModel(rs2));
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+
+				}}
+		});
+		btnNewButton_3.setBounds(148, 186, 89, 23);
+		contentPane.add(btnNewButton_3);
+		btnNewButton_3.setVisible(false);
+
+		
 		
 		
 		
