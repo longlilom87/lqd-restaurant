@@ -12,14 +12,16 @@ import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
+import javax.swing.Timer;
 
 
 public class customerscreen extends JPanel {
@@ -51,15 +53,39 @@ public class customerscreen extends JPanel {
 		adPanel= new JPanel();
 		adPanel.setLayout(null);
 		adPanel.setBounds(0, 100, Window.getW(), Window.getH());
-		JLabel picLabel = new JLabel(new ImageIcon("Image\\hinh_LQD.png"));
-		JLabel call = new JLabel();
+		
+		String[] pic = {
+				"Image\\hinh_LQD.png",
+				"Advertisement\\ad1.jpg",
+				"Advertisement\\ad2.jpg",
+				"Advertisement\\ad3.jpg"
+		};
+		JLabel picLabel=new JLabel();
 		picLabel.setBounds(0, 0, Window.getW(),Window.getH()-100);
+		picLabel.setIcon(new ImageIcon(pic[0]));
+		picLabel.setVisible(true);
+		Timer tm= new Timer(2000,new ActionListener() {
+		int picNo=1;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				picLabel.setIcon(new ImageIcon(pic[picNo]));
+				picNo+=1;
+				if (picNo>=pic.length) {
+					picNo=0;
+				}
+			}	
+		});
+		picLabel.setHorizontalAlignment(JLabel.CENTER);
+		adPanel.add(picLabel,SwingConstants.CENTER);
+		tm.start();
+		
+		JLabel call = new JLabel();
 		call.setBounds(0, 0, Window.getW(), 30);
 		call.setText("For Advertisement: 0909 099 009");
 		call.setVisible(true);
 		call.setFont(new Font("Arial",Font.PLAIN,20));
-		picLabel.setVisible(true);
-		adPanel.add(picLabel);
+		
 		adPanel.add(call,SwingConstants.CENTER);
 		adPanel.setVisible(true);
 		
@@ -76,7 +102,7 @@ public class customerscreen extends JPanel {
 		add(barPanel);
 
 		bLogout = new Button("Log out");
-		bLogout.setBounds(1050, 0, 50, 50);
+		bLogout.setBounds(1050, 15, 50, 50);
 		bLogout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -87,7 +113,7 @@ public class customerscreen extends JPanel {
 		barPanel2.add(bLogout);
 
 		bInfo = new Button("Profile");
-		bInfo.setBounds(900, 0, 100, 50);
+		bInfo.setBounds(900, 15, 100, 50);
 		bInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -98,7 +124,7 @@ public class customerscreen extends JPanel {
 		barPanel2.add(bInfo);
 
 		bOrder = new Button("Order");
-		bOrder.setBounds(800, 0, 50, 50);
+		bOrder.setBounds(800, 15, 50, 50);
 		bOrder.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

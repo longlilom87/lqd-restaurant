@@ -28,7 +28,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
 public class drawTable extends JPanel {
 
 	User user = LoginFrame.user;
@@ -89,6 +88,16 @@ public class drawTable extends JPanel {
 			Table t = tablelist.get(i);
 			choice.add(Integer.toString(t.getX()));
 		}
+		
+		JButton bBack = new JButton("Back");
+		bBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Window.switchPane(new customerscreen());
+			}
+		});
+		bBack.setBounds(60,ybutton+60,150,23);
+		add(bBack);
 
 //		JButton btnBlank = new JButton("Blank");
 //		btnBlank.addActionListener(new ActionListener() {
