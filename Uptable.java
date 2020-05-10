@@ -115,16 +115,17 @@ public class Uptable extends JFrame {
 		JButton btnNewButton = new JButton("Update");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+           
 
 				try {
-
+                
 					checkexist();
-					String query = "SELECT * FROM Res_table;";
+					String query = "SELECT * FROM Res_table ORDER by tableID;";
 					PreparedStatement stmt = c.prepareStatement(query);
 					ResultSet rs = stmt.executeQuery();
 					ManagerFrame.table_2.setModel(DbUtils.resultSetToTableModel(rs));
 				} catch (SQLException e1) {
-
+                    
 					e1.printStackTrace();
 				}
 			}
@@ -137,7 +138,7 @@ public class Uptable extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					checkavailable();
-					String query = "SELECT * FROM Res_table;";
+					String query = "SELECT * FROM Res_table Order by tableID ;";
 					PreparedStatement stmt = c.prepareStatement(query);
 					ResultSet rs = stmt.executeQuery();
 					ManagerFrame.table_2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -153,7 +154,7 @@ public class Uptable extends JFrame {
 		contentPane.add(btnNewButton_1);
 
 	}
-
+// ADD
 	public void insert(int tableID, int Table_status) throws SQLException {
 		String sql = "Insert into Res_table(tableID, Table_status) VALUES(?,?)";
 
@@ -164,7 +165,7 @@ public class Uptable extends JFrame {
 		stmt.executeUpdate();
 
 	}
-
+// DELETE
 	public void insert_2(int tableID) throws SQLException {
 		String sql = "Delete from Res_table where tableID = ? ;";
 
@@ -174,7 +175,7 @@ public class Uptable extends JFrame {
 		stmt.executeUpdate();
 
 	}
-
+   //check 1
 	public void checkexist() throws SQLException {
 		String sql = "SELECT tableID From Res_table where tableID = ? ;";
 
@@ -188,7 +189,7 @@ public class Uptable extends JFrame {
 			insert(Integer.parseInt(ID.getText()), Integer.parseInt(Status.getText()));
 		}
 	}
-
+//check 2
 	public void checkavailable() throws SQLException {
 		String sql = "SELECT tableID From Res_table where tableID = ? ;";
 

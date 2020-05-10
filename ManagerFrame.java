@@ -37,10 +37,6 @@ public class ManagerFrame extends JFrame {
 	private JPanel panel_2;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_4;
-	private JButton btnNewButton_5;
 
 
 	/**
@@ -121,7 +117,7 @@ public class ManagerFrame extends JFrame {
 
 				try {
 				Connection connection= Connect();
-				String query = "SELECT * FROM Authentication_Login;";
+				String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Customer'; ";
 				PreparedStatement	stmt = connection.prepareStatement(query);
 				ResultSet rs1 = stmt.executeQuery();
 				table_2.setModel(DbUtils.resultSetToTableModel(rs1));
@@ -146,16 +142,23 @@ public class ManagerFrame extends JFrame {
 		txtEmployee.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-				btnNewButton_2.setVisible(true);
-				btnNewButton_3.setVisible(true);
+				
 				btnNewButton.setVisible(false);
 				btnNewButton_1.setVisible(false);
-				table_2.setVisible(false);
-
+				
+				try {
+					Connection connection= Connect();
+					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
+					PreparedStatement	stmt = connection.prepareStatement(query);
+					ResultSet rs2 = stmt.executeQuery();
+					table_2.setModel(DbUtils.resultSetToTableModel(rs2));
+				} catch (SQLException e2) {
+						
+						e2.printStackTrace();
 
 				
 			}
-		});
+			}});
 		txtEmployee.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		txtEmployee.setBackground(Color.LIGHT_GRAY);
 		txtEmployee.setEditable(false);
@@ -183,7 +186,7 @@ public class ManagerFrame extends JFrame {
 				btnNewButton_1.setVisible(false);
 				try {
 					Connection connection= Connect();
-					String query = "SELECT * FROM Res_table;";
+					String query = "SELECT * FROM Res_table ORDER by TableID;";
 				 PreparedStatement	stmt = connection.prepareStatement(query);
 					ResultSet rs = stmt.executeQuery();
 					table_2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -246,7 +249,7 @@ public class ManagerFrame extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(55, 65, 109, 99);
+		btnNewButton.setBounds(55, 48, 109, 99);
 		panel_2.add(btnNewButton);
 		btnNewButton.setVisible(false);
 		
@@ -261,93 +264,29 @@ public class ManagerFrame extends JFrame {
 			}
 			
 		});
-		btnNewButton_1.setBounds(55, 65, 109, 99);
+		btnNewButton_1.setBounds(55, 48, 109, 99);
 		panel_2.add(btnNewButton_1);
 		btnNewButton_1.setVisible(false);
 		
-		btnNewButton_4 = new JButton("Up Chef");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton btnNewButton_2 = new JButton("Up Staff");
+		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UpChef upchef;
-				upchef = new UpChef();
-				upchef.setVisible(true);
+				
+				try {
+					UpStaff upstaff;
+					upstaff = new UpStaff();
+					upstaff.setVisible(true);
+				} catch (SQLException e1) {
+				
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 			}
 		});
-		btnNewButton_4.setBounds(57, 65, 107, 99);
-		panel_2.add(btnNewButton_4);
-		btnNewButton_4.setVisible(false);
-		
-		btnNewButton_5 = new JButton("Add New Partner");
-		btnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UpManager upmana;
-				upmana = new UpManager();
-				upmana.setVisible(true);
-			}
-		});
-		btnNewButton_5.setBounds(55, 65, 109, 99);
-		panel_2.add(btnNewButton_5);
-		btnNewButton_5.setVisible(false);
-		
-		
-	    btnNewButton_2 = new JButton("Manager");
-	    btnNewButton_2.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		btnNewButton_5.setVisible(true);
-	    		btnNewButton_4.setVisible(false);
-	    		table_2.setVisible(true);
+		btnNewButton_2.setBounds(55, 48, 109, 99);
+		panel_2.add(btnNewButton_2);
 
-				try {
-
-	    		Connection connection= Connect();
-
-				String query = "SELECT * FROM Authentication_Login Where Login_Role ='Manager' ;";
-
-	    		PreparedStatement	stmt = connection.prepareStatement(query);
-	    		ResultSet rs3 = stmt.executeQuery();
-	    		table_2.setModel(DbUtils.resultSetToTableModel(rs3));
-	    	} catch (SQLException e3) {
-	    		e3.printStackTrace();
-
-	    		
-	    	}}
-	    });
-		btnNewButton_2.setBounds(34, 186, 89, 23);
-		contentPane.add(btnNewButton_2);
-		btnNewButton_2.setVisible(false);
-		
-		
-		btnNewButton_3 = new JButton("Chef");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnNewButton_4.setVisible(true);
-				btnNewButton_5.setVisible(false);
-				table_2.setVisible(true);
-
-				try {
-					Connection connection= Connect();
-					String query = "SELECT * FROM Authentication_Login Where Login_Role ='Chef' ;";
-					PreparedStatement	stmt = connection.prepareStatement(query);
-					ResultSet rs2 = stmt.executeQuery();
-					table_2.setModel(DbUtils.resultSetToTableModel(rs2));
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-
-				}}
-		});
-		btnNewButton_3.setBounds(148, 186, 89, 23);
-		contentPane.add(btnNewButton_3);
-		btnNewButton_3.setVisible(false);
-
-		
-		
-		
-		
-		
-	
-		
-		
-		
-		
 	}
 }
