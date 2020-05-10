@@ -242,11 +242,9 @@ public class Menu extends JPanel {
 					});
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		panel.add(scroll);
-//		panel.repaint();
 	}
 	public static ArrayList<String> Select (String select, String tableName, String condition) throws SQLException{
 		Connection c = Connect();
