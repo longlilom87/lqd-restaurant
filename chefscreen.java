@@ -1,5 +1,3 @@
-
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -22,15 +20,12 @@ import java.sql.*;
 public class chefscreen extends JPanel {
 
 //	private JPanel contentPane;
-	private JTable table;
-	private JTable table_1;
+	
 	private JTable orderTable;
-	private JScrollBar scrollBar;
-	private JScrollPane scrollPane;
 	private JButton btnDone, btnRefresh;
 	static ArrayList<Order> delivery;
 
-	String[] column = { "id", "name", "food", "unit", "TableID", "status" };
+	String[] column = { "Bill Number", "Name", "Food", "Unit", "Table", "Status" };
 
 	/**
 	 * Launch the application.
@@ -166,7 +161,14 @@ public class chefscreen extends JPanel {
 		});
 		add(bLogout);
 
-		orderTable = new JTable(createTableModel());
+		orderTable = new JTable(createTableModel()) {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+			
+		};
 		orderTable.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		orderTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 30));
 		orderTable.setRowHeight(60);
@@ -210,6 +212,7 @@ public class chefscreen extends JPanel {
 
 	public DefaultTableModel createTableModel() {
 		delivery = delivery();
+		System.out.println(delivery);
 		Object[] row = new Object[column.length];
 		DefaultTableModel model = new DefaultTableModel(0, column.length);
 
