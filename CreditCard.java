@@ -125,6 +125,14 @@ public class CreditCard extends JFrame {
 				try {
 					PreparedStatement create = c.prepareStatement("UPDATE Credit SET balance = "+balance+" WHERE username = '"+username+"';");
 					create.executeUpdate();
+					
+					PreparedStatement stmt  =c.prepareStatement("SELECT balance FROM Credit WHERE username = 'lqdrestaurant'");
+					ResultSet result = stmt.executeQuery();
+					int restaurantBalance = result.getInt("balance");
+					System.out.println("restaurantBalance = "+restaurantBalance);
+					create = c.prepareStatement("UPDATE Credit SET balance = "+(Menu.total+restaurantBalance)
+							+ " WHERE username = 'lqdrestaurant';");
+					create.executeUpdate();
 					switchPane(confirmPanel);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

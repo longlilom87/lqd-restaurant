@@ -99,7 +99,7 @@ public class chefscreen extends JPanel {
 		
 		btnDone = new JButton("Done");
 		btnDone.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		btnDone.setBounds(500, Window.getH() - 200, 207, 79);
+		btnDone.setBounds(Window.getW()/2-100, Window.getH() - 200, 207, 79);
 		btnDone.addActionListener(new ActionListener() {
 			private Connection c = null;
 
@@ -153,6 +153,18 @@ public class chefscreen extends JPanel {
 
 		});
 		add(btnRefresh);
+		
+		JButton bLogout = new JButton("Log out");
+		bLogout.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		bLogout.setBounds(btnDone.getX() - 500, btnDone.getY(), 207, 79);
+		bLogout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoginFrame.user.Logout();
+				Window.switchPane(new Welcome());
+			}
+		});
+		add(bLogout);
 
 		orderTable = new JTable(createTableModel());
 		orderTable.setFont(new Font("Tahoma", Font.PLAIN, 30));

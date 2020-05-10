@@ -26,7 +26,7 @@ public class customerscreen extends JPanel {
 
 	private JPanel barPanel = new JPanel();
 	private JPanel barPanel2 = new JPanel();
-	private JPanel adPanel, infoPanel, historyPanel, infoChangePanel;
+	private JPanel adPanel, infoPanel, infoChangePanel;
 	private JTextField nameField, addressField, usernameField;
 	private static Connection c;
 
@@ -159,7 +159,7 @@ public class customerscreen extends JPanel {
 
 		Button bChange = new Button("Change...");
 		infoPanel.add(bChange);
-		bChange.setBounds(1000, 500, 100, 60);
+		bChange.setBounds(1000, 500, 100, 50);
 		bChange.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -243,7 +243,27 @@ public class customerscreen extends JPanel {
 		});
 		bChangeUsername.setBounds(btnChange, 315, 150, 23);
 		infoChangePanel.add(bChangeUsername);
-
+		
+		JButton bBack = new JButton("Back");
+		bBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchPane(infoPanel);
+			}
+		});
+		bBack.setBounds(btnChange,400,150,23);
+		infoChangePanel.add(bBack);
+		
+		JButton bBackAd = new JButton("Back");
+		bBackAd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("BACK AD");
+				switchPane(adPanel);
+			}
+		});
+		bBackAd.setBounds(btnChange,400,150,23);
+		infoPanel.add(bBackAd);
 	}
 
 	private void setLayerPanel(JPanel p) {
