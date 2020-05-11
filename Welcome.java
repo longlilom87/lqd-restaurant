@@ -106,7 +106,7 @@ public class Welcome extends JPanel{
 //					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 //				}
-				Window.switchPane(new drawTable());
+				Window.switchPane(new UpdateMenu());
 			}
 		});
 		
