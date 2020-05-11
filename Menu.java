@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
-
 //import draw.FoodItem;  
 
 
@@ -117,10 +116,12 @@ public class Menu extends JPanel {
 	
 	public void namePanel() {
 		// NAME PANEL
+		JPanel namePanel = new JPanel();
 		namePanel.setBounds(0, 0, 1382/4, 744);
 		namePanel.setLayout(null);
 //		namePanel.setBounds(0, 0, 1382/4, 744);
 		namePanel.setBackground(new Color(107, 142, 35));
+		add(namePanel);
 		
 		
 		btnQuin.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
@@ -132,7 +133,7 @@ public class Menu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					restart();
+					restart(burgerPanel,"B%");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -148,6 +149,12 @@ public class Menu extends JPanel {
 		bChicken.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					restart(chickenPanel,"C%");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				switchPane(chickenPanel);
 			}
 		});
@@ -158,6 +165,12 @@ public class Menu extends JPanel {
 		bBeverage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					restart(beveragePanel,"D%");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				switchPane(beveragePanel);
 			}
 		});
@@ -168,6 +181,12 @@ public class Menu extends JPanel {
 		bPizza.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					restart(pizzaPanel,"P%");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				switchPane(pizzaPanel);
 			}
 		});
@@ -183,7 +202,7 @@ public class Menu extends JPanel {
 			}
 		});
 		
-		if(Menu.bl==false) namePanel.add(bBack);
+		if(Menu.bl==false)namePanel.add(bBack);
 		
 		name.setForeground(new Color(255, 255, 255));
 		name.setBackground(new Color(0, 204, 204));
@@ -201,6 +220,10 @@ public class Menu extends JPanel {
 		JLabel label = new JLabel(new ImageIcon(scale));
 		label.setBounds(193, 62, 50,50);
 		namePanel.add(label);
+		
+		JLabel lblNewLabel = new JLabel(new ImageIcon(new ImageIcon("Image/menu.jpg").getImage().getScaledInstance(1026, 749,java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel.setBounds(344, 0, 1026, 749);
+		add(lblNewLabel);
 	}
 	
 	public static Connection Connect() throws SQLException {
@@ -290,10 +313,10 @@ public class Menu extends JPanel {
 		menuLayer.revalidate();
 	}
 	
-	public static void restart() throws SQLException {
-		burgerPanel = new JPanel();
+	public static void restart(JPanel p,String rule) throws SQLException {
+		p = new JPanel();
 		try {
-			addMenuPanel(Connect(),burgerPanel,"'B%'");
+			addMenuPanel(Connect(),p,"'"+rule+"'");
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

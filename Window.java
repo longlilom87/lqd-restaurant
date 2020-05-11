@@ -56,8 +56,8 @@ public class Window extends JFrame {
 				}
 			}
 		});
-//		fr.add(menuButton);
-		homePanel.add(menuButton);
+		fr.add(menuButton);
+//		homePanel.add(menuButton);
 		homeLayer.add(homePanel);
 	}
 	public static void switchPane (JPanel p) {

@@ -11,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -20,19 +21,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 
 public class RegisterFrame extends JFrame{
 
 	public JFrame frame;
 	private JTextField username,nameField,addressField;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JPasswordField Pass1;
 	private JPasswordField Pass2;
 	
 	ArrayList<User> userList = new ArrayList<>();
+	private JLabel lblNewLabel_5;
+	private JLabel lblUsername;
+	private JLabel lblPassword;
+	private JLabel lblConfirmPassword;
+	private JPanel panel;
+	private JPanel panel_1;
 	/**
 	 * Launch the application.
 	 * @throws SQLException 
@@ -105,51 +110,36 @@ public class RegisterFrame extends JFrame{
 		
 		JLabel lblNewLabel = new JLabel("Register");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 29));
+		lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 40));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(157, 37, 180, 41);
+		lblNewLabel.setBounds(157, 27, 180, 51);
 		frame.getContentPane().add(lblNewLabel);
 		
 		username = new JTextField();
-		username.setBounds(132, 250, 272, 29);
+		username.setBounds(182, 250, 272, 29);
 		frame.getContentPane().add(username);
 		username.setColumns(10);
 		
 		nameField = new JTextField();
-		nameField.setBounds(132, 110, 272, 29);
+		nameField.setBounds(182, 110, 272, 29);
 		frame.getContentPane().add(nameField);
 		nameField.setColumns(10);
 		
 		addressField = new JTextField();
-		addressField.setBounds(132, 185, 272, 29);
+		addressField.setBounds(182, 175, 272, 29);
 		frame.getContentPane().add(addressField);
 		addressField.setColumns(10);
 		
-//		JComboBox Role = new JComboBox();
-//		Role.setBounds(132, 357, 272, 29);
-//		frame.getContentPane().add(Role);
-//		Role.addItem("Manager");
-//		Role.addItem("Customer");
-//		Role.addItem("Chef");
-		
-		lblNewLabel_1 = new JLabel("Username");
-		lblNewLabel_1.setBounds(132, 225, 111, 14);
-		frame.getContentPane().add(lblNewLabel_1);
-		
-		lblNewLabel_2 = new JLabel("Password");
-		lblNewLabel_2.setBounds(132, 290, 79, 14);
-		frame.getContentPane().add(lblNewLabel_2);
-		
-		lblNewLabel_3 = new JLabel("Confirm Password");
-		lblNewLabel_3.setBounds(132, 355, 111, 14);
-		frame.getContentPane().add(lblNewLabel_3);
-		
 		JLabel name = new JLabel("Your name");
-		name.setBounds(132, 85, 65, 14);
+		name.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
+		name.setForeground(new Color(0, 0, 0));
+		name.setBounds(10, 110, 162, 29);
 		frame.getContentPane().add(name);
 		
 		JLabel address = new JLabel("Address");
-		address.setBounds(132,150,50,14);
+		address.setForeground(new Color(0, 0, 0));
+		address.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
+		address.setBounds(10,172,147,32);
 		frame.getContentPane().add(address);
 		
 		JButton btnNewButton = new JButton("Create ");
@@ -187,6 +177,31 @@ public class RegisterFrame extends JFrame{
 				}
 			}
 		});
+		
+		lblUsername = new JLabel("Username");
+		lblUsername.setForeground(new Color(0, 0, 0));
+		lblUsername.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
+		lblUsername.setBounds(10, 250, 147, 32);
+		frame.getContentPane().add(lblUsername);
+		
+		lblPassword = new JLabel("Password");
+		lblPassword.setForeground(new Color(0, 0, 0));
+		lblPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
+		lblPassword.setBounds(10, 312, 147, 32);
+		frame.getContentPane().add(lblPassword);
+		
+		lblConfirmPassword = new JLabel("Confirm password");
+		lblConfirmPassword.setForeground(new Color(0, 0, 0));
+		lblConfirmPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
+		lblConfirmPassword.setBounds(0, 381, 190, 32);
+		frame.getContentPane().add(lblConfirmPassword);
+		
+		lblNewLabel_5 = new JLabel();
+		lblNewLabel_5.setForeground(new Color(255, 255, 255));
+//		lblNewLabel_5.setIcon(new ImageIcon(new ImageIcon("Image/Register.jpg").getImage().getScaledInstance(521, 561, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_5.setBackground(new Color(255, 255, 255));
+		lblNewLabel_5.setBounds(0, 0, 531, 561);
+		frame.getContentPane().add(lblNewLabel_5);
 			
 			
 		btnNewButton.setBounds(291, 437, 111, 51);
@@ -204,12 +219,24 @@ public class RegisterFrame extends JFrame{
 		frame.getContentPane().add(btnNewButton_1);
 		
 		Pass1 = new JPasswordField();
-		Pass1.setBounds(132, 315, 269, 29);
+		Pass1.setBounds(185, 315, 269, 29);
 		frame.getContentPane().add(Pass1);
 		
 		Pass2 = new JPasswordField();
-		Pass2.setBounds(132, 380, 272, 33);
+		Pass2.setBounds(182, 380, 272, 33);
 		frame.getContentPane().add(Pass2);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(34, 139, 34));
+		panel.setForeground(new Color(0, 128, 0));
+		panel.setBounds(0, 0, 521, 83);
+		frame.getContentPane().add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setForeground(new Color(255, 255, 255));
+		panel_1.setBounds(0, 83, 521, 478);
+		frame.getContentPane().add(panel_1);
 
 	}
 
