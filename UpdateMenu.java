@@ -69,8 +69,11 @@ public class UpdateMenu extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+
 				instruction.setVisible(false);
-				releaseTable();
+				menuTable.setModel(createTableModel());
+				refreshHeader();
+				menuTable.repaint();
 
 			}
 
