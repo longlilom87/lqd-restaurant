@@ -107,6 +107,7 @@ public class RegisterFrame extends JFrame{
 		frame.setBounds(450, 40, 537, 600);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
 		
 		JLabel lblNewLabel = new JLabel("Register");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
@@ -142,7 +143,65 @@ public class RegisterFrame extends JFrame{
 		address.setBounds(10,172,147,32);
 		frame.getContentPane().add(address);
 		
+		lblUsername = new JLabel("Username");
+		lblUsername.setForeground(new Color(0, 0, 0));
+		lblUsername.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
+		lblUsername.setBounds(10, 250, 147, 32);
+		frame.getContentPane().add(lblUsername);
+		
+		lblPassword = new JLabel("Password");
+		lblPassword.setForeground(new Color(0, 0, 0));
+		lblPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
+		lblPassword.setBounds(10, 312, 147, 32);
+		frame.getContentPane().add(lblPassword);
+		
+		lblConfirmPassword = new JLabel("Confirm password");
+		lblConfirmPassword.setForeground(new Color(0, 0, 0));
+		lblConfirmPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
+		lblConfirmPassword.setBounds(0, 381, 190, 32);
+		frame.getContentPane().add(lblConfirmPassword);
+		
+		lblNewLabel_5 = new JLabel();
+		lblNewLabel_5.setForeground(new Color(255, 255, 255));
+//		lblNewLabel_5.setIcon(new ImageIcon(new ImageIcon("Image/Register.jpg").getImage().getScaledInstance(521, 561, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_5.setBackground(new Color(255, 255, 255));
+		lblNewLabel_5.setBounds(0, 0, 531, 561);
+		frame.getContentPane().add(lblNewLabel_5);
+		
+		Pass1 = new JPasswordField();
+		Pass1.setBounds(185, 315, 269, 29);
+		frame.getContentPane().add(Pass1);
+		
+		Pass2 = new JPasswordField();
+		Pass2.setBounds(182, 380, 272, 33);
+		frame.getContentPane().add(Pass2);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(34, 139, 34));
+		panel.setForeground(new Color(0, 128, 0));
+		panel.setBounds(0, 0, 521, 83);
+		frame.getContentPane().add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setForeground(new Color(255, 255, 255));
+		panel_1.setBounds(0, 83, 521, 478);
+		frame.getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
 		JButton btnNewButton = new JButton("Create ");
+		btnNewButton.setBounds(341, 355, 111, 51);
+		panel_1.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Close");
+		btnNewButton_1.setBounds(183, 355, 103, 51);
+		panel_1.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				   {
+				       frame.dispose();
+				    }
+				}});
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean bl = true;
@@ -177,66 +236,6 @@ public class RegisterFrame extends JFrame{
 				}
 			}
 		});
-		
-		lblUsername = new JLabel("Username");
-		lblUsername.setForeground(new Color(0, 0, 0));
-		lblUsername.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
-		lblUsername.setBounds(10, 250, 147, 32);
-		frame.getContentPane().add(lblUsername);
-		
-		lblPassword = new JLabel("Password");
-		lblPassword.setForeground(new Color(0, 0, 0));
-		lblPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 30));
-		lblPassword.setBounds(10, 312, 147, 32);
-		frame.getContentPane().add(lblPassword);
-		
-		lblConfirmPassword = new JLabel("Confirm password");
-		lblConfirmPassword.setForeground(new Color(0, 0, 0));
-		lblConfirmPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
-		lblConfirmPassword.setBounds(0, 381, 190, 32);
-		frame.getContentPane().add(lblConfirmPassword);
-		
-		lblNewLabel_5 = new JLabel();
-		lblNewLabel_5.setForeground(new Color(255, 255, 255));
-//		lblNewLabel_5.setIcon(new ImageIcon(new ImageIcon("Image/Register.jpg").getImage().getScaledInstance(521, 561, java.awt.Image.SCALE_SMOOTH)));
-		lblNewLabel_5.setBackground(new Color(255, 255, 255));
-		lblNewLabel_5.setBounds(0, 0, 531, 561);
-		frame.getContentPane().add(lblNewLabel_5);
-			
-			
-		btnNewButton.setBounds(291, 437, 111, 51);
-		frame.getContentPane().add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Close");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				   {
-				       frame.dispose();
-				    }
-				}});
-			
-		btnNewButton_1.setBounds(140, 437, 103, 51);
-		frame.getContentPane().add(btnNewButton_1);
-		
-		Pass1 = new JPasswordField();
-		Pass1.setBounds(185, 315, 269, 29);
-		frame.getContentPane().add(Pass1);
-		
-		Pass2 = new JPasswordField();
-		Pass2.setBounds(182, 380, 272, 33);
-		frame.getContentPane().add(Pass2);
-		
-		panel = new JPanel();
-		panel.setBackground(new Color(34, 139, 34));
-		panel.setForeground(new Color(0, 128, 0));
-		panel.setBounds(0, 0, 521, 83);
-		frame.getContentPane().add(panel);
-		
-		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setForeground(new Color(255, 255, 255));
-		panel_1.setBounds(0, 83, 521, 478);
-		frame.getContentPane().add(panel_1);
 
 	}
 

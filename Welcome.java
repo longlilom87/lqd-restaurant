@@ -106,7 +106,12 @@ public class Welcome extends JPanel{
 //					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 //				}
-				Window.switchPane(new UpdateMenu());
+				try {
+					Window.switchPane(new UpdateMenu());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		

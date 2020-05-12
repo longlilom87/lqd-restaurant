@@ -270,8 +270,8 @@ public class Menu extends JPanel {
 			ResultSet result = stmt.executeQuery();
 			int y=0,sl=0;
 			while(result.next()) {
-				FoodItem tFood = new FoodItem(result.getString("idFood"),result.getString("name"),result.getInt("price"),y);
-				tFood.setIcon("Image\\"+result.getString("name")+".png");
+				FoodItem tFood = new FoodItem(result.getString("idFood"),result.getString("name"),result.getInt("price"),y,result.getString("imagePath"));
+//				tFood.setIcon("Image\\"+result.getString("name")+".png");
 				panel.add(tFood);
 				y+=130;
 				sl++;

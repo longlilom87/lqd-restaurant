@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -33,33 +36,34 @@ public class UpdateMenu extends JPanel {
 //	String[] foodlist = { "Burger", "Chicken", "Beverage", "Pizza" };
 //	String[] condition = { "'B%'", "'O%'", "'D%'", "'P%'" };
 	JTable menuTable;
-
+	private Connection c;
 	/**
 	 * Create the panel.
+	 * @throws SQLException 
 	 */
-	public UpdateMenu() {
-
+	public UpdateMenu() throws SQLException {
+		c = Menu.Connect();
 		setBounds(0, 0, Window.getW(), Window.getH());
 		setLayout(null);
 		setBackground(new Color(255, 250, 205));
 
-		choice.setBounds(700, 150, 300, 40);
+		choice.setBounds(Window.getW()/4, 50, 300, 40);
 		choice.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		choice.addItem("Burger");
-		choice.addItem("Chicken");
+		choice.addItem("Other");
 		choice.addItem("Beverage");
 		choice.addItem("Pizza");
 		add(choice);
 
 		JLabel instruction = new JLabel("Please click on Go to see the Table");
-		instruction.setBounds(1200, 150, 300, 55);
+		instruction.setBounds(Window.getW()-500, 50, 300, 55);
 		instruction.setFont(new Font("Arial", Font.ITALIC, 15));
 		instruction.setForeground(Color.red);
 		add(instruction);
 		releaseTable();
 
 		JButton bGo = new JButton("Go!");
-		bGo.setBounds(1050, 150, 60, 55);
+		bGo.setBounds(Window.getW()/2, 50, 60, 55);
 		bGo.setVisible(true);
 		bGo.addActionListener(new ActionListener() {
 
@@ -75,7 +79,7 @@ public class UpdateMenu extends JPanel {
 
 		JLabel lblDeleteItem = new JLabel("Delete Item");
 		lblDeleteItem.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblDeleteItem.setBounds(1200, 650, 218, 59);
+		lblDeleteItem.setBounds(1000, 400, 218, 59);
 		lblDeleteItem.setHorizontalAlignment(JLabel.CENTER);
 		add(lblDeleteItem);
 
@@ -98,7 +102,6 @@ public class UpdateMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Connection c = Menu.Connect();
 					int check = selectID(textField.getText());
 					if (check == 1) {
 						JOptionPane.showMessageDialog(null, "No food " + textField.getText(), "Alert",
@@ -130,17 +133,17 @@ public class UpdateMenu extends JPanel {
 		JLabel lblUpdateItem = new JLabel("Update Item");
 		lblUpdateItem.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblUpdateItem.setHorizontalAlignment(JLabel.CENTER);
-		lblUpdateItem.setBounds(400, 650, 209, 69);
+		lblUpdateItem.setBounds(200, 390, 209, 69);
 		add(lblUpdateItem);
 
 		JLabel lblEnterName = new JLabel("Enter Item Name");
 		lblEnterName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblEnterName.setBounds(lblUpdateItem.getX() - 90, lblUpdateItem.getY() + 82, 190, 35);
+		lblEnterName.setBounds(lblUpdateItem.getX() - 90, lblUpdateItem.getY() + 60, 190, 35);
 		add(lblEnterName);
 
 		JLabel lblEnterPrice = new JLabel("Enter Item Price");
 		lblEnterPrice.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblEnterPrice.setBounds(lblEnterName.getX(), lblEnterName.getY() + 60, 190, 35);
+		lblEnterPrice.setBounds(lblEnterName.getX(), lblEnterName.getY() + 50, 190, 35);
 		add(lblEnterPrice);
 
 		JTextField txtEnterName = new JTextField();
@@ -157,14 +160,49 @@ public class UpdateMenu extends JPanel {
 
 		JLabel lblEnterID = new JLabel("Enter Item ID");
 		lblEnterID.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblEnterID.setBounds(lblEnterName.getX(), lblEnterName.getY() + 120, 190, 35);
+		lblEnterID.setBounds(lblEnterName.getX(), lblEnterName.getY() + 100, 190, 35);
 		add(lblEnterID);
-
+		
 		JTextField txtEnterID = new JTextField();
 		txtEnterID.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtEnterID.setColumns(10);
 		txtEnterID.setBounds(txtEnterName.getX(), lblEnterID.getY(), 183, 31);
 		add(txtEnterID);
+		
+		JLabel ImageLabel = new JLabel("Image String");
+		ImageLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		ImageLabel.setBounds(lblEnterName.getX(), lblEnterName.getY()+150, 190, 35);
+		add(ImageLabel);
+		
+		JTextField imageField = new JTextField();
+		imageField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		imageField.setColumns(10);
+		imageField.setBounds(txtEnterName.getX(), ImageLabel.getY(), 183, 31);
+		add(imageField);
+		
+		JButton bBrowse = new JButton("Browse...");
+		bBrowse.setBounds(imageField.getX()+200,imageField.getY(),97,25);
+		bBrowse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser file = new JFileChooser();
+				file.setCurrentDirectory(new File(System.getProperty("user.home")));
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Image", "png","jpg","gif");
+				file.addChoosableFileFilter(filter);
+				
+				int result = file.showSaveDialog(null);
+				if(result == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = file.getSelectedFile();
+					String path = selectedFile.getAbsolutePath();
+					imageField.setText(path);
+				}
+				else if(result == JFileChooser.CANCEL_OPTION) {
+					System.out.println("No file selected");
+				}
+			}
+		});
+		add(bBrowse);
 
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setBounds(lblUpdateItem.getX() - 43, lblUpdateItem.getY() + 260, 97, 25);
@@ -185,7 +223,6 @@ public class UpdateMenu extends JPanel {
 
 					if (dialogbutton == JOptionPane.YES_OPTION) {
 						try {
-							Connection c = Menu.Connect();
 							int check = selectID(txtEnterID.getText());
 							if (check == 2) {
 								JOptionPane.showMessageDialog(null, "Food existed. \n You can only update", "Error",
@@ -195,6 +232,13 @@ public class UpdateMenu extends JPanel {
 										+ "','" + txtEnterName.getText() + "','" + txtEnterPrice.getText() + "')";
 								PreparedStatement s = c.prepareStatement(iFood);
 								s.executeUpdate();
+								
+								if(imageField.getText().isEmpty()==false) {
+									iFood = "UPDATE Menu SET imagePath = '"+imageField.getText()+"' WHERE idFood = '"+txtEnterID.getText()+"';";
+									s = c.prepareStatement(iFood);
+									s.executeUpdate();
+								}
+								
 								menuTable.setModel(createTableModel());
 								refreshHeader();
 							}
@@ -206,7 +250,10 @@ public class UpdateMenu extends JPanel {
 
 					}
 				}
-
+				imageField.setText(null);
+				txtEnterID.setText(null);
+				txtEnterName.setText(null);
+				txtEnterPrice.setText(null);
 			}
 
 		});
@@ -218,10 +265,8 @@ public class UpdateMenu extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Connection c = null;
 				try {
-					c = Menu.Connect();
-					String update = "", name = "", price = "";
+					String update = "", name = "", price = "",update2 = "",image = "";
 					if (txtEnterName.getText().isEmpty() == false) {
 						name = "name ='" + txtEnterName.getText() + "' ";
 					}
@@ -232,18 +277,30 @@ public class UpdateMenu extends JPanel {
 					if (txtEnterName.getText().isEmpty() == false && txtEnterPrice.getText().isEmpty() == false) {
 						update = ",";
 					}
+					if(imageField.getText().isEmpty() ==false) {
+						image = "imagePath = '"+imageField.getText()+"'";
+					}
+					if(imageField.getText().isEmpty()==false && txtEnterPrice.getText().isEmpty() == false) {
+						update2 = ",";
+					}
+					
 					int check = selectID(txtEnterID.getText());
 					if (check == 1) {
 						JOptionPane.showMessageDialog(null, "No food " + textField.getText(), "Alert",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
-						String sql = "update Menu set " + name + update + price + " where idFood = '"
+						String sql = "update Menu set " + name + update + price +update2+image+ " where idFood = '"
 								+ txtEnterID.getText() + "'";
 						PreparedStatement s = c.prepareStatement(sql);
 						s.executeUpdate();
 						menuTable.setModel(createTableModel());
 						refreshHeader();
 					}
+					
+					imageField.setText(null);
+					txtEnterID.setText(null);
+					txtEnterName.setText(null);
+					txtEnterPrice.setText(null);
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -264,7 +321,7 @@ public class UpdateMenu extends JPanel {
 		case "Burger":
 			condition = "'B%'";
 			break;
-		case "Chicken":
+		case "Other":
 			condition = "'O%'";
 			break;
 		case "Beverage":
@@ -338,17 +395,15 @@ public class UpdateMenu extends JPanel {
 		refreshHeader();
 
 		JScrollPane js = new JScrollPane(menuTable);
-		js.setBounds(0, 230, Window.getW() - 20, 400);
+		js.setBounds(25, 150, Window.getW() - 50, 250);
 		js.setVisible(true);
 		add(js);
 
 	}
 
 	private int selectID(String ID) {
-		Connection c = null;
 		int i = 0;
 		try {
-			c = Menu.Connect();
 			String getID = "SELECT idFood FROM Menu WHERE idFood ='" + ID + "'";
 			PreparedStatement s = c.prepareStatement(getID);
 			ResultSet result = s.executeQuery();

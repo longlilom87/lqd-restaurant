@@ -112,14 +112,13 @@ public class drawTable extends JPanel {
 		JButton btnCustomer = new JButton("Choose Table");
 		btnCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (Table t : tablelist) {
-					if (String.valueOf(t.getX()).equals(choice.getSelectedItem())) {
+				for (Table t : tablelist) 
+					if (String.valueOf(t.getX()).equals(choice.getSelectedItem())) 
 						if (t.getY() == 1) {
 							JOptionPane.showMessageDialog(null, "Please choose another table");
 							return;
 						}
-					}
-				}
+					
 				try {
 					Menu.bl = true;
 					Window.switchPane(new Menu());

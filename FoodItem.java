@@ -41,11 +41,12 @@ public class FoodItem extends JPanel{
 		qty = qt;
 	}
 	
-	public FoodItem(String id, String n, int p,int y) {
+	public FoodItem(String id, String n, int p,int y,String path) {
 		this.y = y;
 		idFood = id;
 		name = n;
 		price = p;
+		this.path = path;
 		
 		plusButton.setBounds(900, 50, 30, 30);
 		plusButton.addActionListener(new ActionListener() {
@@ -145,7 +146,7 @@ public class FoodItem extends JPanel{
 		super.paintComponent(g);
 		
 		if(path!=null)
-		g.drawImage(new ImageIcon(scale).getImage(), 50, 10, null);
+		g.drawImage(setIcon(path), 50, 10, null);
 		
 		g.setColor(new Color(107, 142, 35));
 		g.drawRoundRect(25,5, Window.getW() * 3 / 4-100,123, 70,70);
@@ -188,10 +189,12 @@ public class FoodItem extends JPanel{
 //		this.image = i;
 //	}
 
-	public void setIcon(String path) {
-		 this.path = path;
+	public Image setIcon(String path) {
 		 icon = new ImageIcon(path);
 		 scale = icon.getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH);
+		 icon = new ImageIcon(scale);
+		 
+		 return icon.getImage();
 	}
 	
 	public int getQty() {
