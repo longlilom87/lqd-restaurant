@@ -46,7 +46,7 @@ public class drawTable extends JPanel {
 		// Aligning color explanation box
 		int available = 80;
 		int reserved = available + 100;
-		int text = 1400;
+		int text = 1270;
 		int colortext = text - 80;
 
 		JLabel lblAvailable = new JLabel("Available");
