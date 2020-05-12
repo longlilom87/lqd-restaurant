@@ -34,9 +34,11 @@ public class ManagerFrame extends JFrame {
 	private JTextField textField;
 	public static JTable table_2;
 	private JPanel panel_1;
-	private JPanel panel_2;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JButton ButTable;
+	private JButton ButCus;
+	private JButton Upstaff;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 
 
 	/**
@@ -112,8 +114,10 @@ public class ManagerFrame extends JFrame {
 		txtAboutUs.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-				btnNewButton_1.setVisible(true);
-				btnNewButton.setVisible(false);
+				Upstaff.setVisible(false);
+				ButTable.setVisible(false);
+				ButCus.setVisible(true);
+				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\food.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
 
 				try {
 				Connection connection= Connect();
@@ -142,10 +146,11 @@ public class ManagerFrame extends JFrame {
 		txtEmployee.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-				
-				btnNewButton.setVisible(false);
-				btnNewButton_1.setVisible(false);
-				
+				Upstaff.setVisible(true);
+				ButTable.setVisible(false);
+				ButCus.setVisible(false);
+				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\restaurant.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
+
 				try {
 					Connection connection= Connect();
 					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
@@ -182,8 +187,11 @@ public class ManagerFrame extends JFrame {
 		txtTable.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-				btnNewButton.setVisible(true);
-				btnNewButton_1.setVisible(false);
+				ButTable.setVisible(true);
+				Upstaff.setVisible(false);
+				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\Table.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
+
+				ButCus.setVisible(false);
 				try {
 					Connection connection= Connect();
 					String query = "SELECT * FROM Res_table ORDER by TableID;";
@@ -224,69 +232,67 @@ public class ManagerFrame extends JFrame {
 		txtBill.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(34, 220, 986, 412);
+		scrollPane.setBounds(55, 219, 986, 412);
 		contentPane.add(scrollPane);
 		
 		table_2 = new JTable();
 		scrollPane.setViewportView(table_2);
 		
-		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 250, 205));
-		panel_2.setBounds(1031, 220, 257, 412);
-		contentPane.add(panel_2);
-		panel_2.setLayout(null);
-		
-		btnNewButton = new JButton("Up Table");
-		btnNewButton.addActionListener(new ActionListener() {
+		 ButTable = new JButton("Uptable");
+		ButTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Uptable uptable;
 				try {
 					uptable = new Uptable();
 					uptable.setVisible(true);
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		btnNewButton.setBounds(55, 48, 109, 99);
-		panel_2.add(btnNewButton);
-		btnNewButton.setVisible(false);
+		ButTable.setBounds(1094, 262, 106, 89);
+		contentPane.add(ButTable);
 		
-		
-		btnNewButton_1 = new JButton("Up cus");
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
+		 ButCus = new JButton("Upcus");
+		ButCus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				Upcustomer upcus;
 				upcus = new Upcustomer();
 				upcus.setVisible(true);
 			}
 			
 		});
-		btnNewButton_1.setBounds(55, 48, 109, 99);
-		panel_2.add(btnNewButton_1);
-		btnNewButton_1.setVisible(false);
+			
+	
+		ButCus.setBounds(1094, 262, 106, 89);
+		contentPane.add(ButCus);
 		
-		JButton btnNewButton_2 = new JButton("Up Staff");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		 Upstaff = new JButton("Upstaff");
+		Upstaff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				try {
 					UpStaff upstaff;
 					upstaff = new UpStaff();
 					upstaff.setVisible(true);
 				} catch (SQLException e1) {
 				
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				
 			}
 		});
-		btnNewButton_2.setBounds(55, 48, 109, 99);
-		panel_2.add(btnNewButton_2);
-
+		Upstaff.setBounds(1094, 262, 106, 89);
+		contentPane.add(Upstaff);
+		
+		 lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(1045, 395, 246, 211);
+		contentPane.add(lblNewLabel_1);
+		
+	    lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\1584.jpg").getImage().getScaledInstance(1360,625, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_2.setBounds(0, 104, 1360, 625);
+		contentPane.add(lblNewLabel_2);
+		
 	}
 }
