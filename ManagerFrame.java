@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
+import main_app.UpdateMenu;
+import main_app.Window;
 import net.proteanit.sql.DbUtils;
 
 import java.awt.event.MouseAdapter;
@@ -26,20 +28,24 @@ import java.awt.event.ActionEvent;
 public class ManagerFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtAboutUs;
-	private JTextField txtEmployee;
-	private JTextField txtMenu;
-	private JTextField txtTable;
 	private JTextField txtBill;
 	private JTextField textField;
 	public static JTable table_2;
 	private JPanel panel_1;
-	private JButton ButTable;
-	private JButton ButCus;
-	private JButton Upstaff;
 	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
-
+	private JLabel up1;
+	private JLabel up2;
+	private JLabel up3;
+    private JScrollPane scrollPane;
+    private JLabel lblNewLabel_2;
+    private JLabel lblNewLabel_3;
+    private JLabel lblNewLabel_4;
+    private JLabel lblNewLabel_5;
+    private JLabel lblNewLabel_6;
+    private JLabel lblNewLabel_7;
+    private JLabel lblNewLabel_8;
+    private JLabel lblNewLabel_9;
+    private JLabel lblNewLabel_10;
 
 	/**
 	 * Launch the application.
@@ -101,23 +107,99 @@ public class ManagerFrame extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(107, 142, 35));
-		panel.setBounds(0, 0, 1370, 103);
+		panel.setBounds(0, 0, 1350, 103);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome .....  ");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(10, 112, 158, 25);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setBounds(1151, 11, 189, 82);
+		panel.add(lblNewLabel);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		txtAboutUs = new JTextField();
-		txtAboutUs.addMouseListener(new MouseAdapter() {
-			
+
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(52, 251, 986, 412);
+		contentPane.add(scrollPane);
+		scrollPane.setVisible(false);
+		
+		table_2 = new JTable();
+		scrollPane.setViewportView(table_2);
+		table_2.setVisible(false);
+		
+		
+		 lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBounds(1051, 420, 261, 211);
+		contentPane.add(lblNewLabel_1);
+		
+		up1 = new JLabel("yfyyyg");
+		up1.setIcon(new ImageIcon (new ImageIcon("Image/computer.png").getImage().getScaledInstance(106,88, java.awt.Image.SCALE_SMOOTH)));
+		up1.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
-				Upstaff.setVisible(false);
-				ButTable.setVisible(false);
-				ButCus.setVisible(true);
-				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\food.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
+				try {
+					UpStaff upstaff;
+					upstaff = new UpStaff();
+					upstaff.setVisible(true);
+				} catch (SQLException e1) {
+				
+					e1.printStackTrace();
+				}
+			}
+		});
+		up1.setBounds(799, 114, 106, 88);
+		contentPane.add(up1);
+		up1.setVisible(false);
+
+		
+		up2 = new JLabel("New label");
+		up2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Uptable uptable;
+				try {
+					uptable = new Uptable();
+					uptable.setVisible(true);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+			}
+		});
+		up2.setIcon(new ImageIcon (new ImageIcon("Image/computer.png").getImage().getScaledInstance(106,88, java.awt.Image.SCALE_SMOOTH)));
+		up2.setBounds(799, 114, 104, 89);
+		contentPane.add(up2);
+		up2.setVisible(false);
+
+		up3 = new JLabel("New label");
+		up3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Upcustomer upcus;
+				upcus = new Upcustomer();
+				upcus.setVisible(true);
+			
+				
+			}
+		});
+		up3.setIcon(new ImageIcon (new ImageIcon("Image/computer.png").getImage().getScaledInstance(106,88, java.awt.Image.SCALE_SMOOTH)));
+		up3.setBounds(799, 114, 106, 89);
+		contentPane.add(up3);
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				up1.setVisible(false);
+				up2.setVisible(false);
+				up3.setVisible(true);
+				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("Image/food.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
+				table_2.setVisible(true);
+				lblNewLabel_10.setVisible(true);
+				scrollPane.setVisible(true);
 
 				try {
 				Connection connection= Connect();
@@ -130,68 +212,29 @@ public class ManagerFrame extends JFrame {
 					e1.printStackTrace();
 				
 			
-			}}
-			
-		});
-		txtAboutUs.setEditable(false);
-		txtAboutUs.setBackground(Color.LIGHT_GRAY);
-		txtAboutUs.setHorizontalAlignment(SwingConstants.CENTER);
-		txtAboutUs.setText("Customer");
-		txtAboutUs.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		txtAboutUs.setBounds(1220, 114, 140, 33);
-		contentPane.add(txtAboutUs);
-		txtAboutUs.setColumns(10);
-		
-		txtEmployee = new JTextField();
-		txtEmployee.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				Upstaff.setVisible(true);
-				ButTable.setVisible(false);
-				ButCus.setVisible(false);
-				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\restaurant.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
-
-				try {
-					Connection connection= Connect();
-					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
-					PreparedStatement	stmt = connection.prepareStatement(query);
-					ResultSet rs2 = stmt.executeQuery();
-					table_2.setModel(DbUtils.resultSetToTableModel(rs2));
-				} catch (SQLException e2) {
-						
-						e2.printStackTrace();
-
-				
 			}
-			}});
-		txtEmployee.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		txtEmployee.setBackground(Color.LIGHT_GRAY);
-		txtEmployee.setEditable(false);
-		txtEmployee.setText("Staff");
-		txtEmployee.setHorizontalAlignment(SwingConstants.CENTER);
-		txtEmployee.setBounds(1060, 114, 140, 33);
-		contentPane.add(txtEmployee);
-		txtEmployee.setColumns(10);
+			}
+		});
+		lblNewLabel_2.setIcon(new ImageIcon(new ImageIcon("Image/private-account.png").getImage().getScaledInstance(88,88, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setBounds(1238, 114, 88, 88);
+		contentPane.add(lblNewLabel_2);
 		
-		txtMenu = new JTextField();
-		txtMenu.setEditable(false);
-		txtMenu.setText("Menu");
-		txtMenu.setHorizontalAlignment(SwingConstants.CENTER);
-		txtMenu.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		txtMenu.setBackground(Color.LIGHT_GRAY);
-		txtMenu.setBounds(901, 114, 140, 33);
-		contentPane.add(txtMenu);
-		txtMenu.setColumns(10);
-		
-		txtTable = new JTextField();
-		txtTable.addMouseListener(new MouseAdapter() {
-			
+		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_3.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
-				ButTable.setVisible(true);
-				Upstaff.setVisible(false);
-				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\Table.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
+				up2.setVisible(true);
+				lblNewLabel_10.setVisible(true);
 
-				ButCus.setVisible(false);
+				up1.setVisible(false);
+				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("Image/Table.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
+				table_2.setVisible(true);
+                up3.setVisible(false);
+				scrollPane.setVisible(true);
+
 				try {
 					Connection connection= Connect();
 					String query = "SELECT * FROM Res_table ORDER by TableID;";
@@ -204,95 +247,84 @@ public class ManagerFrame extends JFrame {
 					
 					e1.printStackTrace();
 				}
-			
-				
-				
-				
-				
 			}
 		});
-		txtTable.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		txtTable.setEditable(false);
-		txtTable.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTable.setBackground(Color.LIGHT_GRAY);
-		txtTable.setForeground(Color.BLACK);
-		txtTable.setText("Table ");
-		txtTable.setBounds(739, 114, 140, 33);
-		contentPane.add(txtTable);
-		txtTable.setColumns(10);
+		lblNewLabel_3.setIcon(new ImageIcon(new ImageIcon("Image/restaurant_1.png").getImage().getScaledInstance(88,88, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_3.setBounds(915, 114, 98, 94);
+		contentPane.add(lblNewLabel_3);
 		
-		txtBill = new JTextField();
-		txtBill.setEditable(false);
-		txtBill.setHorizontalAlignment(SwingConstants.CENTER);
-		txtBill.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		txtBill.setText("Bill");
-		txtBill.setBackground(Color.LIGHT_GRAY);
-		txtBill.setBounds(574, 114, 140, 33);
-		contentPane.add(txtBill);
-		txtBill.setColumns(10);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(55, 219, 986, 412);
-		contentPane.add(scrollPane);
-		
-		table_2 = new JTable();
-		scrollPane.setViewportView(table_2);
-		
-		 ButTable = new JButton("Uptable");
-		ButTable.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Uptable uptable;
-				try {
-					uptable = new Uptable();
-					uptable.setVisible(true);
+		lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblNewLabel_10.setVisible(true);
+				up1.setVisible(true);
 
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
-		ButTable.setBounds(1094, 262, 106, 89);
-		contentPane.add(ButTable);
+		lblNewLabel_4.setIcon(new ImageIcon(new ImageIcon("Image/menu.png").getImage().getScaledInstance(88,88, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_4.setBounds(1034, 114, 88, 88);
+		contentPane.add(lblNewLabel_4);
 		
-		 ButCus = new JButton("Upcus");
-		ButCus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Upcustomer upcus;
-				upcus = new Upcustomer();
-				upcus.setVisible(true);
-			}
-			
-		});
-			
-	
-		ButCus.setBounds(1094, 262, 106, 89);
-		contentPane.add(ButCus);
-		
-		 Upstaff = new JButton("Upstaff");
-		Upstaff.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				up1.setVisible(true);
+				up2.setVisible(false);
+				lblNewLabel_10.setVisible(true);
+
+				up3.setVisible(false);
+				lblNewLabel_1.setIcon(new ImageIcon (new ImageIcon("Image/restaurant.png").getImage().getScaledInstance(246,211, java.awt.Image.SCALE_SMOOTH)));
+				scrollPane.setVisible(true);
+				table_2.setVisible(true);
+
 				try {
-					UpStaff upstaff;
-					upstaff = new UpStaff();
-					upstaff.setVisible(true);
-				} catch (SQLException e1) {
-				
-					e1.printStackTrace();
-				}
-			}
+					Connection connection= Connect();
+					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
+					PreparedStatement	stmt = connection.prepareStatement(query);
+					ResultSet rs2 = stmt.executeQuery();
+					table_2.setModel(DbUtils.resultSetToTableModel(rs2));
+				} catch (SQLException e2) {
+						
+						e2.printStackTrace();
+			}}
 		});
-		Upstaff.setBounds(1094, 262, 106, 89);
-		contentPane.add(Upstaff);
+		lblNewLabel_5.setIcon(new ImageIcon(new ImageIcon("Image/owner.png").getImage().getScaledInstance(106,88, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_5.setBounds(1122, 114, 106, 94);
+		contentPane.add(lblNewLabel_5);
 		
-		 lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(1045, 395, 246, 211);
-		contentPane.add(lblNewLabel_1);
+		lblNewLabel_6 = new JLabel("CUSTOMER");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6.setBounds(1238, 213, 98, 22);
+		contentPane.add(lblNewLabel_6);
 		
-	    lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\1584.jpg").getImage().getScaledInstance(1360,625, java.awt.Image.SCALE_SMOOTH)));
-		lblNewLabel_2.setBounds(0, 104, 1360, 625);
-		contentPane.add(lblNewLabel_2);
+		lblNewLabel_7 = new JLabel("STAFF");
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7.setBounds(1122, 213, 98, 22);
+		contentPane.add(lblNewLabel_7);
+		
+		lblNewLabel_8 = new JLabel("MENU");
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8.setBounds(1023, 213, 98, 22);
+		contentPane.add(lblNewLabel_8);
+		
+		lblNewLabel_9 = new JLabel("TABLE");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9.setBounds(915, 213, 98, 22);
+		contentPane.add(lblNewLabel_9);
+		
+		lblNewLabel_10 = new JLabel("UPDATE");
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_10.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_10.setBounds(799, 213, 98, 22);
+		contentPane.add(lblNewLabel_10);
+		lblNewLabel_10.setVisible(false);
+		up3.setVisible(false);
 		
 	}
 }
