@@ -1,4 +1,6 @@
-import java.awt.BorderLayout;
+package main_app;
+
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,13 +13,16 @@ import javax.swing.*;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
-import javax.swing.border.BevelBorder;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
-import javax.swing.border.LineBorder;
 
-import main_app.UpdateMenu;
-import main_app.Window;
+import draw.UpMenu;
+import draw.UpStaff;
+import draw.Upcustomer;
+import draw.UpdateMenu;
+import draw.Uptable;
+
 import net.proteanit.sql.DbUtils;
 
 import java.awt.event.MouseAdapter;
@@ -49,8 +54,9 @@ public class ManagerFrame extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * @throws SQLException 
 	 */
-	public static void main(String[] args) throws SQLException { 
+	public static void main(String[] args) throws SQLException{ 
 		Connection conne = Connect();
 //		PreparedStatement create = conne.prepareStatement("CREATE TABLE IF NOT EXISTS Res_table (" + 
 //				"     tableID int PRIMARY KEY,\r\n" + 
@@ -93,8 +99,9 @@ public class ManagerFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public ManagerFrame() {
+	public ManagerFrame() throws SQLException {
 	
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,13 +118,13 @@ public class ManagerFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Welcome .....  ");
+		JLabel lblNewLabel = new JLabel("Welcome "+LoginFrame.user.getName());
 		lblNewLabel.setBounds(1151, 11, 189, 82);
 		panel.add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-
+		
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(52, 251, 986, 412);
@@ -244,7 +251,6 @@ public class ManagerFrame extends JFrame {
 				
 					
 				} catch (SQLException e1) {
-					
 					e1.printStackTrace();
 				}
 			}
@@ -257,11 +263,19 @@ public class ManagerFrame extends JFrame {
 		lblNewLabel_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				lblNewLabel_10.setVisible(true);
-				up1.setVisible(true);
-
+					UpMenu u;
+				
+				try {
+					u= new UpMenu();
+					u.setVisible(true);
+					u.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
 			}
 		});
+			
 		lblNewLabel_4.setIcon(new ImageIcon(new ImageIcon("Image/menu.png").getImage().getScaledInstance(88,88, java.awt.Image.SCALE_SMOOTH)));
 		lblNewLabel_4.setBounds(1034, 114, 88, 88);
 		contentPane.add(lblNewLabel_4);
@@ -325,6 +339,19 @@ public class ManagerFrame extends JFrame {
 		contentPane.add(lblNewLabel_10);
 		lblNewLabel_10.setVisible(false);
 		up3.setVisible(false);
+		
+	}
+	
+	private void addUpdateMenu() {
+		UpdateMenu u;
+		
+		try {
+			u= new UpdateMenu();
+			u.setVisible(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }
