@@ -34,7 +34,7 @@ public class Goodbye extends JFrame {
 	public Goodbye() throws InterruptedException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, Window.getW(), Window.getH());
-
+		setUndecorated(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -56,7 +56,7 @@ public class Goodbye extends JFrame {
 
 		JLabel lblThankYou = new JLabel("Thank you for choosing us!");
 		lblThankYou.setForeground(new Color(50, 205, 100));
-		lblThankYou.setFont(new Font("Arial Black", Font.ITALIC, 100));
+		lblThankYou.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 100));
 		lblThankYou.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblThankYou);
 

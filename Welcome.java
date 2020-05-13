@@ -1,3 +1,5 @@
+
+
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
@@ -11,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
 
 public class Welcome extends JPanel{
 	
@@ -106,14 +109,31 @@ public class Welcome extends JPanel{
 //					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 //				}
+				Goodbye g;
 				try {
-					Window.switchPane(new UpdateMenu());
-				} catch (SQLException e1) {
+					g = new Goodbye();
+					g.setVisible(true);
+				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-		});
+				
+				
+//				try {
+//				
+//					//Window.switchPane(new UpdateMenu());
+//					
+//
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			}
+		}
+			});
 		
 		add(bg);
 	}
