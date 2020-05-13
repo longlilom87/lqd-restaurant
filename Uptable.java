@@ -1,3 +1,5 @@
+package main_app;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
@@ -26,6 +28,9 @@ import javax.swing.JToggleButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Uptable extends JFrame {
 
@@ -44,6 +49,7 @@ public class Uptable extends JFrame {
 			public void run() {
 				try {
 					Uptable frame = new Uptable();
+					frame.setUndecorated(true);;
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -84,35 +90,40 @@ public class Uptable extends JFrame {
 		c = Connect();
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 600, 500);
+		setBounds(300, 100, 414, 161);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		ID = new JTextField();
-		ID.setBounds(132, 64, 149, 25);
+		ID.setBounds(124, 64, 149, 25);
 		contentPane.add(ID);
 		ID.setColumns(10);
 
 		Status = new JTextField();
-		Status.setBounds(132, 114, 149, 25);
+		Status.setBounds(124, 115, 149, 25);
 		contentPane.add(Status);
 		Status.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("Table ID");
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(new ImageIcon("Image/letter.png").getImage().getScaledInstance(52,42, java.awt.Image.SCALE_SMOOTH)));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel.setForeground(new Color(0, 0, 0));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(35, 69, 57, 16);
+		lblNewLabel.setBounds(47, 46, 52, 42);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Table Status");
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon("Image/boolean.png").getImage().getScaledInstance(52,42, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_1.setBounds(35, 114, 82, 25);
+		lblNewLabel_1.setBounds(47, 99, 52, 48);
 		contentPane.add(lblNewLabel_1);
 
 		JButton btnNewButton = new JButton("Update");
+		btnNewButton.setBackground(Color.ORANGE);
+		btnNewButton.setBorder(null);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
            
@@ -130,10 +141,12 @@ public class Uptable extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(423, 65, 89, 23);
+		btnNewButton.setBounds(297, 65, 89, 23);
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Delete");
+		btnNewButton_1.setBorder(null);
+		btnNewButton_1.setBackground(Color.ORANGE);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -150,8 +163,28 @@ public class Uptable extends JFrame {
 
 			}
 		});
-		btnNewButton_1.setBounds(423, 115, 89, 23);
+		btnNewButton_1.setBounds(297, 116, 89, 23);
 		contentPane.add(btnNewButton_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+			}
+		});
+		lblNewLabel_2.setBounds(379, 0, 35, 31);
+		lblNewLabel_2.setIcon(new ImageIcon(new ImageIcon("Image/X.png").getImage().getScaledInstance(35,31, java.awt.Image.SCALE_SMOOTH)));
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setBounds(0, 0, 414, 161);
+		lblNewLabel_3.setIcon(new ImageIcon(new ImageIcon("Image/3802954.jpg").getImage().getScaledInstance(414,161, java.awt.Image.SCALE_SMOOTH)));;
+
+		contentPane.add(lblNewLabel_3);
+		
+		
+		
 
 	}
 // ADD

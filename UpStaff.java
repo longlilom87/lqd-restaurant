@@ -1,3 +1,4 @@
+package main_app;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.JComboBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UpStaff extends JFrame {
 
@@ -37,6 +41,8 @@ public class UpStaff extends JFrame {
 	private JButton btnNewButton_4;
 	private static Connection c;
 	private JComboBox comboBox;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
 	
 
 
@@ -49,6 +55,7 @@ public class UpStaff extends JFrame {
 			public void run() {
 				try {
 					UpStaff frame = new UpStaff();
+					frame.setUndecorated(true);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,7 +84,7 @@ public class UpStaff extends JFrame {
 		 c = Connect();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 100, 700, 500);
+		setBounds(300, 100, 684, 461);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 250, 205));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,6 +92,8 @@ public class UpStaff extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Updatepass");
+		btnNewButton.setBorder(null);
+		btnNewButton.setBackground(new Color(220, 20, 60));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -104,6 +113,8 @@ public class UpStaff extends JFrame {
 		contentPane.add(newpass);
 		newpass.setColumns(10);
 		JButton btnNewButton_1 = new JButton("UpdateName");
+		btnNewButton_1.setBorder(null);
+		btnNewButton_1.setBackground(new Color(220, 20, 60));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -125,6 +136,8 @@ public class UpStaff extends JFrame {
 		newname.setColumns(10);
 		
 		JButton btnNewButton_2 = new JButton("UpdateAddress");
+		btnNewButton_2.setBorder(null);
+		btnNewButton_2.setBackground(new Color(220, 20, 60));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -144,10 +157,11 @@ public class UpStaff extends JFrame {
 		contentPane.add(newaddress);
 		newaddress.setColumns(10);
 		
-		JLabel SelectAccount = new JLabel("Account ");
+		JLabel SelectAccount = new JLabel("");
 		SelectAccount.setBackground(Color.WHITE);
 		SelectAccount.setHorizontalAlignment(SwingConstants.CENTER);
-		SelectAccount.setBounds(120, 125, 123, 35);
+		SelectAccount.setIcon(new ImageIcon (new ImageIcon("Image/username.png").getImage().getScaledInstance(83,71, java.awt.Image.SCALE_SMOOTH)));
+		SelectAccount.setBounds(146, 96, 83, 71);
 		contentPane.add(SelectAccount);
 		
 		account = new JTextField();
@@ -184,13 +198,26 @@ public class UpStaff extends JFrame {
 		panel.setBackground(new Color(107, 142, 35));
 		panel.setBounds(0, 0, 684, 71);
 		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+			}
+		});
+		lblNewLabel.setBounds(631, 0, 53, 60);
+		lblNewLabel.setIcon(new ImageIcon(new ImageIcon("Image/X.png").getImage().getScaledInstance(53,60, java.awt.Image.SCALE_SMOOTH)));
+
+		panel.add(lblNewLabel);
 		
 	    btnNewButton_4 = new JButton("DELETE");
 	    btnNewButton_4.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		try {
 	    			Connection connection= Connect();
-	    			checkdontdeletemainaccount();
+	    			checkavailable();
 	    			String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
 					
 					PreparedStatement	stmt = connection.prepareStatement(query);
@@ -219,10 +246,17 @@ public class UpStaff extends JFrame {
 	    
 
 		
-		JLabel lblNewLabel = new JLabel("Role");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(120, 343, 123, 29);
-		contentPane.add(lblNewLabel);
+		JLabel SelectRole = new JLabel("");
+		SelectRole.setIcon(new ImageIcon(new ImageIcon("Image/manager.png").getImage().getScaledInstance(83,71, java.awt.Image.SCALE_SMOOTH)));
+		SelectRole.setHorizontalAlignment(SwingConstants.CENTER);
+		SelectRole.setBounds(146, 324, 83, 71);
+		contentPane.add(SelectRole);
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(0, 0, 684, 461);
+		lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon("Image/3802954.jpg").getImage().getScaledInstance(684,461, java.awt.Image.SCALE_SMOOTH)));
+
+		contentPane.add(lblNewLabel_1);
 	}
 	public void insert(String username, String userpassword,String Login_Role, String name, String address) throws SQLException {
 		String sql = "INSERT INTO Authentication_Login (username, userpassword, Login_Role, name, address) VALUES(?,?,?,?,?)";
@@ -314,15 +348,7 @@ public class UpStaff extends JFrame {
     			insert_4(account.getText());
       
 }}
-      public void checkdontdeletemainaccount() throws SQLException {
-    	  
-  		
-  		
-  		
-  		if (account.getText().equals("Admin")) {
-  			JOptionPane.showMessageDialog(null, "Account is main account, can not delete");
-  		} else {
-  			checkavailable();;
+     
     
-}}
+
       }
