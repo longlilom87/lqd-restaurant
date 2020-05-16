@@ -27,7 +27,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-
 public class UpdateMenu extends JPanel {
 
 	Choice choice = new Choice();
@@ -399,6 +398,26 @@ public class UpdateMenu extends JPanel {
 		js.setBounds(25, 150, Window.getW() - 50, 250);
 		js.setVisible(true);
 		add(js);
+		
+		JButton back = new JButton("Back");
+		back.setFont(new Font ("Arial", Font.PLAIN, 20));
+		back.setBounds(Window.getW()-200, 60, 100, 30);
+		back.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Window.switchPane(new ManagerFrame());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+		back.setVisible(true);
+		add (back);
 
 	}
 

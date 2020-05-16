@@ -1,8 +1,4 @@
-
-
 import javax.swing.JOptionPane;
-
-
 
 public class User {
 	String username = null, password = null, role=null;

@@ -13,7 +13,6 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-
 public class Goodbye extends JFrame {
 
 	private JPanel contentPane;
@@ -54,11 +53,14 @@ public class Goodbye extends JFrame {
 		  t.start();
 
 		JLabel lblThankYou = new JLabel();
+		System.out.println(LoginFrame.user.getRole());
 		switch (LoginFrame.user.getRole()) {
 		case "Customer":
 			lblThankYou.setText("Thank you for choosing us!");
+			break;
 		default:
-			lblThankYou.setText("Have a nice day");
+			lblThankYou.setText("Have a nice day!");
+			break;
 		}
 		lblThankYou.setForeground(new Color(50, 205, 100));
 		lblThankYou.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 100));
