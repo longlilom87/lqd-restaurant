@@ -1,5 +1,4 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.Color;
@@ -29,8 +28,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 
-
-
 public class UpdateMenu extends JPanel {
 
 	Choice choice = new Choice();
@@ -40,10 +37,6 @@ public class UpdateMenu extends JPanel {
 //	String[] condition = { "'B%'", "'O%'", "'D%'", "'P%'" };
 	JTable menuTable;
 	private Connection c;
-	/**
-	 * @wbp.nonvisual location=323,304
-	 */
-	
 	/**
 	 * Create the panel.
 	 * @throws SQLException 
@@ -63,7 +56,7 @@ public class UpdateMenu extends JPanel {
 		add(choice);
 
 		JLabel instruction = new JLabel("Please click on Go to see the Table");
-		instruction.setBounds(Window.getW()-600, 50, 300, 55);
+		instruction.setBounds(Window.getW()-500, 50, 300, 55);
 		instruction.setFont(new Font("Arial", Font.ITALIC, 15));
 		instruction.setForeground(Color.red);
 		add(instruction);
@@ -76,12 +69,10 @@ public class UpdateMenu extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
 				instruction.setVisible(false);
 				menuTable.setModel(createTableModel());
 				refreshHeader();
 				menuTable.repaint();
-
 			}
 
 		});
@@ -409,27 +400,6 @@ public class UpdateMenu extends JPanel {
 		js.setVisible(true);
 		add(js);
 
-		
-		JButton back = new JButton("Back");
-		back.setFont(new Font ("Arial", Font.PLAIN, 20));
-		back.setBounds(Window.getW()-200, 60, 100, 30);
-		back.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					Window.switchPane(new ManagerFrame());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
-		});
-		back.setVisible(true);
-		add (back);
-		
 	}
 
 	private int selectID(String ID) {

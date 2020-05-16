@@ -1,4 +1,3 @@
-package main_app;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
@@ -12,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cate_list.User;
 
 import java.sql.*;
 

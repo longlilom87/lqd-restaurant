@@ -45,7 +45,7 @@ public class customerscreen extends JPanel {
 
 		adPanel= new JPanel();
 		adPanel.setLayout(null);
-		adPanel.setBounds(0, 100, Window.getW(), Window.getH());
+		adPanel.setBounds(0, 100, Window.getW(), Window.getH()-150);
 		
 		String[] pic = {
 				"Image\\hinh_LQD.png",
@@ -62,6 +62,7 @@ public class customerscreen extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+//				picLabel.setIcon(new ImageIcon(new ImageIcon(pic[picNo]).getImage().getScaledInstance(adPanel.getWidth(), adPanel.getHeight(), java.awt.Image.SCALE_SMOOTH)));
 				picLabel.setIcon(new ImageIcon(pic[picNo]));
 				picNo+=1;
 				if (picNo>=pic.length) {
@@ -122,7 +123,8 @@ public class customerscreen extends JPanel {
 		lblLogOut_1.setBounds(1078, 0, 135, 80);
 		barPanel2.add(lblLogOut_1);
 		
-		JButton lblLogOut_1_1 = new JButton("Order");
+		JButton lblLogOut_1_1 = new JButton();
+		lblLogOut_1_1.setIcon(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(80,80, java.awt.Image.SCALE_SMOOTH)));
 		lblLogOut_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Window.switchPane(new drawTable());

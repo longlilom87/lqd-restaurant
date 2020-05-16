@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-
 import java.awt.Color;
 import java.sql.*;
 import javax.swing.*;
@@ -26,7 +25,6 @@ import java.awt.event.ActionEvent;
 
 public class ManagerFrame extends JPanel {
 
-	
 	private JTextField txtBill;
 	private JTextField textField;
 	public static JTable table_2;
@@ -89,16 +87,17 @@ public class ManagerFrame extends JPanel {
 	 */
 	public ManagerFrame() throws SQLException {
 
-		
 		setBounds(0, 0, 1366, 768);
-		setBackground(new Color(255, 250, 205));
+//		setBackground(new Color(255, 250, 205));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
-
+//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(107, 142, 35));
 		panel.setBounds(0, 0, 1366, 103);
-		add(panel);
+//		add(panel);
 		panel.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Welcome " + LoginFrame.user.getName());
@@ -338,11 +337,15 @@ public class ManagerFrame extends JPanel {
 
 		lblNewLabel_11.setBounds(799, 114, 104, 89);
 		add(lblNewLabel_11);
+
 		lblNewLabel_10.setVisible(false);
 		lblNewLabel_11.setVisible(false);
 
 		up3.setVisible(false);
-
+		
+		JLabel bg = new JLabel(new ImageIcon(new ImageIcon("C:\\Users\\Admin\\Desktop\\Image\\bg.jpg").getImage().getScaledInstance(Window.getW(), Window.getH(), java.awt.Image.SCALE_SMOOTH)));
+		bg.setBounds(0, 0, Window.getW(),Window.getH());
+		add(bg);
 	}
 
 	private void addUpdateMenu() {

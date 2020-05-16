@@ -51,23 +51,6 @@ public class LoginFrame extends JFrame {
 	private JLabel X;
 
 	public static void main(String[] args) throws SQLException {
-//		Connection c = Connect();
-//		PreparedStatement create = c.prepareStatement("CREATE TABLE IF NOT EXISTS Authentication_Login (" + 
-//				"     username varchar(100)  Unique,\r\n" + 
-//				"	 userpassword varchar(14),\r\n" + 
-//				"	 Login_Role varchar(20 ) );");
-//		create.executeUpdate();
-//		
-////		PreparedStatement insert = c.prepareStatement("INSERT INTO Authentication_Login (username, userpassword, Login_Role) values ('QuinLeaderr156', '1234231', 'Manager'),('DuckDuck', 'anhiuem123', 'Chef'),('Q_Dragon', 'nhantobanh', 'Customer');\r\n" + 
-////				"");
-////		insert.executeUpdate();
-//		
-//		PreparedStatement stmt = c.prepareStatement("SELECT * FROM Authentication_Login;");
-//		ResultSet r = stmt.executeQuery();
-//		while(r.next()) {
-//			System.out.println(r.getString("username")+" "+r.getString("userpassword")+" "+r.getString("Login_Role"));
-//		}
-//		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -78,7 +61,6 @@ public class LoginFrame extends JFrame {
 				}
 			}
 		});
-//		check();
 	}
 
 	/**
@@ -285,9 +267,10 @@ public class LoginFrame extends JFrame {
 					Window.switchPane(new chefscreen());
 					break;
 				case "Manager":
-					ManagerFrame m = new ManagerFrame();
-					m.setVisible(true);
-					m.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//					ManagerFrame m = new ManagerFrame();
+//					m.setVisible(true);
+//					m.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					Window.switchPane(new ManagerFrame());
 					break;
 
 				}

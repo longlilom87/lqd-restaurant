@@ -168,6 +168,25 @@ public class CreditCard extends JFrame {
 		txtrFafw_1.setBackground(new Color(107, 142, 35));
 		txtrFafw_1.setBounds(54, 149, 604, 260);
 		confirmPanel.add(txtrFafw_1);
+		
+		JButton btnOK = new JButton("OK");
+		btnOK.setBounds(50, 50, 50, 50);
+		btnOK.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				LoginFrame.user.Logout();
+				Goodbye g;
+				try {
+					g = new Goodbye();
+					g.setVisible(true);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		confirmPanel.add(btnOK);
 	}
 	
 	private void login() throws SQLException {
@@ -197,7 +216,6 @@ public class CreditCard extends JFrame {
 		layer.add(p);
 		layer.repaint();
 		layer.revalidate();
-		if(p.equals(confirmPanel)) System.out.println("Confirm panel");
 	}
 	public static void main (String []args) throws SQLException {
 		new CreditCard();

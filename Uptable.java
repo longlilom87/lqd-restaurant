@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
