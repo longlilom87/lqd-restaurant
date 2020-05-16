@@ -1,22 +1,26 @@
+
+
 import javax.swing.JOptionPane;
 
+
+
 public class User {
-	String username = null, password = null, role=null;
+	String username = null, password = null, role = null;
 	String name;
 	String address;
 	String tableID = null;
 	int reward;
-	
-	public User(String u, String p,String r,String n, String a) {
+
+	public User(String u, String p, String r, String n, String a) {
 		username = u;
 		password = p;
 		role = r;
 		name = n;
 		address = a;
 	}
-	
+
 	public String toString() {
-		return this.getUsername()+" "+this.getPassword()+" "+this.getRole();
+		return this.getUsername() + " " + this.getPassword() + " " + this.getRole();
 	}
 
 	public String getUsername() {
@@ -42,11 +46,13 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	public void Logout() {
-		
-		int confirm = JOptionPane.YES_NO_OPTION;
-        JOptionPane.showConfirmDialog (null, "Are you sure you want to log out?","WARNING", confirm);
-		if (confirm == JOptionPane.YES_OPTION) {
+
+		int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "WARNING",
+				JOptionPane.YES_NO_OPTION);
+		switch (confirm) {
+		case JOptionPane.YES_OPTION:
 			try {
 				Goodbye g = new Goodbye();
 				g.setVisible(true);
@@ -54,19 +60,20 @@ public class User {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 			username = null;
 			password = null;
 			role = null;
 			name = null;
 			address = null;
 			tableID = null;
-			
-			
+			break;
+		case JOptionPane.NO_OPTION:
+			break;
 		}
-		
-		
+
 	}
+
 	public String getName() {
 		return name;
 	}
