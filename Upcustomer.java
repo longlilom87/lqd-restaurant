@@ -96,7 +96,7 @@ public class Upcustomer extends JFrame {
 	 * Create the frame.
 	 */
 	public Upcustomer() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(400, 100, 684, 461);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 250, 205));

@@ -218,7 +218,8 @@ public class Uptable extends JFrame {
 		if (rs.next() == true) {
 			JOptionPane.showMessageDialog(null, "Table existed");
 		} else {
-			insert(Integer.parseInt(ID.getText()), Integer.parseInt(Status.getText()));
+			if(Status.getText().isEmpty()) insert(Integer.parseInt(ID.getText()), 0);
+			else insert(Integer.parseInt(ID.getText()), Integer.parseInt(Status.getText()));
 		}
 	}
 //check 2

@@ -202,6 +202,7 @@ public class CreditCard extends JFrame {
 			} else
 				check = 0;
 		}
+		
 		if (check == 0) {
 			JOptionPane.showMessageDialog(null, "Incorrect");
 		} else {
@@ -219,6 +220,7 @@ public class CreditCard extends JFrame {
 						txtrFafw.setText(intro);
 //						JOptionPane.showMessageDialog(null, "OK");
 						switchPane(panel);
+						Menu.total=0;
 					}
 				}
 			}

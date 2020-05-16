@@ -132,7 +132,7 @@ public class bill extends JFrame {
 
 					int i = writeID();
 					for (FoodItem t : foodList) {
-						String to_delivery = "insert into Delivery (id,name,food,unit,address,status) values (?,?,?,?,?,?)";
+						String to_delivery = "insert into Delivery (id,name,food,unit,address,status,username) values (?,?,?,?,?,?,?)";
 						PreparedStatement st = c.prepareStatement(to_delivery);
 						st.setInt(1, i + 1);
 						st.setString(2, user.getName());
@@ -143,6 +143,7 @@ public class bill extends JFrame {
 						} else
 							st.setString(5, "Delivery");
 						st.setInt(6, 2);
+						st.setString(7,LoginFrame.user.getUsername());
 						st.executeUpdate();
 					}
 
