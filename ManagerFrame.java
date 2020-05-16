@@ -1,3 +1,5 @@
+package main_app;
+
 
 
 import java.awt.EventQueue;
@@ -32,7 +34,7 @@ public class ManagerFrame extends JPanel {
 	private JTextField textField;
 	public static JTable table_2;
 	private JPanel panel_1;
-
+    private JScrollBar scrollBar;
 	private JLabel up1;
 	private JLabel up2;
 	private JLabel up3;
@@ -131,7 +133,14 @@ public class ManagerFrame extends JPanel {
 		table_2 = new JTable();
 		scrollPane.setViewportView(table_2);
 		table_2.setVisible(false);
+        table_2.setRowHeight(35);
+        
+        
+		
 
+        scrollBar = new JScrollBar();
+        scrollPane.setColumnHeaderView(scrollBar);
+        scrollPane.setVisible(false);
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(1051, 420, 261, 211);
 		add(lblNewLabel_1);
@@ -362,6 +371,12 @@ public class ManagerFrame extends JPanel {
 				.getScaledInstance(Window.getW(), Window.getH(), java.awt.Image.SCALE_SMOOTH)));
 		bg.setBounds(0, 0, Window.getW(), Window.getH());
 		add(bg);
+		
+		JLabel lblNewLabel_12 = new JLabel("New label");
+		lblNewLabel_12.setIcon(new ImageIcon (new ImageIcon("Image/3802954.jpg").getImage()
+				.getScaledInstance(Window.getW(), Window.getH(), java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_12.setBounds(0, 97, 1366, 652);
+		add(lblNewLabel_12);
 	}
 
 	private void addUpdateMenu() {
