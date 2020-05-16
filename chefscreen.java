@@ -1,3 +1,5 @@
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -8,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+
+
 
 import java.awt.Font;
 import java.awt.Label;
@@ -111,7 +115,7 @@ public class chefscreen extends JPanel {
 						PreparedStatement st = c.prepareStatement(change);
 						st.executeUpdate();
 						orderTable.setModel(createTableModel()); // updateTable()
-						refreshHeader();
+						refreshHeader(column);
 					}
 
 				} catch (Exception err) {
@@ -132,7 +136,7 @@ public class chefscreen extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				Connection c;
 				orderTable.setModel(createTableModel());
-				refreshHeader();
+				refreshHeader(column);
 				try {
 					c = Menu.Connect();
 					String change = "update Delivery set status =0 where status =2";
@@ -156,7 +160,6 @@ public class chefscreen extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				LoginFrame.user.Logout();
-				Window.switchPane(new Welcome());
 			}
 		});
 		add(bLogout);
@@ -174,7 +177,7 @@ public class chefscreen extends JPanel {
 		orderTable.setRowHeight(60);
 
 		// add column header
-		refreshHeader();
+		refreshHeader(column);
 
 		JScrollPane js = new JScrollPane(orderTable);
 		js.setBounds(0, 130, Window.getW() - 20, btnDone.getY() - 200);
@@ -212,7 +215,6 @@ public class chefscreen extends JPanel {
 
 	public DefaultTableModel createTableModel() {
 		delivery = delivery();
-		System.out.println(delivery);
 		Object[] row = new Object[column.length];
 		DefaultTableModel model = new DefaultTableModel(0, column.length);
 
@@ -235,7 +237,7 @@ public class chefscreen extends JPanel {
 
 	}
 
-	private void refreshHeader() {
+	private void refreshHeader(String[] column) {
 		for (int i = 0; i < column.length; i++) {
 			JTableHeader header = orderTable.getTableHeader();
 			TableColumn col = header.getColumnModel().getColumn(i);

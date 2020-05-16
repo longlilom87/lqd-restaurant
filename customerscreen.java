@@ -1,4 +1,6 @@
 
+
+
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.CardLayout;
@@ -82,7 +84,6 @@ public class customerscreen extends JPanel {
 		
 		adPanel.add(call,SwingConstants.CENTER);
 		adPanel.setVisible(true);
-		
 		add(adPanel);
 		
 		barPanel2.setBounds(10, 10, Window.getW() - 35, 80);
@@ -99,7 +100,6 @@ public class customerscreen extends JPanel {
 		lblLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginFrame.user.Logout();
-				Window.switchPane(new Welcome());
 			}
 		});
 		lblLogOut.setForeground(new Color(0, 128, 0));

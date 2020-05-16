@@ -1,4 +1,9 @@
 
+
+import javax.swing.JOptionPane;
+
+
+
 public class User {
 	String username = null, password = null, role=null;
 	String name;
@@ -42,11 +47,29 @@ public class User {
 		this.role = role;
 	}
 	public void Logout() {
-		username = null;
-		password = null;
-		role = null;
-		name = null;
-		address = null;
+		
+		int confirm = JOptionPane.YES_NO_OPTION;
+        JOptionPane.showConfirmDialog (null, "Are you sure you want to log out?","WARNING", confirm);
+		if (confirm == JOptionPane.YES_OPTION) {
+			try {
+				Goodbye g = new Goodbye();
+				g.setVisible(true);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			username = null;
+			password = null;
+			role = null;
+			name = null;
+			address = null;
+			tableID = null;
+			
+			
+		}
+		
+		
 	}
 	public String getName() {
 		return name;
@@ -79,5 +102,4 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
 }

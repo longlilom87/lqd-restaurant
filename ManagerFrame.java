@@ -1,10 +1,13 @@
 
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
+
 
 import java.awt.Color;
 import java.sql.*;
@@ -88,23 +91,37 @@ public class ManagerFrame extends JPanel {
 	public ManagerFrame() throws SQLException {
 
 		setBounds(0, 0, 1366, 768);
-//		setBackground(new Color(255, 250, 205));
+		setBackground(new Color(255, 250, 205));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 //		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(107, 142, 35));
 		panel.setBounds(0, 0, 1366, 103);
-//		add(panel);
+		add(panel);
 		panel.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Welcome " + LoginFrame.user.getName());
-		lblNewLabel.setBounds(1151, 11, 189, 82);
+		lblNewLabel.setBounds(1071, -10, 189, 82);
 		panel.add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(Color.white);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JButton logout = new JButton ("Log out");
+		logout.setFont(new Font ("Tahoma", Font.PLAIN,15));
+		logout.setBounds(1151,45, 100, 30);
+		logout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				LoginFrame.user.Logout();
+				
+			}
+			
+		});
+		panel.add(logout);
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(59, 246, 986, 412);
@@ -149,8 +166,6 @@ public class ManagerFrame extends JPanel {
 				try {
 					uptable = new Uptable();
 					uptable.setUndecorated(true);
-					;
-
 					uptable.setVisible(true);
 
 				} catch (SQLException e1) {
@@ -342,9 +357,10 @@ public class ManagerFrame extends JPanel {
 		lblNewLabel_11.setVisible(false);
 
 		up3.setVisible(false);
-		
-		JLabel bg = new JLabel(new ImageIcon(new ImageIcon("C:\\Users\\Admin\\Desktop\\Image\\bg.jpg").getImage().getScaledInstance(Window.getW(), Window.getH(), java.awt.Image.SCALE_SMOOTH)));
-		bg.setBounds(0, 0, Window.getW(),Window.getH());
+
+		JLabel bg = new JLabel(new ImageIcon(new ImageIcon("C:\\Users\\Admin\\Desktop\\Image\\bg.jpg").getImage()
+				.getScaledInstance(Window.getW(), Window.getH(), java.awt.Image.SCALE_SMOOTH)));
+		bg.setBounds(0, 0, Window.getW(), Window.getH());
 		add(bg);
 	}
 

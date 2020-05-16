@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -42,9 +43,9 @@ public class Goodbye extends JFrame {
 		
 		int delay = 2000; //milliseconds
 		  ActionListener taskPerformer = new ActionListener() {
-		      public void actionPerformed(ActionEvent evt) {
-		      dispose();
+		      public void actionPerformed(ActionEvent evt) { 
 		      Window.switchPane(new Welcome());
+		      dispose();
 		      }
 		  };
 		  
@@ -52,7 +53,13 @@ public class Goodbye extends JFrame {
 		  t.setRepeats(false);
 		  t.start();
 
-		JLabel lblThankYou = new JLabel("Thank you for choosing us!");
+		JLabel lblThankYou = new JLabel();
+		switch (LoginFrame.user.getRole()) {
+		case "Customer":
+			lblThankYou.setText("Thank you for choosing us!");
+		default:
+			lblThankYou.setText("Have a nice day");
+		}
 		lblThankYou.setForeground(new Color(50, 205, 100));
 		lblThankYou.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 100));
 		lblThankYou.setHorizontalAlignment(SwingConstants.CENTER);
