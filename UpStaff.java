@@ -1,3 +1,4 @@
+package main_app;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -217,6 +218,8 @@ public class UpStaff extends JFrame {
 	    		try {
 	    			Connection connection= Connect();
 	    			checkavailable();
+	    			checkdontdeletemainaccount();
+
 	    			String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
 					
 					PreparedStatement	stmt = connection.prepareStatement(query);
@@ -347,7 +350,17 @@ public class UpStaff extends JFrame {
     			insert_4(account.getText());
       
 }}
-     
+         public void checkdontdeletemainaccount() throws SQLException {
+    	  
+    	     
+    	    
+
+    		if (account.getText().equals("Admin")) {
+    			JOptionPane.showMessageDialog(null, "Account is main account, can not delete");
+    		} else {
+    			checkavailable();;
+      
+  }}
     
 
       }
