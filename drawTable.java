@@ -1,5 +1,4 @@
 
-
 import java.awt.CardLayout;
 import java.awt.Choice;
 import java.awt.Color;
@@ -10,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,13 +28,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+
+
 public class drawTable extends JPanel {
 
 	User user = LoginFrame.user;
 	List<Table> tablelist = getTablelist();
-	
+
 	JLabel[] tbls = new JLabel[tablelist.size()];
 	JLabel[] nameTbl = new JLabel[tablelist.size()];
+	JLabel[] tblChosen = new JLabel[tablelist.size()];
 	private int x = 400;
 	private int n = 4;
 	static JPanel tableMenu = new JPanel();
@@ -88,7 +91,7 @@ public class drawTable extends JPanel {
 			Table t = tablelist.get(i);
 			choice.add(Integer.toString(t.getX()));
 		}
-		
+
 		JButton bBack = new JButton("Back");
 		bBack.addActionListener(new ActionListener() {
 			@Override
@@ -96,7 +99,7 @@ public class drawTable extends JPanel {
 				Window.switchPane(new customerscreen());
 			}
 		});
-		bBack.setBounds(60,ybutton+60,150,23);
+		bBack.setBounds(60, ybutton + 60, 150, 23);
 		add(bBack);
 
 //		JButton btnBlank = new JButton("Blank");
@@ -112,13 +115,13 @@ public class drawTable extends JPanel {
 		JButton btnCustomer = new JButton("Choose Table");
 		btnCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (Table t : tablelist) 
-					if (String.valueOf(t.getX()).equals(choice.getSelectedItem())) 
+				for (Table t : tablelist)
+					if (String.valueOf(t.getX()).equals(choice.getSelectedItem()))
 						if (t.getY() == 1) {
 							JOptionPane.showMessageDialog(null, "Please choose another table");
 							return;
 						}
-					
+
 				try {
 					Menu.bl = true;
 					Window.switchPane(new Menu());
@@ -174,13 +177,13 @@ public class drawTable extends JPanel {
 
 		for (int i = 0; i < tablelist.size(); i++) {
 			ImageIcon ic;
-			int ID = tablelist.get(i).getX();
-
 			tbls[i] = new JLabel();
 			tbls[i].setBounds(x - (lineDevision(i, n) - 1) * n * 150, 100 * lineDevision(i, n), 108, 62);
-			nameTbl[i] = new JLabel();
-			nameTbl[i].setBounds(tbls[i].getX(), tbls[i].getY(), tbls[i].getWidth(), tbls[i].getHeight());
 
+			nameTbl[i] = new JLabel();
+			nameTbl[i].setBounds(tbls[i].getX(), tbls[i].getY(), 
+					tbls[i].getWidth(), tbls[i].getHeight());
+			nameTbl[i].setBackground(Color.BLUE);
 			if (tablelist.get(i).getY() == 1) {
 				ic = new ImageIcon("Image\\tbl_black.png");
 				nameTbl[i].setForeground(Color.white);
@@ -191,13 +194,64 @@ public class drawTable extends JPanel {
 			nameTbl[i].setText(String.valueOf(tablelist.get(i).getX()));
 			nameTbl[i].setFont(new Font("Tahoma", Font.BOLD, 20));
 
+			final Integer innerI = new Integer(i);
+
+			nameTbl[i].addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					for (Table t : tablelist)
+						if (String.valueOf(t.getX()).equals(nameTbl[innerI].getText()))
+							if (t.getY() == 1) {
+								JOptionPane.showMessageDialog(null, "Please choose another table");
+								return;
+							}
+
+					try {
+						Menu.bl = true;
+						Window.switchPane(new Menu());
+						user.setTableID(String.valueOf(nameTbl[innerI].getText()));
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					update(choice.getSelectedItem(), 1);
+					repaint();
+
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+
+				}
+
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+
+				}
+
+			});
 			nameTbl[i].setHorizontalAlignment(SwingConstants.CENTER);
 			nameTbl[i].setVerticalAlignment(SwingConstants.CENTER);
 			table.add(nameTbl[i]);
+
 			Image img = ic.getImage().getScaledInstance(tbls[i].getWidth(), tbls[i].getHeight(), Image.SCALE_SMOOTH);
 			ImageIcon scaledImage = new ImageIcon(img);
 			tbls[i].setIcon(scaledImage);
 			table.add(tbls[i]);
+
 			x += 150;
 
 		}
