@@ -1,15 +1,13 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-
-
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -46,6 +44,7 @@ public class bill extends JFrame {
 	private JTextField txtPriceLabel;
 	JButton btnOrder = new JButton("Order Now!");
 	JButton bPay = new JButton("Cash");
+	JLabel txtTotal;
 	static boolean cash = false;
 
 	private JPanel panel = new JPanel();
@@ -143,7 +142,7 @@ public class bill extends JFrame {
 						} else
 							st.setString(5, "Delivery");
 						st.setInt(6, 2);
-						st.setString(7,LoginFrame.user.getUsername());
+						st.setString(7, LoginFrame.user.getUsername());
 						st.executeUpdate();
 					}
 
@@ -235,6 +234,15 @@ public class bill extends JFrame {
 		contentPane.add(txtUnits);
 		txtUnits.setColumns(10);
 
+		txtPriceLabel = new JTextField();
+		txtPriceLabel.setEditable(false);
+		txtPriceLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtPriceLabel.setText("Price");
+		txtPriceLabel.setBounds(301, 258, 49, 22);
+		contentPane.add(txtPriceLabel);
+		txtPriceLabel.setColumns(10);
+
 		panel.setLayout(null);
 		panel.setBounds(0, line, 492, 734);
 		panel.setBackground(Color.white);
@@ -269,6 +277,16 @@ public class bill extends JFrame {
 			y = y + txtFoodGoesHere.getFont().getSize() + 10;
 			sl++;
 		}
+		JLabel dotline = new JLabel("------------------------------------------------------------------------------");
+		dotline.setBounds(40, y, 320, 30);
+		dotline.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(dotline);
+
+		txtTotal = new JLabel("Total: " + Menu.total);
+		txtTotal.setBounds(44, y + 30, 311, 40);
+		txtTotal.setFont(new Font("Arial", Font.BOLD, 30));
+		txtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(txtTotal);
 
 		JScrollBar scroll = new JScrollBar();
 		scroll.setBounds(460, 0, 15, 700);
@@ -282,14 +300,6 @@ public class bill extends JFrame {
 		});
 //		scroll.setMaximum(maximum);
 
-		txtPriceLabel = new JTextField();
-		txtPriceLabel.setEditable(false);
-		txtPriceLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtPriceLabel.setText("Price");
-		txtPriceLabel.setBounds(301, 258, 49, 22);
-		contentPane.add(txtPriceLabel);
-		txtPriceLabel.setColumns(10);
 	}
 
 	public int writeID() {
