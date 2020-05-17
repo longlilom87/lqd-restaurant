@@ -217,7 +217,6 @@ public class UpStaff extends JFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		try {
 	    			Connection connection= Connect();
-	    			checkavailable();
 	    			checkdontdeletemainaccount();
 
 	    			String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
@@ -355,10 +354,10 @@ public class UpStaff extends JFrame {
     	     
     	    
 
-    		if (account.getText().equals("Admin")) {
+    		if (account.getText().equals("admin")) {
     			JOptionPane.showMessageDialog(null, "Account is main account, can not delete");
     		} else {
-    			checkavailable();;
+    			checkavailable();
       
   }}
     
