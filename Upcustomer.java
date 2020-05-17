@@ -1,3 +1,4 @@
+package main_app;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
@@ -11,12 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import cate_list.User;
 
 import java.sql.*;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -110,7 +113,7 @@ public class Upcustomer extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					insert_1(account.getText(),newpass.getText());
+					checkavailable_1();
 				} catch (SQLException e1) {
 					
 					e1.printStackTrace();
@@ -132,8 +135,8 @@ public class Upcustomer extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					insert_2(account.getText(),newname.getText());
-				} catch (SQLException e1) {
+					checkavailable_2();
+					} catch (SQLException e1) {
 					
 					e1.printStackTrace();
 				}
@@ -155,7 +158,7 @@ public class Upcustomer extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					insert_3(account.getText(),newaddress.getText());
+					checkavailable_3();
 				} catch (SQLException e1) {
 					
 					e1.printStackTrace();
@@ -257,4 +260,58 @@ public class Upcustomer extends JFrame {
 	   
         stmt.executeUpdate();
 	   }
-}
+        //check acc available to update
+        
+        public void checkavailable_1() throws SQLException {
+      	  
+      		String username = account.getText();
+  			String sql = "SELECT username From Authentication_Login where username  ='"+username +"';";
+
+     		Connection c = Connect();
+      		PreparedStatement stmt = c.prepareStatement(sql);
+      		ResultSet rs = stmt.executeQuery();
+      		if (rs.next() == false) {
+      			JOptionPane.showMessageDialog(null, "Account not available");
+				account.setText("");
+				newpass.setText("");
+
+      		} else {
+				insert_1(account.getText(),newpass.getText());
+
+        
+  }}
+       
+        
+        public void checkavailable_2() throws SQLException {
+      	  
+      		String username = account.getText();
+  			String sql = "SELECT username From Authentication_Login where username  ='"+username +"';";
+
+     		Connection c = Connect();
+      		PreparedStatement stmt = c.prepareStatement(sql);
+      		ResultSet rs = stmt.executeQuery();
+      		if (rs.next() == false) {
+      			JOptionPane.showMessageDialog(null, "Account not available");
+				account.setText("");
+				newname.setText("");
+      		} else {
+		        insert_2(account.getText(),newname.getText());
+}}
+        public void checkavailable_3() throws SQLException {
+        	  
+      		String username = account.getText();
+  			String sql = "SELECT username From Authentication_Login where username  ='"+username +"';";
+
+     		Connection c = Connect();
+      		PreparedStatement stmt = c.prepareStatement(sql);
+      		ResultSet rs = stmt.executeQuery();
+      		if (rs.next() == false) {
+      			JOptionPane.showMessageDialog(null, "Account not available");		
+      			account.setText("");
+      			newaddress.setText("");
+      			
+      		} else {
+		insert_3(account.getText(),newaddress.getText());
+      		}}
+
+     }
