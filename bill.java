@@ -1,4 +1,5 @@
 
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -8,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -34,9 +36,6 @@ public class bill extends JFrame {
 	private JTextArea textAddress;
 	private JTextArea textField_2;
 	private JTextArea txtPrice;
-	private static String name, address, food;
-	private static int unit, price;
-	private static int id;
 	private JTextField txtOrders;
 	private JTextField txtUnits;
 	private JTextArea txtFoodGoesHere;
@@ -46,7 +45,7 @@ public class bill extends JFrame {
 	JButton bPay = new JButton("Cash");
 	JLabel txtTotal;
 	static boolean cash = false;
-
+	public int i;
 	private JPanel panel = new JPanel();
 	private int yButton = 548, yTxtName = 125, yTxtAddress = 190;
 	private int ytextField2 = 24, yTxtOrders = 258, yTxtUnits = 310, line = 305;
@@ -80,11 +79,16 @@ public class bill extends JFrame {
 		panel.setBounds(0, line - value, 492, 734);
 	}
 
-	public bill(int id, User user, ArrayList<FoodItem> foodList) {
+	public bill(User user, ArrayList<FoodItem> foodList) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 492, 734);
 		setResizable(false);
 
+		if (Menu.orderMore==0) {
+			i= writeID()+1;
+		}
+		else i=writeID();
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,6 +98,7 @@ public class bill extends JFrame {
 
 		btnOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Menu.orderMore++;
 				boolean bl = false;
 				for (FoodItem t : foodList) {
 					for (FoodItem p : payFoodList) {
@@ -129,11 +134,10 @@ public class bill extends JFrame {
 					Menu.addMenuPanel(c, beveragePanel, "'D%'");
 					Menu.addMenuPanel(c, pizzaPanel, "'P%'");
 
-					int i = writeID();
 					for (FoodItem t : foodList) {
 						String to_delivery = "insert into Delivery (id,name,food,unit,address,status,username) values (?,?,?,?,?,?,?)";
 						PreparedStatement st = c.prepareStatement(to_delivery);
-						st.setInt(1, i + 1);
+						st.setInt(1, i);
 						st.setString(2, user.getName());
 						st.setString(3, t.getName());
 						st.setLong(4, t.getQty());
@@ -166,6 +170,7 @@ public class bill extends JFrame {
 		bPay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Menu.orderMore=0;
 				CreditCard cc;
 				try {
 					cc = new CreditCard();
@@ -207,8 +212,8 @@ public class bill extends JFrame {
 
 		textField_2 = new JTextArea();
 		textField_2.setForeground(Color.BLACK);
-		id = writeID() + 1;
-		textField_2.setText("#" + id);
+	
+		textField_2.setText("#" + i);
 		textField_2.setFont(new Font("Trebuchet MS", Font.PLAIN, 45));
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
@@ -247,6 +252,7 @@ public class bill extends JFrame {
 		panel.setBounds(0, line, 492, 734);
 		panel.setBackground(Color.white);
 		add(panel);
+		
 		int sl = 0;
 		int y = 0;
 		for (FoodItem f : foodList) {

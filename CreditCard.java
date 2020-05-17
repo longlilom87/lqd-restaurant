@@ -1,4 +1,5 @@
 
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+
 
 public class CreditCard extends JFrame {
 
@@ -213,7 +215,6 @@ public class CreditCard extends JFrame {
 						txtrFafw.setText(intro);
 //						JOptionPane.showMessageDialog(null, "OK");
 						switchPane(panel);
-						Menu.total=0;
 					}
 				}
 			}

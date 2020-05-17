@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+
 public class Menu extends JPanel {
 
 	JPanel namePanel = new JPanel();
@@ -27,6 +28,7 @@ public class Menu extends JPanel {
 	public static boolean bl;
 
 	public static int total = 0;
+	public static int orderMore = 0;
 	static ArrayList<FoodItem> foodList = FoodItem.foodList;
 	static ArrayList<FoodItem> payFoodList = new ArrayList<>();
 
@@ -51,6 +53,7 @@ public class Menu extends JPanel {
 		Cash.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				total = 0;
 				if (foodList.size() == 0) {
 					JOptionPane.showMessageDialog(null, "Please order");
 					return;
@@ -61,10 +64,10 @@ public class Menu extends JPanel {
 				for (FoodItem t : foodList) {
 					total = total + t.getPrice() * t.getQty();
 				}
-				bill bill = new bill(0, LoginFrame.user, foodList);
+				bill bill = new bill(LoginFrame.user, foodList);
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-				total = 0;
+
 			}
 		});
 
@@ -77,22 +80,23 @@ public class Menu extends JPanel {
 		bPay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				total = 0;
 //				System.out.println("CASH");
 				if (payFoodList.size() == 0) {
 					JOptionPane.showMessageDialog(null, "You haven't order anything to pay");
 					return;
 				}
-				
+
 				bill.cash = true;
-				
+
 				for (FoodItem t : payFoodList) {
 					total = total + t.getPrice() * t.getQty();
 				}
-				bill bill = new bill(0, LoginFrame.user, payFoodList);
+
+				bill bill = new bill(LoginFrame.user, payFoodList);
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-				
 			}
 		});
 
@@ -126,7 +130,6 @@ public class Menu extends JPanel {
 		JPanel namePanel = new JPanel();
 		namePanel.setBounds(0, 0, 1382 / 4, 744);
 		namePanel.setLayout(null);
-//		namePanel.setBounds(0, 0, 1382/4, 744);
 		namePanel.setBackground(new Color(107, 142, 35));
 		add(namePanel);
 
