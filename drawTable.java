@@ -1,5 +1,4 @@
 
-
 import java.awt.CardLayout;
 import java.awt.Choice;
 import java.awt.Color;
@@ -29,8 +28,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
-
 public class drawTable extends JPanel {
 
 	User user = LoginFrame.user;
@@ -42,15 +39,17 @@ public class drawTable extends JPanel {
 	private int x = 400;
 	private int n = 4;
 	static JPanel tableMenu = new JPanel();
+	JPanel table;
 
 	public drawTable() {
-		setBounds(0, 0, Window.getW(), Window.getH());
+		setBounds(0, 0, 1382, 744);
 		setLayout(null);
-
+		setBackground(new Color(255, 250, 205));
+		
 		// Aligning color explanation box
 		int available = 80;
 		int reserved = available + 100;
-		int text = 1370;
+		int text = 1182;
 		int colortext = text - 80;
 
 		JLabel lblAvailable = new JLabel("Available");
@@ -80,7 +79,7 @@ public class drawTable extends JPanel {
 		textField_1.setBounds(colortext, reserved, 54, 82);
 		add(textField_1);
 
-		int button = 60;
+		int button = 90;
 		int ybutton = 200;
 
 		Choice choice = new Choice();
@@ -92,26 +91,45 @@ public class drawTable extends JPanel {
 			Table t = tablelist.get(i);
 			choice.add(Integer.toString(t.getX()));
 		}
-
-		JButton bBack = new JButton("Back");
-		bBack.addActionListener(new ActionListener() {
+		
+		JLabel bBack = new JLabel();
+		bBack.setIcon(new ImageIcon(new ImageIcon("Image/back_shadow.png").getImage().getScaledInstance(50,50,
+				java.awt.Image.SCALE_SMOOTH)));
+		bBack.setBounds(button, ybutton + 60, 150,100);
+		bBack.addMouseListener(new MouseListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				Window.switchPane(new customerscreen());
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back_shadow.png").getImage().getScaledInstance(50,50,
+						java.awt.Image.SCALE_SMOOTH)));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back_shadow.png").getImage().getScaledInstance(70,70,
+						java.awt.Image.SCALE_SMOOTH)));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+					Window.switchPane(new customerscreen());
+				
 			}
 		});
-		bBack.setBounds(60, ybutton + 60, 150, 23);
+		bBack.setHorizontalAlignment(SwingConstants.CENTER);
 		add(bBack);
 
-//		JButton btnBlank = new JButton("Blank");
-//		btnBlank.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				update(choice.getSelectedItem(), 0);
-//				repaint();
-//			}
-//		});
-//		btnBlank.setBounds(button, ybutton, 97, 25);
-//		add(btnBlank);
 
 		JButton btnCustomer = new JButton("Choose Table");
 		btnCustomer.addActionListener(new ActionListener() {
@@ -159,19 +177,27 @@ public class drawTable extends JPanel {
 		add(bDelivery);
 
 		tableMenu.setLayout(null);
-		tableMenu.setBounds(0, 0, Window.getW() / 4, Window.getH());
+		tableMenu.setBounds(0, 0, 1382 / 4, Window.getH());
 		tableMenu.setBackground(new Color(107, 142, 35));
 
+		Image scale = new ImageIcon("Image/logo.png").getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		JLabel label = new JLabel(new ImageIcon(scale));
+		label.setBounds(193, 62, 50, 50);
+		add(label);
+		
 		JLabel name = new JLabel("LQD");
 		name.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 50));
-		name.setBounds(60, 10, 200, 100);
+		name.setBounds(88, 11, 130, 100);
 		name.setForeground(Color.white);
 		name.setVisible(true);
+		name.setHorizontalAlignment(SwingConstants.CENTER);
 		add(name);
 		add(tableMenu);
+		
 
-		JPanel table = new JPanel();
-		table.setBounds(Window.getW() / 8, 0, 1000, Window.getH());
+		table = new JPanel();
+		table.setBounds(30, 0, 1000, Window.getH());
+		table.setBackground(new Color(255, 250, 205));
 		table.setLayout(null);
 		table.setVisible(true);
 		add(table);
@@ -275,10 +301,9 @@ public class drawTable extends JPanel {
 	public static List<Table> getTablelist() {
 		List<Table> tablelist = new ArrayList<>();
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:Restaurant.db");
-
-			String getTable = "select * from Res_table";
+			
+			Connection c = Menu.Connect();
+			String getTable = "select * from Res_table order by TableID";
 			Statement s = c.createStatement();
 			ResultSet rs = s.executeQuery(getTable);
 			while (rs.next()) {

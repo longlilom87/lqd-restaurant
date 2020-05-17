@@ -1,7 +1,4 @@
 
-
-import java.awt.CardLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -19,10 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-
 
 public class CreditCard extends JFrame {
 
@@ -110,7 +104,6 @@ public class CreditCard extends JFrame {
 		txtrFafw.setFont(new Font("Monospaced", Font.PLAIN, 35));
 		txtrFafw.setForeground(new Color(255, 255, 255));
 		txtrFafw.setBackground(new Color(107, 142, 35));
-
 		txtrFafw.setBounds(10, 101, 657, 384);
 		panel.add(txtrFafw);
 
@@ -175,13 +168,13 @@ public class CreditCard extends JFrame {
 		confirmPanel.add(titleLabel_2);
 
 		txtrFafw_1.setForeground(Color.WHITE);
-		txtrFafw_1.setFont(new Font("Monospaced", Font.PLAIN, 40));
+		txtrFafw_1.setFont(new Font("Monospaced", Font.PLAIN, 35));
 		txtrFafw_1.setBackground(new Color(107, 142, 35));
 		txtrFafw_1.setBounds(54, 149, 604, 260);
 		confirmPanel.add(txtrFafw_1);
 
 		JButton btnOK = new JButton("OK");
-		btnOK.setBounds(50, 50, 50, 50);
+		btnOK.setBounds(300, confirmPanel.getHeight()-200, 100, 50);
 		btnOK.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

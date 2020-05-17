@@ -1,13 +1,16 @@
 
+
 import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -41,9 +45,11 @@ public class UpdateMenu extends JPanel {
 //	String[] condition = { "'B%'", "'O%'", "'D%'", "'P%'" };
 	JTable menuTable;
 	private Connection c;
+
 	/**
 	 * Create the panel.
-	 * @throws SQLException 
+	 * 
+	 * @throws SQLException
 	 */
 	public UpdateMenu() throws SQLException {
 		c = Menu.Connect();
@@ -51,7 +57,7 @@ public class UpdateMenu extends JPanel {
 		setLayout(null);
 		setBackground(new Color(255, 250, 205));
 
-		choice.setBounds(Window.getW()/4, 50, 300, 40);
+		choice.setBounds(Window.getW() / 4, 50, 300, 40);
 		choice.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		choice.addItem("Burger");
 		choice.addItem("Other");
@@ -60,41 +66,41 @@ public class UpdateMenu extends JPanel {
 		add(choice);
 
 		JLabel instruction = new JLabel("Please click on Go to see the Table");
-		instruction.setBounds(Window.getW()-500, 50, 300, 55);
+		instruction.setBounds(Window.getW() - 500, 50, 300, 55);
 		instruction.setFont(new Font("Arial", Font.ITALIC, 15));
 		instruction.setForeground(Color.red);
 		add(instruction);
 		releaseTable();
-		
+
 		JLabel bBack = new JLabel();
-		bBack.setIcon(new ImageIcon(new ImageIcon("Image/back.png").getImage().getScaledInstance(50,50,
-				java.awt.Image.SCALE_SMOOTH)));
-		bBack.setBounds(50, 35, 100,100);
+		bBack.setIcon(new ImageIcon(
+				new ImageIcon("Image/back.png").getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
+		bBack.setBounds(50, 35, 100, 100);
 		bBack.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
-				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back.png").getImage().getScaledInstance(50,50,
+				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back.png").getImage().getScaledInstance(50, 50,
 						java.awt.Image.SCALE_SMOOTH)));
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back.png").getImage().getScaledInstance(70,70,
+				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back.png").getImage().getScaledInstance(70, 70,
 						java.awt.Image.SCALE_SMOOTH)));
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -105,10 +111,11 @@ public class UpdateMenu extends JPanel {
 				}
 			}
 		});
+		bBack.setHorizontalAlignment(SwingConstants.CENTER);
 		add(bBack);
-		
+
 		JButton bGo = new JButton("Go!");
-		bGo.setBounds(Window.getW()/2, 50, 60, 55);
+		bGo.setBounds(Window.getW() / 2, 50, 60, 55);
 		bGo.setVisible(true);
 		bGo.addActionListener(new ActionListener() {
 
@@ -208,42 +215,41 @@ public class UpdateMenu extends JPanel {
 		lblEnterID.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblEnterID.setBounds(lblEnterName.getX(), lblEnterName.getY() + 100, 190, 35);
 		add(lblEnterID);
-		
+
 		JTextField txtEnterID = new JTextField();
 		txtEnterID.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtEnterID.setColumns(10);
 		txtEnterID.setBounds(txtEnterName.getX(), lblEnterID.getY(), 183, 31);
 		add(txtEnterID);
-		
+
 		JLabel ImageLabel = new JLabel("Image String");
 		ImageLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		ImageLabel.setBounds(lblEnterName.getX(), lblEnterName.getY()+150, 190, 35);
+		ImageLabel.setBounds(lblEnterName.getX(), lblEnterName.getY() + 150, 190, 35);
 		add(ImageLabel);
-		
+
 		JTextField imageField = new JTextField();
 		imageField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		imageField.setColumns(10);
 		imageField.setBounds(txtEnterName.getX(), ImageLabel.getY(), 183, 31);
 		add(imageField);
-		
+
 		JButton bBrowse = new JButton("Browse...");
-		bBrowse.setBounds(imageField.getX()+200,imageField.getY(),97,25);
+		bBrowse.setBounds(imageField.getX() + 200, imageField.getY(), 97, 25);
 		bBrowse.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser file = new JFileChooser();
 				file.setCurrentDirectory(new File(System.getProperty("user.home")));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Image", "png","jpg","gif");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Image", "png", "jpg", "gif");
 				file.addChoosableFileFilter(filter);
-				
+
 				int result = file.showSaveDialog(null);
-				if(result == JFileChooser.APPROVE_OPTION) {
+				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = file.getSelectedFile();
 					String path = selectedFile.getAbsolutePath();
 					imageField.setText(path);
-				}
-				else if(result == JFileChooser.CANCEL_OPTION) {
+				} else if (result == JFileChooser.CANCEL_OPTION) {
 					System.out.println("No file selected");
 				}
 			}
@@ -278,13 +284,14 @@ public class UpdateMenu extends JPanel {
 										+ "','" + txtEnterName.getText() + "','" + txtEnterPrice.getText() + "')";
 								PreparedStatement s = c.prepareStatement(iFood);
 								s.executeUpdate();
-								
-								if(imageField.getText().isEmpty()==false) {
-									iFood = "UPDATE Menu SET imagePath = '"+imageField.getText()+"' WHERE idFood = '"+txtEnterID.getText()+"';";
+
+								if (imageField.getText().isEmpty() == false) {
+									iFood = "UPDATE Menu SET imagePath = '" + imageField.getText()
+											+ "' WHERE idFood = '" + txtEnterID.getText() + "';";
 									s = c.prepareStatement(iFood);
 									s.executeUpdate();
 								}
-								
+
 								menuTable.setModel(createTableModel());
 								refreshHeader();
 							}
@@ -312,7 +319,7 @@ public class UpdateMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String update = "", name = "", price = "",update2 = "",image = "";
+					String update = "", name = "", price = "", update2 = "", image = "";
 					if (txtEnterName.getText().isEmpty() == false) {
 						name = "name ='" + txtEnterName.getText() + "' ";
 					}
@@ -323,26 +330,26 @@ public class UpdateMenu extends JPanel {
 					if (txtEnterName.getText().isEmpty() == false && txtEnterPrice.getText().isEmpty() == false) {
 						update = ",";
 					}
-					if(imageField.getText().isEmpty() ==false) {
-						image = "imagePath = '"+imageField.getText()+"'";
+					if (imageField.getText().isEmpty() == false) {
+						image = "imagePath = '" + imageField.getText() + "'";
 					}
-					if(imageField.getText().isEmpty()==false && txtEnterPrice.getText().isEmpty() == false) {
+					if (imageField.getText().isEmpty() == false && txtEnterPrice.getText().isEmpty() == false) {
 						update2 = ",";
 					}
-					
+
 					int check = selectID(txtEnterID.getText());
 					if (check == 1) {
 						JOptionPane.showMessageDialog(null, "No food " + textField.getText(), "Alert",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
-						String sql = "update Menu set " + name + update + price +update2+image+ " where idFood = '"
+						String sql = "update Menu set " + name + update + price + update2 + image + " where idFood = '"
 								+ txtEnterID.getText() + "'";
 						PreparedStatement s = c.prepareStatement(sql);
 						s.executeUpdate();
 						menuTable.setModel(createTableModel());
 						refreshHeader();
 					}
-					
+
 					imageField.setText(null);
 					txtEnterID.setText(null);
 					txtEnterName.setText(null);
