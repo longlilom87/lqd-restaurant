@@ -1,6 +1,4 @@
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.CardLayout;
@@ -16,7 +14,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -25,6 +26,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -40,7 +43,7 @@ public class customerscreen extends JPanel {
 
 	private JLayeredPane layer = new JLayeredPane();
 
-	public customerscreen() {
+	public customerscreen() throws SQLException {
 		setBounds(0, 0, Window.getW(), Window.getH());
 		setLayout(null);
 		setBackground(new Color(255, 250, 205));
@@ -84,6 +87,7 @@ public class customerscreen extends JPanel {
 		
 		adPanel.add(call,SwingConstants.CENTER);
 		adPanel.setVisible(true);
+		
 		add(adPanel);
 		
 		barPanel2.setBounds(10, 10, Window.getW() - 35, 80);
@@ -100,6 +104,7 @@ public class customerscreen extends JPanel {
 		lblLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginFrame.user.Logout();
+//				Window.switchPane(new Welcome());
 			}
 		});
 		lblLogOut.setForeground(new Color(0, 128, 0));
@@ -123,8 +128,8 @@ public class customerscreen extends JPanel {
 		lblLogOut_1.setBounds(1078, 0, 135, 80);
 		barPanel2.add(lblLogOut_1);
 		
-		JButton lblLogOut_1_1 = new JButton();
-		lblLogOut_1_1.setIcon(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(80,80, java.awt.Image.SCALE_SMOOTH)));
+		JButton lblLogOut_1_1 = new JButton("Order");
+//		lblLogOut_1_1.setIcon(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(80,80, java.awt.Image.SCALE_SMOOTH)));
 		lblLogOut_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Window.switchPane(new drawTable());
@@ -152,38 +157,83 @@ public class customerscreen extends JPanel {
 		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		nameLabel.setForeground(Color.ORANGE);
-		nameLabel.setBounds(xInfo, yInfo, 126, 59);
+		nameLabel.setBounds(452, 98, 126, 59);
 		infoPanel.add(nameLabel);
 
 		JLabel addressLabel = new JLabel("Address");
 		addressLabel.setForeground(Color.ORANGE);
 		addressLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-		addressLabel.setBounds(xInfo, yInfo + 100, 172, 59);
+		addressLabel.setBounds(nameLabel.getX(), nameLabel.getY()+100, 172, 59);
 		infoPanel.add(addressLabel);
 
 		JLabel usernameLabel = new JLabel("Username");
 		usernameLabel.setForeground(Color.ORANGE);
 		usernameLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-		usernameLabel.setBounds(xInfo, yInfo + 200, 215, 59);
+		usernameLabel.setBounds(nameLabel.getX(), nameLabel.getY()+200, 215, 59);
 		infoPanel.add(usernameLabel);
 
 		JLabel usernameInfo = new JLabel(LoginFrame.user.getUsername());
 		usernameInfo.setForeground(new Color(107, 142, 35));
 		usernameInfo.setFont(new Font("Tahoma", Font.ITALIC, 40));
-		usernameInfo.setBounds(xInfo + 225, yInfo + 200, 215, 59);
+		usernameInfo.setBounds(704, 298, 653, 59);
 		infoPanel.add(usernameInfo);
 
 		JLabel addressInfo = new JLabel(LoginFrame.user.getAddress());
 		addressInfo.setForeground(new Color(107, 142, 35));
 		addressInfo.setFont(new Font("Tahoma", Font.ITALIC, 40));
-		addressInfo.setBounds(xInfo + 225, yInfo + 100, 215, 59);
+		addressInfo.setBounds(usernameInfo.getX(), usernameInfo.getY()-100, 653, 59);
 		infoPanel.add(addressInfo);
 
 		JLabel nameInfo = new JLabel(LoginFrame.user.getName());
 		nameInfo.setForeground(new Color(107, 142, 35));
 		nameInfo.setFont(new Font("Tahoma", Font.ITALIC, 40));
-		nameInfo.setBounds(xInfo + 225, yInfo, 215, 59);
+		nameInfo.setBounds(usernameInfo.getX(), usernameInfo.getY()-200, 215, 59);
 		infoPanel.add(nameInfo);
+		
+		
+		
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(10, 11, 373, 622);
+		textArea.setEditable(false);
+		infoPanel.add(textArea);
+		
+		c = Menu.Connect();
+		PreparedStatement stmt = c.prepareStatement("SELECT id FROM Delivery WHERE username = '"+LoginFrame.user.getUsername()+"' GROUP BY id;");
+		ResultSet result = stmt.executeQuery();
+		ArrayList<Integer> tableID = new ArrayList<>();
+		while (result.next()) {
+			tableID.add(result.getInt("id"));
+		}
+		String string="";
+		if(tableID.size()==0) textArea.setText("You have not ordered");
+		else {
+			for(Integer t: tableID) {
+				stmt = c.prepareStatement("SELECT food,unit FROM Delivery WHERE id = "+t+";");
+				result = stmt.executeQuery();
+				ArrayList<String> food = new ArrayList<>();
+				while (result.next()) {
+					food.add(result.getString("food")+"    "+result.getString("unit"));
+				}
+				string =string+ "Bill ID: "+t+"\n\n";
+				for(String f: food) 	string = string+f+"\n";
+//				string =string+ "ID: "+t+"\n";
+				string = string+"=======================\n";
+			}
+			textArea.setText(string);
+		}
+		textArea.setFont(new Font("Monospaced", Font.BOLD | Font.ITALIC, 25));
+		
+		
+		
+		
+		
+		
+		JScrollPane scroll = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(10, 11, 406, 580);
+		infoPanel.add(scroll);
+		
+		
 
 		Button bChange = new Button("Change...");
 		bChange.setFont(new Font("Berlin Sans FB Demi", Font.BOLD | Font.ITALIC, 35));
@@ -208,7 +258,6 @@ public class customerscreen extends JPanel {
 		bBackAd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("BACK AD");
 				switchPane(adPanel);
 			}
 		});

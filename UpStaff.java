@@ -1,4 +1,3 @@
-package main_app;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -369,7 +368,7 @@ public class UpStaff extends JFrame {
     	    
 
     		if (account.getText().equals("admin")) {
-    			JOptionPane.showMessageDialog(null, "Account is main account, can not delete");
+    			JOptionPane.showMessageDialog(null, "This is main account, can not be deleted");
     		} else {
     			checkavailable();
       
