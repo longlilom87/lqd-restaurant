@@ -1,3 +1,4 @@
+package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -30,6 +31,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Uptable extends JFrame {
 
@@ -96,6 +99,18 @@ public class Uptable extends JFrame {
 		contentPane.setLayout(null);
 
 		ID = new JTextField();
+		ID.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				try {
+					int attempt = Integer.parseInt(ID.getText()+e.getKeyChar());
+
+                        } catch (NumberFormatException e2) {
+                        	JOptionPane.showMessageDialog(null, "Can't input string");
+                        	ID.setText("");
+					
+				}
+		}});
 		ID.setBounds(124, 64, 149, 25);
 		contentPane.add(ID);
 		ID.setColumns(10);
@@ -120,7 +135,7 @@ public class Uptable extends JFrame {
 		lblNewLabel_1.setBounds(47, 99, 52, 48);
 		contentPane.add(lblNewLabel_1);
 
-		JButton btnNewButton = new JButton("Update");
+		JButton btnNewButton = new JButton("Add");
 		btnNewButton.setBackground(Color.ORANGE);
 		btnNewButton.setBorder(null);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -129,7 +144,9 @@ public class Uptable extends JFrame {
 
 				try {
                 
-					checkexist();
+					checkstatus();
+					ID.setText("");
+					Status.setText("");
 					String query = "SELECT * FROM Res_table ORDER by tableID;";
 					PreparedStatement stmt = c.prepareStatement(query);
 					ResultSet rs = stmt.executeQuery();
@@ -150,6 +167,8 @@ public class Uptable extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					checkavailable();
+					ID.setText("");
+					Status.setText("");
 					String query = "SELECT * FROM Res_table Order by tableID ;";
 					PreparedStatement stmt = c.prepareStatement(query);
 					ResultSet rs = stmt.executeQuery();
@@ -218,9 +237,13 @@ public class Uptable extends JFrame {
 		if (rs.next() == true) {
 			JOptionPane.showMessageDialog(null, "Table existed");
 		} else {
-			if(Status.getText().isEmpty()) insert(Integer.parseInt(ID.getText()), 0);
-			else insert(Integer.parseInt(ID.getText()), Integer.parseInt(Status.getText()));
-		}
+			 {
+					
+					if(Status.getText().isEmpty()) insert(Integer.parseInt(ID.getText()), 0);
+					else insert(Integer.parseInt(ID.getText()), Integer.parseInt(Status.getText()));
+				}
+			}
+		
 	}
 //check 2
 	public void checkavailable() throws SQLException {
@@ -236,5 +259,12 @@ public class Uptable extends JFrame {
 			insert_2(Integer.parseInt(ID.getText()));
 		}
 
+	}
+	public void checkstatus() throws SQLException {
+		if (Status.getText().equals("0") || Status.getText().equals("1")) {
+			checkexist();
+		}else {
+			JOptionPane.showMessageDialog(null, "Status not available. Please input 0 or 1");
+		}
 	}
 }
