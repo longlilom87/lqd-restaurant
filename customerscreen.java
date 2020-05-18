@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+
 public class customerscreen extends JPanel {
 
 	private JPanel barPanel = new JPanel();
@@ -204,18 +205,19 @@ public class customerscreen extends JPanel {
 		while (result.next()) {
 			tableID.add(result.getInt("id"));
 		}
-		String string="YOUR BILL HISTORY\n========================= \n";
+		String string="";
 		if(tableID.size()==0) textArea.setText("You have not ordered");
 		else {
 			for(Integer t: tableID) {
-				stmt = c.prepareStatement("SELECT food, sum(unit) as sum FROM Delivery WHERE id = "+t+" group by food;");
+				stmt = c.prepareStatement("SELECT food,unit FROM Delivery WHERE id = "+t+";");
 				result = stmt.executeQuery();
 				ArrayList<String> food = new ArrayList<>();
 				while (result.next()) {
-					food.add(result.getString("food")+"    "+result.getString("sum"));
+					food.add(result.getString("food")+"    "+result.getString("unit"));
 				}
 				string =string+ "Bill ID: "+t+"\n\n";
 				for(String f: food) 	string = string+f+"\n";
+//				string =string+ "ID: "+t+"\n";
 				string = string+"=======================\n";
 			}
 			textArea.setText(string);
