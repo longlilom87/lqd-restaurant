@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -66,30 +65,8 @@ public class Uptable extends JFrame {
 		}
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public static Connection Connect() throws SQLException {
-		Connection connection = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			String url = "jdbc:sqlite:Restaurant.db";
-			connection = DriverManager.getConnection(url);
-			System.out.println("ConnectJDBC");
-		} catch (ClassNotFoundException e) {
-			System.out.println("ERROR :" + e.getMessage() + "/n" + e.getClass() + "/n" + e.getCause());
-			e.printStackTrace();
-		}
-		return connection;
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws SQLException
-	 */
 	public Uptable() throws SQLException {
-		c = Connect();
+		c = Menu.Connect();
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 100, 414, 161);
