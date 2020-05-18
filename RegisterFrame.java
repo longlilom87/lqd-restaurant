@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JPasswordField;
 
 import java.sql.*;
@@ -105,7 +107,7 @@ public class RegisterFrame extends JFrame{
 		frame.getContentPane().setBackground(new Color(192, 192, 192));
 		frame.setBackground(new Color(173, 216, 230));
 		frame.setUndecorated(true);
-		frame.setBounds(450, 40, 531, 571);
+		frame.setBounds(450, 40, 531, 650);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -113,7 +115,7 @@ public class RegisterFrame extends JFrame{
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setForeground(new Color(255, 255, 255));
-		panel_1.setBounds(0, 0, 531, 571);
+		panel_1.setBounds(0, 0, 531, 650);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -122,30 +124,38 @@ public class RegisterFrame extends JFrame{
 		btnNewButton.setBorder(null);
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(Color.BLACK);
-		btnNewButton.setBounds(236, 509, 111, 51);
+		btnNewButton.setBounds(203, 571, 111, 51);
 		panel_1.add(btnNewButton);
 		
 		JLabel Close = new JLabel("");
 		Close.setIcon(new ImageIcon(new ImageIcon("Image/X.png").getImage().getScaledInstance(53,51, java.awt.Image.SCALE_SMOOTH)));
 		Close.setBounds(478, 0, 53, 51);
+		Close.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.dispose();
+			}
+		});
 		panel_1.add(Close);
 		
 		Pass2 = new JPasswordField();
-		Pass2.setBounds(186, 447, 272, 33);
+		Pass2.setBounds(186, 498, 272, 33);
 		panel_1.add(Pass2);
 		
-		lblConfirmPassword = new JLabel("Confirm password");
-		lblConfirmPassword.setBounds(0, 447, 184, 33);
+		lblConfirmPassword = new JLabel("pass");
+		lblConfirmPassword.setIcon(new ImageIcon(new ImageIcon("Image/password.png").getImage().getScaledInstance(81,72, java.awt.Image.SCALE_SMOOTH)));
+		lblConfirmPassword.setBounds(70, 474, 81, 72);
 		panel_1.add(lblConfirmPassword);
 		lblConfirmPassword.setForeground(new Color(0, 0, 0));
 		lblConfirmPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
 		
 		Pass1 = new JPasswordField();
-		Pass1.setBounds(186, 385, 269, 29);
+		Pass1.setBounds(186, 400, 269, 29);
 		panel_1.add(Pass1);
 		
 		lblPassword = new JLabel("Password");
-		lblPassword.setBounds(0, 382, 147, 32);
+		lblPassword.setIcon(new ImageIcon(new ImageIcon("Image/password.png").getImage().getScaledInstance(81,72, java.awt.Image.SCALE_SMOOTH)));
+		lblPassword.setBounds(70, 374, 81, 72);
 		panel_1.add(lblPassword);
 		lblPassword.setForeground(new Color(0, 0, 0));
 		lblPassword.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
@@ -156,24 +166,27 @@ public class RegisterFrame extends JFrame{
 		username.setColumns(10);
 		
 		lblUsername = new JLabel("Username");
-		lblUsername.setBounds(0, 314, 147, 32);
+		lblUsername.setIcon(new ImageIcon(new ImageIcon("Image/username.png").getImage().getScaledInstance(81,72, java.awt.Image.SCALE_SMOOTH)));
+		lblUsername.setBounds(70, 291, 81, 72);
 		panel_1.add(lblUsername);
 		lblUsername.setForeground(new Color(0, 0, 0));
 		lblUsername.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
 		
 		addressField = new JTextField();
-		addressField.setBounds(186, 235, 272, 29);
+		addressField.setBounds(186, 224, 272, 29);
 		panel_1.add(addressField);
 		addressField.setColumns(10);
 		
 		JLabel address = new JLabel("Address");
-		address.setBounds(0, 232, 147, 32);
+		address.setIcon(new ImageIcon(new ImageIcon("Image/pin.png").getImage().getScaledInstance(87,72, java.awt.Image.SCALE_SMOOTH)));
+		address.setBounds(60, 211, 87, 72);
 		panel_1.add(address);
 		address.setForeground(new Color(0, 0, 0));
 		address.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
 		
-		JLabel name = new JLabel("Your name");
-		name.setBounds(0, 161, 162, 29);
+		JLabel name = new JLabel("");
+		name.setIcon(new ImageIcon(new ImageIcon("Image/business.png").getImage().getScaledInstance(87,72, java.awt.Image.SCALE_SMOOTH)));
+		name.setBounds(60, 118, 87, 72);
 		panel_1.add(name);
 		name.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 21));
 		name.setForeground(new Color(0, 0, 0));
@@ -185,14 +198,14 @@ public class RegisterFrame extends JFrame{
 		
 		JLabel lblNewLabel = new JLabel("REGISTER");
 		lblNewLabel.setForeground(Color.WHITE);
-	
-		lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.BOLD, 31));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 40));
 		lblNewLabel.setBounds(160, 61, 237, 51);
 		panel_1.add(lblNewLabel);
 		
 		JLabel Back = new JLabel("");
-		Back.setIcon(new ImageIcon (new ImageIcon("C:\\Users\\Admin\\Desktop\\58930.jpg").getImage().getScaledInstance(531,571, java.awt.Image.SCALE_SMOOTH)));
-		Back.setBounds(0, 0, 531, 571);
+		Back.setIcon(new ImageIcon (new ImageIcon("Image/3394.jpg").getImage().getScaledInstance(531,650, java.awt.Image.SCALE_SMOOTH)));
+		Back.setBounds(0, -11, 531, 650);
 		panel_1.add(Back);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
