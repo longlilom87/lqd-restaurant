@@ -242,7 +242,7 @@ public class drawTable extends JPanel {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					update(nameTbl[innerI].getText(), 1);
+					update(choice.getSelectedItem(), 1);
 					repaint();
 
 				}
