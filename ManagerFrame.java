@@ -43,41 +43,8 @@ public class ManagerFrame extends JPanel {
 	 * 
 	 * @throws SQLException
 	 */
-//	public static void main(String[] args) throws SQLException{ 
-//		Connection conne = Connect();
-////		PreparedStatement create = conne.prepareStatement("CREATE TABLE IF NOT EXISTS Res_table (" + 
-////				"     tableID int PRIMARY KEY,\r\n" + 
-////				"	  Table_status int,\r\n );");
-////		create.executeUpdate();
-//		PreparedStatement stmt = conne.prepareStatement("SELECT * FROM Res_table;");
-////		ResultSet rs = stmt.executeQuery();
-//
-//
-//
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					ManagerFrame frame = new ManagerFrame();
-//					frame.setVisible(true);
-//		 
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	public static Connection Connect() throws SQLException {
-//		Connection connection = null;
-//		try {
-//			Class.forName("org.sqlite.JDBC");
-//			String url = "jdbc:sqlite:Restaurant.db";
-//			connection = DriverManager.getConnection(url);
-//			System.out.println("ConnectJDBC");
-//		} catch (ClassNotFoundException e) {
-//			System.out.println("ERROR :" + e.getMessage() + "/n" + e.getClass() + "/n" + e.getCause());
-//			e.printStackTrace();
-//		}
 		return Menu.Connect();
 	}
 
