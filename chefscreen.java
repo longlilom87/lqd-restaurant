@@ -1,5 +1,4 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -10,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-
 
 
 import java.awt.Font;
@@ -29,7 +27,7 @@ public class chefscreen extends JPanel {
 	private JButton btnDone, btnRefresh;
 	static ArrayList<Order> delivery;
 
-	String[] column = { "Bill Number", "Name", "Food", "Unit", "Table", "Status" };
+	String[] column = { "Bill", "Name", "Food", "Unit", "Table", "Date", "Status" };
 
 	/**
 	 * Launch the application.
@@ -70,7 +68,7 @@ public class chefscreen extends JPanel {
 		
 		JLabel name = new JLabel("LQD");
 		name.setFont(new Font("Harlow Solid Italic", Font.ITALIC, 50));
-		name.setBounds(60, 10, 200, 100);
+		name.setBounds(60, 10, 220, 100);
 		name.setForeground(Color.white);
 		name.setVisible(true);
 		add(name);
@@ -111,7 +109,7 @@ public class chefscreen extends JPanel {
 					} else {
 						c = Menu.Connect();
 						String change = "update Delivery set status =1 where id='" + item(i, 0) + "' and name ='"
-								+ item(i, 1) + "' and food ='" + item(i, 2) + "'";
+								+ item(i, 1) + "' and food ='" + item(i, 2) + "' and date = '"+item(i,5)+"'";
 						PreparedStatement st = c.prepareStatement(change);
 						st.executeUpdate();
 						orderTable.setModel(createTableModel()); // updateTable()
@@ -135,6 +133,7 @@ public class chefscreen extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Connection c;
+				System.out.println(orderTable.getSelectedRowCount());
 				orderTable.setModel(createTableModel());
 				refreshHeader(column);
 				try {
@@ -192,12 +191,12 @@ public class chefscreen extends JPanel {
 		try {
 
 			c = Menu.Connect();
-			String Table = "select * from Delivery where status =0 or status=2";
+			String Table = "select id, name, food, unit, address, date, status from Delivery where status =0 or status=2";
 			PreparedStatement st = c.prepareStatement(Table);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				Order order = new Order(rs.getInt("id"), rs.getString("name"), rs.getString("food"), rs.getInt("unit"),
-						rs.getString("address"), rs.getInt("status"));
+						rs.getString("address"),rs.getString("date"), rs.getInt("status"));
 				delivery.add(order);
 			}
 
@@ -225,10 +224,11 @@ public class chefscreen extends JPanel {
 			row[2] = delivery.get(i).getFood();
 			row[3] = delivery.get(i).getUnit();
 			row[4] = delivery.get(i).getAddress();
+			row[5]= delivery.get(i).getDate();
 			if (delivery.get(i).getStatus() == 0) {
-				row[5] = "Not yet";
+				row[6] = "Not yet";
 			} else
-				row[5] = "New";
+				row[6] = "New";
 			model.addRow(row);
 
 		}
