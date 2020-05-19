@@ -1,15 +1,8 @@
-package main_app;
-
-
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-
-
 
 import java.awt.Color;
 import java.sql.*;
@@ -34,55 +27,34 @@ public class ManagerFrame extends JPanel {
 	private JTextField textField;
 	public static JTable table_2;
 	private JPanel panel_1;
-    private JScrollBar scrollBar;
-	private JLabel up1;
-	private JLabel up2;
-	private JLabel up3;
+	private JScrollBar scrollBar;
+	private JLabel up1; //staff
+	private JLabel up2; //table
+	private JLabel up3; //customer
+	private JLabel up4; //menu
 	private JScrollPane scrollPane;
 	private JLabel lblNewLabel_1, lblNewLabel_2, lblNewLabel_3, lblNewLabel_4, lblNewLabel_5, lblNewLabel_6,
-			lblNewLabel_7, lblNewLabel_8, lblNewLabel_9, lblNewLabel_10, lblNewLabel_11;
+			lblNewLabel_7, lblNewLabel_8, lblNewLabel_9, txtUpdate, lblNewLabel_11;
 
 	/**
 	 * Launch the application.
 	 * 
 	 * @throws SQLException
 	 */
-//	public static void main(String[] args) throws SQLException{ 
-//		Connection conne = Connect();
-////		PreparedStatement create = conne.prepareStatement("CREATE TABLE IF NOT EXISTS Res_table (" + 
-////				"     tableID int PRIMARY KEY,\r\n" + 
-////				"	  Table_status int,\r\n );");
-////		create.executeUpdate();
-//		PreparedStatement stmt = conne.prepareStatement("SELECT * FROM Res_table;");
-////		ResultSet rs = stmt.executeQuery();
-//
-//
-//
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					ManagerFrame frame = new ManagerFrame();
-//					frame.setVisible(true);
-//		 
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+
 
 	public static Connection Connect() throws SQLException {
-		Connection connection = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			String url = "jdbc:sqlite:Restaurant.db";
-			connection = DriverManager.getConnection(url);
-			System.out.println("ConnectJDBC");
-		} catch (ClassNotFoundException e) {
-			System.out.println("ERROR :" + e.getMessage() + "/n" + e.getClass() + "/n" + e.getCause());
-			e.printStackTrace();
-		}
-		return connection;
+//		Connection connection = null;
+//		try {
+//			Class.forName("org.sqlite.JDBC");
+//			String url = "jdbc:sqlite:Restaurant.db";
+//			connection = DriverManager.getConnection(url);
+//			System.out.println("ConnectJDBC");
+//		} catch (ClassNotFoundException e) {
+//			System.out.println("ERROR :" + e.getMessage() + "/n" + e.getClass() + "/n" + e.getCause());
+//			e.printStackTrace();
+//		}
+		return Menu.Connect();
 	}
 
 	/**
@@ -110,18 +82,17 @@ public class ManagerFrame extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.white);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		JButton logout = new JButton ("Log out");
-		logout.setFont(new Font ("Tahoma", Font.PLAIN,15));
-		logout.setBounds(1151,45, 100, 30);
+
+		JButton logout = new JButton("Log out");
+		logout.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		logout.setBounds(1151, 45, 100, 30);
 		logout.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				LoginFrame.user.Logout();
-				
 			}
-			
+
 		});
 		panel.add(logout);
 
@@ -130,17 +101,23 @@ public class ManagerFrame extends JPanel {
 		add(scrollPane);
 		scrollPane.setVisible(false);
 
-		table_2 = new JTable();
+		table_2 = new JTable() {
+
+			@Override
+			public boolean isCellEditable(int arg0, int arg1) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+		};
 		scrollPane.setViewportView(table_2);
 		table_2.setVisible(false);
-        table_2.setRowHeight(35);
-        
-        
-		
+		table_2.setRowHeight(35);
+		table_2.getTableHeader().setFont(new Font("Arial",Font.BOLD,20));
 
-        scrollBar = new JScrollBar();
-        scrollPane.setColumnHeaderView(scrollBar);
-        scrollPane.setVisible(false);
+		scrollBar = new JScrollBar();
+		scrollPane.setColumnHeaderView(scrollBar);
+		scrollPane.setVisible(false);
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(1051, 420, 261, 211);
 		add(lblNewLabel_1);
@@ -195,6 +172,7 @@ public class ManagerFrame extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Upcustomer upcus;
+				
 				upcus = new Upcustomer();
 				upcus.setUndecorated(true);
 				upcus.setVisible(true);
@@ -206,6 +184,27 @@ public class ManagerFrame extends JPanel {
 		up3.setBounds(799, 114, 106, 89);
 		add(up3);
 
+		up4 = new JLabel("");
+		up4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				UpdateMenu upmenu;
+				try {
+					upmenu= new UpdateMenu();
+				    Window.switchPane(upmenu);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
+			}
+		});
+		up4.setIcon(new ImageIcon(new ImageIcon("Image/computer.png").getImage().getScaledInstance(106, 88,
+				java.awt.Image.SCALE_SMOOTH)));
+		up4.setBounds(799, 114, 106, 89);
+		add(up4);
+		up4.setVisible(false);
+		
+		
 		lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.addMouseListener(new MouseAdapter() {
 			@Override
@@ -213,25 +212,14 @@ public class ManagerFrame extends JPanel {
 				up1.setVisible(false);
 				up2.setVisible(false);
 				up3.setVisible(true);
+				up4.setVisible(false);
 				lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon("Image/food.png").getImage().getScaledInstance(246,
 						211, java.awt.Image.SCALE_SMOOTH)));
-				table_2.setVisible(true);
-				lblNewLabel_10.setVisible(true);
-				scrollPane.setVisible(true);
-
-				try {
-					Connection connection = Connect();
-					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Customer'; ";
-					PreparedStatement stmt = connection.prepareStatement(query);
-					ResultSet rs1 = stmt.executeQuery();
-					table_2.setModel(DbUtils.resultSetToTableModel(rs1));
-				} catch (SQLException e1) {
-
-					e1.printStackTrace();
-
-				}
+				txtUpdate.setVisible(true);
+				showCustomer();
 			}
 		});
+		
 		lblNewLabel_2.setIcon(new ImageIcon(new ImageIcon("Image/private-account.png").getImage().getScaledInstance(88,
 				88, java.awt.Image.SCALE_SMOOTH)));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -244,26 +232,16 @@ public class ManagerFrame extends JPanel {
 		lblNewLabel_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				up2.setVisible(true);
-				lblNewLabel_10.setVisible(true);
-
 				up1.setVisible(false);
+				up2.setVisible(true);
+				up3.setVisible(false);
+				up4.setVisible(false);
+				
+				txtUpdate.setVisible(true);
 				lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon("Image/Table.png").getImage().getScaledInstance(246,
 						211, java.awt.Image.SCALE_SMOOTH)));
-				table_2.setVisible(true);
-				up3.setVisible(false);
-				scrollPane.setVisible(true);
-
-				try {
-					Connection connection = Connect();
-					String query = "SELECT * FROM Res_table ORDER by TableID;";
-					PreparedStatement stmt = connection.prepareStatement(query);
-					ResultSet rs = stmt.executeQuery();
-					table_2.setModel(DbUtils.resultSetToTableModel(rs));
-
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				showTable();
+				
 			}
 		});
 		lblNewLabel_3.setIcon(new ImageIcon(new ImageIcon("Image/restaurant_1.png").getImage().getScaledInstance(88, 88,
@@ -277,14 +255,16 @@ public class ManagerFrame extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon("Image/drink.png").getImage().getScaledInstance(246,
 						211, java.awt.Image.SCALE_SMOOTH)));
-				lblNewLabel_10.setVisible(true);
+				txtUpdate.setVisible(true);
 				lblNewLabel_11.setVisible(true);
 
-				try {
-					Window.switchPane(new UpdateMenu());
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				up1.setVisible(false);
+				up2.setVisible(false);
+				up3.setVisible(false);
+				
+				up4.setVisible(true);
+				
+				showMenu();
 
 			}
 		});
@@ -300,24 +280,14 @@ public class ManagerFrame extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				up1.setVisible(true);
 				up2.setVisible(false);
-				lblNewLabel_10.setVisible(true);
-
 				up3.setVisible(false);
+				up4.setVisible(false);
+				txtUpdate.setVisible(true);
+				
 				lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon("Image/restaurant.png").getImage()
 						.getScaledInstance(246, 211, java.awt.Image.SCALE_SMOOTH)));
-				scrollPane.setVisible(true);
-				table_2.setVisible(true);
 
-				try {
-					Connection connection = Connect();
-					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
-					PreparedStatement stmt = connection.prepareStatement(query);
-					ResultSet rs2 = stmt.executeQuery();
-					table_2.setModel(DbUtils.resultSetToTableModel(rs2));
-				} catch (SQLException e2) {
-
-					e2.printStackTrace();
-				}
+				showStaff();
 			}
 		});
 		lblNewLabel_5.setIcon(new ImageIcon(
@@ -349,11 +319,11 @@ public class ManagerFrame extends JPanel {
 		lblNewLabel_9.setBounds(915, 213, 98, 22);
 		add(lblNewLabel_9);
 
-		lblNewLabel_10 = new JLabel("UPDATE");
-		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_10.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_10.setBounds(799, 213, 98, 22);
-		add(lblNewLabel_10);
+		txtUpdate = new JLabel("UPDATE");
+		txtUpdate.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtUpdate.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUpdate.setBounds(799, 213, 98, 22);
+		add(txtUpdate);
 
 		lblNewLabel_11 = new JLabel("");
 		lblNewLabel_11.setIcon(new ImageIcon(new ImageIcon("Image/computer.png").getImage().getScaledInstance(106, 88,
@@ -362,7 +332,7 @@ public class ManagerFrame extends JPanel {
 		lblNewLabel_11.setBounds(799, 114, 104, 89);
 		add(lblNewLabel_11);
 
-		lblNewLabel_10.setVisible(false);
+		txtUpdate.setVisible(false);
 		lblNewLabel_11.setVisible(false);
 
 		up3.setVisible(false);
@@ -371,24 +341,72 @@ public class ManagerFrame extends JPanel {
 				.getScaledInstance(Window.getW(), Window.getH(), java.awt.Image.SCALE_SMOOTH)));
 		bg.setBounds(0, 0, Window.getW(), Window.getH());
 		add(bg);
-		
+
 		JLabel lblNewLabel_12 = new JLabel("New label");
-		lblNewLabel_12.setIcon(new ImageIcon (new ImageIcon("Image/3802954.jpg").getImage()
+		lblNewLabel_12.setIcon(new ImageIcon(new ImageIcon("Image/3802954.jpg").getImage()
 				.getScaledInstance(Window.getW(), Window.getH(), java.awt.Image.SCALE_SMOOTH)));
 		lblNewLabel_12.setBounds(0, 97, 1366, 652);
 		add(lblNewLabel_12);
 	}
 
-	private void addUpdateMenu() {
-		UpdateMenu u;
-
+	public void showStaff() {
 		try {
-			u = new UpdateMenu();
-			u.setVisible(true);
+			Connection connection = Connect();
+			String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Chef' or Login_Role = 'Manager' ORDER BY Login_Role DESC ; ";
+			PreparedStatement stmt = connection.prepareStatement(query);
+			ResultSet rs2 = stmt.executeQuery();
+			table_2.setModel(DbUtils.resultSetToTableModel(rs2));
+			
+			table_2.setVisible(true);
+			scrollPane.setVisible(true);
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+	}
+	public void showCustomer() {
+		try {
+			Connection connection = Connect();
+			String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Customer'; ";
+			PreparedStatement stmt = connection.prepareStatement(query);
+			ResultSet rs1 = stmt.executeQuery();
+			table_2.setModel(DbUtils.resultSetToTableModel(rs1));
+			
+			table_2.setVisible(true);
+			scrollPane.setVisible(true);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+	}
+	public void showTable() {
+		try {
+			Connection connection = Connect();
+			String query = "SELECT * FROM Res_table ORDER by TableID;";
+			PreparedStatement stmt = connection.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			table_2.setModel(DbUtils.resultSetToTableModel(rs));
+			
+			table_2.setVisible(true);
+			scrollPane.setVisible(true);
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public void showMenu() {
+		try {
+			Connection connection = Connect();
+			String query = "SELECT idFood, name, price FROM Menu ORDER by idFood;";
+			PreparedStatement stmt = connection.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			table_2.setModel(DbUtils.resultSetToTableModel(rs));
+			
+			table_2.setVisible(true);
+			scrollPane.setVisible(true);
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
