@@ -54,9 +54,6 @@ public class Goodbye extends JFrame {
 		  t.start();
 
 		JLabel lblThankYou = new JLabel();
-		System.out.println("ROLE: "+LoginFrame.user.getRole());
-//		if(LoginFrame.user.getRole().equals("Customer")) lblThankYou.setText("Thank you for choosing us!");
-//		else lblThankYou.setText("Have a nice day");
 		switch (LoginFrame.user.getRole()) {
 		case "Customer":
 			lblThankYou.setText("Thank you for choosing us!");
