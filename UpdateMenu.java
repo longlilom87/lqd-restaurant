@@ -1,5 +1,4 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.Color;
@@ -34,7 +33,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-
 
 public class UpdateMenu extends JPanel {
 
@@ -233,12 +231,24 @@ public class UpdateMenu extends JPanel {
 		imageField.setBounds(txtEnterName.getX(), ImageLabel.getY(), 183, 31);
 		add(imageField);
 
-		JButton bBrowse = new JButton("Browse...");
-		bBrowse.setBounds(imageField.getX() + 200, imageField.getY(), 97, 25);
-		bBrowse.addActionListener(new ActionListener() {
+		JLabel bBrowse = new JLabel(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage()
+				.getScaledInstance(60, 40, java.awt.Image.SCALE_SMOOTH)));
+		bBrowse.setBounds(imageField.getX() + 200, imageField.getY() - 10, 70, 50);
+		bBrowse.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent e) {
+				bBrowse.setIcon(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage().getScaledInstance(60,
+						40, java.awt.Image.SCALE_SMOOTH)));
+			}
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseEntered(MouseEvent e) {
+				bBrowse.setIcon(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage().getScaledInstance(70,
+						50, java.awt.Image.SCALE_SMOOTH)));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				JFileChooser file = new JFileChooser();
 				file.setCurrentDirectory(new File(System.getProperty("user.home")));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Image", "png", "jpg", "gif");
@@ -255,7 +265,6 @@ public class UpdateMenu extends JPanel {
 			}
 		});
 		add(bBrowse);
-
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setBounds(lblUpdateItem.getX() - 43, lblUpdateItem.getY() + 260, 97, 25);
 		btnAdd.addActionListener(new ActionListener() {
