@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -21,6 +24,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 
 public class Menu extends JPanel {
 
@@ -39,21 +45,21 @@ public class Menu extends JPanel {
 	static JPanel burgerPanel = new JPanel();
 	static JPanel pizzaPanel = new JPanel();
 	static JPanel homePanel = new JPanel();
+	private static JPanel searchPanel = new JPanel();
 
-	Button btnQuin = new Button("Burger");
-	Button bChicken, bBeverage, bPizza, Cash, bPay, bBack;
+//	Button btnQuin = new Button("Burger");
+//	Button bChicken, bBeverage, bPizza, bBack;
 
 	public Menu() throws SQLException {
 		setLayout(null);
 		setBounds(0, 0, Window.getW(), Window.getH());
 
-		Cash = new Button("Order");
+		JLabel Cash = new JLabel(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH)));
 		add(namePanel);
 		add(menuLayer);
-		Cash.setBounds(1250, 0, 100, 50);
-		Cash.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		Cash.setBounds(Window.getW()-300, 30, 100, 100);
+		Cash.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				total = 0;
 				if (foodList.size() == 0) {
 					JOptionPane.showMessageDialog(null, "Please order");
@@ -68,19 +74,17 @@ public class Menu extends JPanel {
 				bill bill = new bill(LoginFrame.user, foodList);
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-
 			}
 		});
 
-		bPay = new Button("Cash");
+		JLabel bPay = new JLabel(new ImageIcon(new ImageIcon("Image/cashButton.png").getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH)));
 		if (bl == true) {
 			add(Cash);
 			add(bPay);
 		}
-		bPay.setBounds(1000, 0, 100, 50);
-		bPay.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		bPay.setBounds(Window.getW()-150, Cash.getY(), 100, 100);
+		bPay.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				total = 0;
 //				System.out.println("CASH");
 				if (payFoodList.size() == 0) {
@@ -97,15 +101,14 @@ public class Menu extends JPanel {
 				bill bill = new bill(LoginFrame.user, payFoodList);
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-
 			}
-		});
-
+		} );
+		
+		
 		namePanel();
 		Layer();
 
 	}
-
 	public void Layer() throws SQLException {
 		// LAYER PANE
 		Connection c = Connect();
@@ -118,6 +121,9 @@ public class Menu extends JPanel {
 		addMenuPanel(c, beveragePanel, "'D%'");
 		addMenuPanel(c, burgerPanel, "'B%'");
 		addMenuPanel(c, pizzaPanel, "'P%'");
+		
+		setLayeredMenuPanel(searchPanel);
+		
 	}
 
 	public static void setLayeredMenuPanel(JPanel p) {
@@ -129,21 +135,30 @@ public class Menu extends JPanel {
 	public void namePanel() {
 		// NAME PANEL
 		JPanel namePanel = new JPanel();
-		namePanel.setBounds(0, 0, 1382 / 4, 744);
+		namePanel.setBounds(0, 0, 345, Window.getH());
 		namePanel.setLayout(null);
 		namePanel.setBackground(new Color(107, 142, 35));
 		add(namePanel);
 
+		JLabel btnQuin = new JLabel("Burger");
+		btnQuin.setLabelFor(btnQuin);
+		btnQuin.setHorizontalAlignment(SwingConstants.CENTER);
 		btnQuin.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
-		btnQuin.setBackground(new Color(0, 128, 0));
-
 		btnQuin.setBounds(10, 137, 325, 71);
-		btnQuin.addActionListener(new ActionListener() {
-
+		btnQuin.addMouseListener(new MouseAdapter() {
+			public void mouseExited(MouseEvent e) {
+				btnQuin.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+			}
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseEntered(MouseEvent e) {
+				btnQuin.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				try {
-					restart(burgerPanel, "B%");
+					restart(burgerPanel, "C%");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -151,14 +166,26 @@ public class Menu extends JPanel {
 				switchPane(burgerPanel);
 			}
 		});
-
-		bChicken = new Button("Other");
+		namePanel.add(btnQuin);
+		
+		JLabel bChicken = new JLabel("Other");
+		bChicken.setHorizontalAlignment(SwingConstants.CENTER);
 		bChicken.setBounds(10, 289, 325, 71);
 		bChicken.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 		bChicken.setBackground(new Color(0, 128, 0));
-		bChicken.addActionListener(new ActionListener() {
+		bChicken.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseExited(MouseEvent e) {
+				bChicken.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				bChicken.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				try {
 					restart(chickenPanel, "C%");
 				} catch (SQLException e1) {
@@ -168,13 +195,25 @@ public class Menu extends JPanel {
 				switchPane(chickenPanel);
 			}
 		});
-		bBeverage = new Button("Beverage");
+		
+		JLabel bBeverage = new JLabel("Beverage");
+		bBeverage.setHorizontalAlignment(SwingConstants.CENTER);
 		bBeverage.setBounds(10, 366, 325, 71);
 		bBeverage.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 		bBeverage.setBackground(new Color(0, 128, 0));
-		bBeverage.addActionListener(new ActionListener() {
+		bBeverage.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseExited(MouseEvent e) {
+				bBeverage.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				bBeverage.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				try {
 					restart(beveragePanel, "D%");
 				} catch (SQLException e1) {
@@ -184,13 +223,25 @@ public class Menu extends JPanel {
 				switchPane(beveragePanel);
 			}
 		});
-		bPizza = new Button("Pizza");
+		
+		JLabel bPizza = new JLabel("Pizza");
+		bPizza.setHorizontalAlignment(SwingConstants.CENTER);
 		bPizza.setBounds(10, 212, 325, 71);
 		bPizza.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 		bPizza.setBackground(new Color(0, 128, 0));
-		bPizza.addActionListener(new ActionListener() {
+		bPizza.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseExited(MouseEvent e) {
+				bPizza.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				bPizza.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				try {
 					restart(pizzaPanel, "P%");
 				} catch (SQLException e1) {
@@ -201,13 +252,24 @@ public class Menu extends JPanel {
 			}
 		});
 
-		bBack = new Button("Back");
+		JLabel bBack = new JLabel("Back");
+		bBack.setHorizontalAlignment(SwingConstants.CENTER);
 		bBack.setBounds(10, 443, 325, 71);
 		bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 		bBack.setBackground(new Color(0, 128, 0));
-		bBack.addActionListener(new ActionListener() {
+		bBack.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseExited(MouseEvent e) {
+				bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				bBack.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				Window.switchPane(new Welcome());
 			}
 		});

@@ -67,11 +67,20 @@ public class User {
 			name = null;
 			address = null;
 			tableID = null;
-			break;
+			return;
 		case JOptionPane.NO_OPTION:
-			break;
+			return;
 		}
 
+	}
+	
+	public void logOutBank() {
+		username = null;
+		password = null;
+		role = null;
+		name = null;
+		address = null;
+		tableID = null;
 	}
 
 	public String getName() {

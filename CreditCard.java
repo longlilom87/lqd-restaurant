@@ -41,6 +41,7 @@ public class CreditCard extends JFrame {
 	public CreditCard() throws SQLException {
 		setTitle("Credit Card");
 		setVisible(true);
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(Window.getW() / 4, 0, 700, 700);
 		getContentPane().setLayout(null);
@@ -181,7 +182,14 @@ public class CreditCard extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				LoginFrame.user.Logout();
+				try {
+					Goodbye g = new Goodbye();
+					g.setVisible(true);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				LoginFrame.user.logOutBank();
 			}
 		});
 		confirmPanel.add(btnOK);
