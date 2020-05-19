@@ -1,7 +1,4 @@
-
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package main_app;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,9 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-
-
 import javax.swing.JButton;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Color;
@@ -84,11 +82,11 @@ public class bill extends JFrame {
 		setBounds(0, 0, 492, 734);
 		setResizable(false);
 
-		if (Menu.orderMore==0) {
-			i= writeID()+1;
-		}
-		else i=writeID();
-		
+		if (Menu.orderMore == 0) {
+			i = writeID() + 1;
+		} else
+			i = writeID();
+
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,7 +133,7 @@ public class bill extends JFrame {
 					Menu.addMenuPanel(c, pizzaPanel, "'P%'");
 
 					for (FoodItem t : foodList) {
-						String to_delivery = "insert into Delivery (id,name,food,unit,address,status,username) values (?,?,?,?,?,?,?)";
+						String to_delivery = "insert into Delivery (id,name,food,unit,address,date,status,username) values (?,?,?,?,?,?,?,?)";
 						PreparedStatement st = c.prepareStatement(to_delivery);
 						st.setInt(1, i);
 						st.setString(2, user.getName());
@@ -145,8 +143,9 @@ public class bill extends JFrame {
 							st.setString(5, user.getTableID());
 						} else
 							st.setString(5, "Delivery");
-						st.setInt(6, 2);
-						st.setString(7, LoginFrame.user.getUsername());
+						st.setString(6, Menu.getDate());
+						st.setInt(7, 2);
+						st.setString(8, LoginFrame.user.getUsername());
 						st.executeUpdate();
 					}
 
@@ -170,7 +169,7 @@ public class bill extends JFrame {
 		bPay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Menu.orderMore=0;
+				Menu.orderMore = 0;
 				CreditCard cc;
 				try {
 					cc = new CreditCard();
@@ -212,7 +211,7 @@ public class bill extends JFrame {
 
 		textField_2 = new JTextArea();
 		textField_2.setForeground(Color.BLACK);
-	
+
 		textField_2.setText("#" + i);
 		textField_2.setFont(new Font("Trebuchet MS", Font.PLAIN, 45));
 		textField_2.setEditable(false);
@@ -252,7 +251,7 @@ public class bill extends JFrame {
 		panel.setBounds(0, line, 492, 734);
 		panel.setBackground(Color.white);
 		add(panel);
-		
+
 		int sl = 0;
 		int y = 0;
 		for (FoodItem f : foodList) {
