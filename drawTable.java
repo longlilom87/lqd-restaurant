@@ -1,5 +1,3 @@
-
-
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
@@ -77,17 +75,7 @@ public class drawTable extends JPanel {
 		add(textField_1);
 
 		int button = 90;
-		int ybutton = 200;
-
-		Choice choice = new Choice();
-		choice.setBounds(button, ybutton - 40, 150, 25);
-		choice.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		add(choice);
-
-		for (int i = 0; i < tablelist.size(); i++) {
-			Table t = tablelist.get(i);
-			choice.add(Integer.toString(t.getX()));
-		}
+		int ybutton = 150;
 
 		JLabel bBack = new JLabel();
 		bBack.setIcon(new ImageIcon(new ImageIcon("Image/back_shadow.png").getImage().getScaledInstance(50, 50,
@@ -132,32 +120,6 @@ public class drawTable extends JPanel {
 		bBack.setHorizontalAlignment(SwingConstants.CENTER);
 		add(bBack);
 
-		JButton btnCustomer = new JButton("Choose Table");
-		btnCustomer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (Table t : tablelist)
-					if (String.valueOf(t.getX()).equals(choice.getSelectedItem()))
-						if (t.getY() == 1) {
-							JOptionPane.showMessageDialog(null, "Please choose another table");
-							return;
-						}
-
-				try {
-					Menu.bl = true;
-					Window.switchPane(new Menu());
-					user.setTableID(choice.getSelectedItem());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				update(choice.getSelectedItem(), 1);
-				repaint();
-			}
-		});
-		btnCustomer.setBounds(button, ybutton, 150, 25);
-		add(btnCustomer);
-
 		JButton bDelivery = new JButton("Delivery");
 		bDelivery.addActionListener(new ActionListener() {
 			@Override
@@ -174,7 +136,7 @@ public class drawTable extends JPanel {
 				Window.homeLayer.revalidate();
 			}
 		});
-		bDelivery.setBounds(button, ybutton + 30, 150, 25);
+		bDelivery.setBounds(button, ybutton, 150, 50);
 		add(bDelivery);
 
 		tableMenu.setLayout(null);

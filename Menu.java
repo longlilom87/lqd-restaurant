@@ -1,3 +1,4 @@
+package main_app;
 
 import java.awt.*;
 import java.sql.*;
@@ -27,7 +28,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
 public class Menu extends JPanel {
 
 	JPanel namePanel = new JPanel();
@@ -54,10 +54,11 @@ public class Menu extends JPanel {
 		setLayout(null);
 		setBounds(0, 0, Window.getW(), Window.getH());
 
-		JLabel Cash = new JLabel(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH)));
+		JLabel Cash = new JLabel(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(100,
+				100, java.awt.Image.SCALE_SMOOTH)));
 		add(namePanel);
 		add(menuLayer);
-		Cash.setBounds(Window.getW()-300, 30, 100, 100);
+		Cash.setBounds(Window.getW() - 300, 30, 100, 100);
 		Cash.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				total = 0;
@@ -77,13 +78,16 @@ public class Menu extends JPanel {
 			}
 		});
 
-		JLabel bPay = new JLabel(new ImageIcon(new ImageIcon("Image/cashButton.png").getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH)));
+		JLabel bPay = new JLabel(new ImageIcon(new ImageIcon("Image/cashButton.png").getImage().getScaledInstance(100,
+				100, java.awt.Image.SCALE_SMOOTH)));
 		if (bl == true) {
 			add(Cash);
 			add(bPay);
 		}
-		bPay.setBounds(Window.getW()-150, Cash.getY(), 100, 100);
+		bPay.setBounds(Window.getW() - 150, Cash.getY(), 100, 100);
 		bPay.addMouseListener(new MouseAdapter() {
+			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				total = 0;
 //				System.out.println("CASH");
@@ -102,13 +106,14 @@ public class Menu extends JPanel {
 				bill.setVisible(true);
 				bill.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			}
-		} );
-		
-		
+
+		});
+
 		namePanel();
 		Layer();
 
 	}
+
 	public void Layer() throws SQLException {
 		// LAYER PANE
 		Connection c = Connect();
@@ -121,9 +126,9 @@ public class Menu extends JPanel {
 		addMenuPanel(c, beveragePanel, "'D%'");
 		addMenuPanel(c, burgerPanel, "'B%'");
 		addMenuPanel(c, pizzaPanel, "'P%'");
-		
+
 		setLayeredMenuPanel(searchPanel);
-		
+
 	}
 
 	public static void setLayeredMenuPanel(JPanel p) {
@@ -149,12 +154,12 @@ public class Menu extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				btnQuin.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnQuin.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+				btnQuin.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 60));
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -167,7 +172,7 @@ public class Menu extends JPanel {
 			}
 		});
 		namePanel.add(btnQuin);
-		
+
 		JLabel bChicken = new JLabel("Other");
 		bChicken.setHorizontalAlignment(SwingConstants.CENTER);
 		bChicken.setBounds(10, 289, 325, 71);
@@ -178,12 +183,12 @@ public class Menu extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				bChicken.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				bChicken.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+				bChicken.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 60));
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -195,7 +200,7 @@ public class Menu extends JPanel {
 				switchPane(chickenPanel);
 			}
 		});
-		
+
 		JLabel bBeverage = new JLabel("Beverage");
 		bBeverage.setHorizontalAlignment(SwingConstants.CENTER);
 		bBeverage.setBounds(10, 366, 325, 71);
@@ -206,12 +211,12 @@ public class Menu extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				bBeverage.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				bBeverage.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+				bBeverage.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 60));
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -223,7 +228,7 @@ public class Menu extends JPanel {
 				switchPane(beveragePanel);
 			}
 		});
-		
+
 		JLabel bPizza = new JLabel("Pizza");
 		bPizza.setHorizontalAlignment(SwingConstants.CENTER);
 		bPizza.setBounds(10, 212, 325, 71);
@@ -234,12 +239,12 @@ public class Menu extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				bPizza.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				bPizza.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+				bPizza.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 60));
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -262,12 +267,12 @@ public class Menu extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				bBack.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 60));
+				bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 60));
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Window.switchPane(new Welcome());
@@ -294,9 +299,9 @@ public class Menu extends JPanel {
 		label.setBounds(193, 62, 50, 50);
 		namePanel.add(label);
 
-		JLabel lblNewLabel = new JLabel(new ImageIcon(
-				new ImageIcon("Image/menu.jpg").getImage().getScaledInstance(1026, 749, java.awt.Image.SCALE_SMOOTH)));
-		lblNewLabel.setBounds(344, 0, 1026, 749);
+		JLabel lblNewLabel = new JLabel(new ImageIcon(new ImageIcon("Image/menu.jpg").getImage()
+				.getScaledInstance(Window.getW() - 344, Window.getH(), java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel.setBounds(344, 0, Window.getW() - 344, Window.getH());
 		add(lblNewLabel);
 	}
 
@@ -402,11 +407,12 @@ public class Menu extends JPanel {
 			e1.printStackTrace();
 		}
 	}
+
 	public static String getDate() {
-	    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    Date now = new Date();
-	    String strDate = sdfDate.format(now);
-	    return strDate;
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		return strDate;
 	}
 
 }
