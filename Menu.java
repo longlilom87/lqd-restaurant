@@ -40,6 +40,7 @@ public class Menu extends JPanel {
 	static ArrayList<FoodItem> payFoodList = new ArrayList<>();
 
 	static JLayeredPane menuLayer = new JLayeredPane();
+	JLabel btnQuin,bChicken,bBeverage,bPizza;
 	static JPanel chickenPanel = new JPanel();
 	static JPanel beveragePanel = new JPanel();
 	static JPanel burgerPanel = new JPanel();
@@ -145,7 +146,7 @@ public class Menu extends JPanel {
 		namePanel.setBackground(new Color(107, 142, 35));
 		add(namePanel);
 
-		JLabel btnQuin = new JLabel("Burger");
+		btnQuin = new JLabel("Burger");
 		btnQuin.setLabelFor(btnQuin);
 		btnQuin.setHorizontalAlignment(SwingConstants.CENTER);
 		btnQuin.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
@@ -163,6 +164,7 @@ public class Menu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					setBackground(btnQuin);
 					restart(burgerPanel, "C%");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -173,7 +175,7 @@ public class Menu extends JPanel {
 		});
 		namePanel.add(btnQuin);
 
-		JLabel bChicken = new JLabel("Other");
+		bChicken = new JLabel("Other");
 		bChicken.setHorizontalAlignment(SwingConstants.CENTER);
 		bChicken.setBounds(10, 289, 325, 71);
 		bChicken.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
@@ -192,6 +194,7 @@ public class Menu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					setBackground(bChicken);
 					restart(chickenPanel, "C%");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -201,12 +204,13 @@ public class Menu extends JPanel {
 			}
 		});
 
-		JLabel bBeverage = new JLabel("Beverage");
+		bBeverage = new JLabel("Beverage");
 		bBeverage.setHorizontalAlignment(SwingConstants.CENTER);
 		bBeverage.setBounds(10, 366, 325, 71);
 		bBeverage.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 		bBeverage.setBackground(new Color(0, 128, 0));
 		bBeverage.addMouseListener(new MouseAdapter() {
+		
 			@Override
 			public void mouseExited(MouseEvent e) {
 				bBeverage.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
@@ -220,6 +224,7 @@ public class Menu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					setBackground(bBeverage);
 					restart(beveragePanel, "D%");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -229,7 +234,7 @@ public class Menu extends JPanel {
 			}
 		});
 
-		JLabel bPizza = new JLabel("Pizza");
+		bPizza = new JLabel("Pizza");
 		bPizza.setHorizontalAlignment(SwingConstants.CENTER);
 		bPizza.setBounds(10, 212, 325, 71);
 		bPizza.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
@@ -248,6 +253,7 @@ public class Menu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					setBackground(bPizza);
 					restart(pizzaPanel, "P%");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -408,6 +414,22 @@ public class Menu extends JPanel {
 		}
 	}
 
+	public void setBackground (JLabel p) {
+		p.setBackground(new Color(163, 209, 172));
+		JLabel [] foodType = {btnQuin,bChicken,bBeverage,bPizza};
+		p.setBackground(new Color(163, 209, 172));
+		for (JLabel i: foodType) {
+			if (i==p) {
+				i.setOpaque(true);
+				i.repaint();
+			}
+			else {
+				i.setOpaque(false);
+				i.repaint();
+			}
+		}
+		
+	}
 	public static String getDate() {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date now = new Date();
