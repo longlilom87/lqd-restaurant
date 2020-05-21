@@ -125,13 +125,9 @@ public class drawTable extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Window.homeLayer.removeAll();
-				try {
-					Menu.bl = true;
-					Window.homeLayer.add(new Menu());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				
+				Menu();
+				
 				Window.homeLayer.repaint();
 				Window.homeLayer.revalidate();
 			}
@@ -200,14 +196,8 @@ public class drawTable extends JPanel {
 								return;
 							}
 
-					try {
-						Menu.bl = true;
-						Window.switchPane(new Menu());
-						user.setTableID(String.valueOf(tbls[innerI].getText()));
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					Menu();
+					user.setTableID(String.valueOf(tbls[innerI].getText()));
 					update(tbls[innerI].getText(), 1);
 					repaint();
 
@@ -280,5 +270,18 @@ public class drawTable extends JPanel {
 		return (int) a / b + 1;
 
 	}
-
+	private void Menu() {
+		try {
+			Menu.bl = true;
+			Menu m = new Menu();
+			m.Layer();
+			m.menuLayer.removeAll();
+			m.Layer();
+			Window.switchPane(m);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

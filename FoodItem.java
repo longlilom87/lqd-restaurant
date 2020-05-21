@@ -132,6 +132,7 @@ public class FoodItem extends JPanel{
 			}
 		} );
 
+		System.out.println("CHECK BOOLEAN: "+this.name+" "+Menu.bl);
 		if(Menu.bl==true) {
 			add(plusButton);
 			add(minusButton);
@@ -144,55 +145,6 @@ public class FoodItem extends JPanel{
 	
 	public void setY(int valueY) {
 		setBounds(20,valueY,Window.getW() * 3 / 4-50,130);
-	}
-	
-	public FoodItem(String id, String n, int p) {
-		y=temp;
-		idFood = id;
-		name = n;
-		price = p;
-		
-		plusButton.setBounds(900, 50, 30, 30);
-		plusButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				qty++;
-				for(int i=0; i<foodList.size(); i++) {
-					FoodItem t = foodList.get(i);
-					if(t.getName().equals(name)) foodList.remove(t);
-				}
-				foodList.add(new FoodItem(name,price,qty));
-				repaint();
-			}
-		});
-		
-		minusButton.setBounds(800, 50, 30, 30);
-		minusButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(qty ==0) return;
-				else{
-					qty--;
-					for(int i=0; i<foodList.size(); i++) {
-						FoodItem t = foodList.get(i);
-						if(t.getName().equals(name)) foodList.remove(t);
-					}
-					if(qty!=0) foodList.add(new FoodItem(name,price,qty));
-					repaint();
-				}
-				
-			}
-		});
-
-		if(Menu.bl==true) {
-			add(plusButton);
-			add(minusButton);
-		}
-		
-		setLayout(null);
-		setBounds(20,y, Window.getW() * 3 / 4-50,130);
-		setBackground(new Color(255, 250, 205));
-		temp+=130;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -212,7 +164,11 @@ public class FoodItem extends JPanel{
 		g.drawString(""+this.getPrice(), 500, 110);
 		
 		g.setFont(new Font("Arial",Font.BOLD,30));
-		if(Menu.bl==true) g.drawString(""+qty, 860, 75);
+		if(Menu.bl==true) {
+			g.drawString(""+qty, 860, 75);
+			add(plusButton);
+			add(minusButton);
+		}
 //		g.drawImage(image,0,0,null);
 	}
 

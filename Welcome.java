@@ -121,11 +121,7 @@ public class Welcome extends JPanel{
 				}
 			}
 		});
-		bMenu.addMouseListener(new MouseListener() {
-			public void mouseReleased(MouseEvent e) {
-			}
-			public void mousePressed(MouseEvent e) {
-			}
+		bMenu.addMouseListener(new MouseAdapter() {
 			public void mouseExited(MouseEvent e) {
 				bMenu.setForeground(Color.white);
 			}
@@ -133,69 +129,18 @@ public class Welcome extends JPanel{
 				bMenu.setForeground(new Color(210, 105, 30));
 			}
 			public void mouseClicked(MouseEvent e) {
-				Menu.bl=false;
 				try {
-					Window.switchPane(new Menu());
+					Menu m = new Menu();
+					Menu.bl=false;
+					m.Layer();
+					m.menuLayer.removeAll();
+					m.Layer();
+					Window.switchPane(m);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-//				try {
-//					Window.switchPane(new UpdateMenu());
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 			}
 		});
-//		bSignup.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				RegisterFrame register;
-//				try {
-//					register = new RegisterFrame();
-//					register.frame.setVisible(true);  
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-////				dispose();
-//			}
-//		});
-//		bLogin.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				LoginFrame login;
-//					try {
-//						login = new LoginFrame();
-//						login.setVisible(true);
-//				    login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//					} catch (SQLException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
-//					
-//			}
-//		});
-//		bMenu.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Menu.bl=false;
-//				try {
-//					Window.switchPane(new Menu());
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-////				try {
-////					Window.switchPane(new UpdateMenu());
-////				} catch (SQLException e1) {
-////					// TODO Auto-generated catch block
-////					e1.printStackTrace();
-////				}
-//			}
-//		});
 		
 		add(bg);
 	}
