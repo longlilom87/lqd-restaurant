@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.*;
 import java.sql.*;
@@ -55,11 +54,11 @@ public class Menu extends JPanel {
 		setLayout(null);
 		setBounds(0, 0, Window.getW(), Window.getH());
 
-		JLabel Cash = new JLabel(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(100,
-				100, java.awt.Image.SCALE_SMOOTH)));
+		JLabel Cash = new JLabel(new ImageIcon(new ImageIcon("Image/orderButton.png").getImage().getScaledInstance(80,
+				80, java.awt.Image.SCALE_SMOOTH)));
 		add(namePanel);
 		add(menuLayer);
-		Cash.setBounds(Window.getW() - 300, 30, 100, 100);
+		Cash.setBounds(Window.getW() - 300, 5, 80,80);
 		Cash.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				total = 0;
@@ -79,13 +78,12 @@ public class Menu extends JPanel {
 			}
 		});
 
-		JLabel bPay = new JLabel(new ImageIcon(new ImageIcon("Image/cashButton.png").getImage().getScaledInstance(100,
-				100, java.awt.Image.SCALE_SMOOTH)));
+		JLabel bPay = new JLabel(new ImageIcon(new ImageIcon("Image/cashButton.png").getImage().getScaledInstance(80,80, java.awt.Image.SCALE_SMOOTH)));
 		if (bl == true) {
 			add(Cash);
 			add(bPay);
 		}
-		bPay.setBounds(Window.getW() - 150, Cash.getY(), 100, 100);
+		bPay.setBounds(Window.getW() - 150, Cash.getY(), 80,80);
 		bPay.addMouseListener(new MouseAdapter() {
 			@Override
 

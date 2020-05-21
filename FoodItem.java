@@ -48,10 +48,37 @@ public class FoodItem extends JPanel{
 		price = p;
 		this.path = path;
 		
+		JLabel plusButton = new JLabel(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
 		plusButton.setBounds(900, 50, 30, 30);
-		plusButton.addActionListener(new ActionListener() {
+		plusButton.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				plusButton.setBounds(900,50,30,30);
+				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(30,30, java.awt.Image.SCALE_SMOOTH)));
+
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				plusButton.setBounds(895, 45, 40, 40);
+				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				qty++;
 				for(int i=0; i<foodList.size(); i++) {
 					FoodItem t = foodList.get(i);
@@ -61,11 +88,37 @@ public class FoodItem extends JPanel{
 				repaint();
 			}
 		});
-		
+
+		JLabel minusButton = new JLabel(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
 		minusButton.setBounds(800, 50, 30, 30);
-		minusButton.addActionListener(new ActionListener() {
+		minusButton.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				minusButton.setBounds(800, 50, 30, 30);
+				minusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				minusButton.setBounds(795, 45, 40, 40);
+				minusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH)));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				if(qty ==0) return;
 				else{
 					qty--;
@@ -76,9 +129,9 @@ public class FoodItem extends JPanel{
 					if(qty!=0) foodList.add(new FoodItem(name,price,qty));
 					repaint();
 				}
-				
 			}
-		});
+		} );
+
 		if(Menu.bl==true) {
 			add(plusButton);
 			add(minusButton);
@@ -152,7 +205,7 @@ public class FoodItem extends JPanel{
 		g.drawRoundRect(25,5, Window.getW() * 3 / 4-100,123, 70,70);
 		
 //		g.setColor(Color.LIGHT_GRAY);
-		g.setFont(new Font("Jokerman",Font.TRUETYPE_FONT,60));
+		g.setFont(new Font("Stabillo",Font.TRUETYPE_FONT,60));
 		g.drawString(this.getName(), 150, 70);
 		
 		g.setFont(new Font("Colonna MT",Font.BOLD,50));
