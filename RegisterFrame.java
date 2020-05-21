@@ -1,4 +1,3 @@
-package main_app;
 
 import java.awt.EventQueue;
 
@@ -220,7 +219,7 @@ public class RegisterFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean bl = true;
 				String pass = Pass1.getText();
-				if (username.getText().equals("") || Pass1.getText().equals("")) {
+				if (username.getText().isEmpty() || Pass1.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Your username or password is empty");
 					bl = false;
 					return;
@@ -244,7 +243,10 @@ public class RegisterFrame extends JFrame {
 					try {
 						insert(username.getText(), Pass1.getText(), "Customer", nameField.getText(),
 								addressField.getText());
+						frame.dispose();
 						JOptionPane.showMessageDialog(null, "Your account is created. Now please log in");
+						LoginFrame l = new LoginFrame();
+						l.setVisible(true);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
