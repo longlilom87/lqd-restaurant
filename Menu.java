@@ -27,6 +27,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+
+
 public class Menu extends JPanel {
 
 	JPanel namePanel = new JPanel();
@@ -38,7 +40,7 @@ public class Menu extends JPanel {
 	static ArrayList<FoodItem> foodList = FoodItem.foodList;
 	static ArrayList<FoodItem> payFoodList = new ArrayList<>();
 
-	static JLayeredPane menuLayer = new JLayeredPane();
+	public static JLayeredPane menuLayer = new JLayeredPane();
 	JLabel btnQuin,bChicken,bBeverage,bPizza;
 	static JPanel chickenPanel = new JPanel();
 	static JPanel beveragePanel = new JPanel();
@@ -265,15 +267,21 @@ public class Menu extends JPanel {
 		bBack.setHorizontalAlignment(SwingConstants.CENTER);
 		bBack.setBounds(10, 443, 325, 71);
 		bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
+		bBack.setIcon(new ImageIcon(new ImageIcon("Image/back_shadow.png").getImage().getScaledInstance(50, 50,
+				java.awt.Image.SCALE_SMOOTH)));
 		bBack.setBackground(new Color(0, 128, 0));
 		bBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
+				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back_shadow.png").getImage().getScaledInstance(50, 50,
+						java.awt.Image.SCALE_SMOOTH)));
 				bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 45));
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				bBack.setIcon(new ImageIcon(new ImageIcon("Image/back_shadow.png").getImage().getScaledInstance(65, 65,
+						java.awt.Image.SCALE_SMOOTH)));
 				bBack.setFont(new Font("Bernard MT Condensed", Font.BOLD | Font.ITALIC, 60));
 			}
 
