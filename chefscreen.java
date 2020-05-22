@@ -108,7 +108,9 @@ public class chefscreen extends JPanel {
 						JOptionPane.showMessageDialog(null, "Please choose a line to perform action");
 					} else {
 						c = Menu.Connect();
-						String change = "update Delivery set status =1 where id='" + item(i, 0) + "' and name ='"
+//						String change = "update Delivery set status =1 where id='" + item(i, 0) + "' and name ='"
+//								+ item(i, 1) + "' and food ='" + item(i, 2) + "' and date = '"+item(i,5)+"'";
+						String change = "DELETE FROM Delivery where id='" + item(i, 0) + "' and name ='"
 								+ item(i, 1) + "' and food ='" + item(i, 2) + "' and date = '"+item(i,5)+"'";
 						PreparedStatement st = c.prepareStatement(change);
 						st.executeUpdate();

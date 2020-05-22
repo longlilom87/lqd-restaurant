@@ -1,4 +1,3 @@
-package main_app;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -79,7 +78,7 @@ public class bill extends JFrame {
 
 	public bill(User user, ArrayList<FoodItem> foodList) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 492, 734);
+		setBounds(Window.getW()-492, 0, 492, 734);
 		setResizable(false);
 
 		if (Menu.orderMore == 0) {
@@ -139,16 +138,17 @@ public class bill extends JFrame {
 						st.setString(2, user.getName());
 						st.setString(3, t.getName());
 						st.setLong(4, t.getQty());
+						
 						if (user.getTableID() != null) {
 							st.setString(5, user.getTableID());
 						} else
-							st.setString(5, "Delivery");
+						st.setString(5, "Delivery");
 						st.setString(6, Menu.getDate());
 						st.setInt(7, 2);
 						st.setString(8, LoginFrame.user.getUsername());
 						st.executeUpdate();
+//						Window.switchPane(new Menu());
 					}
-
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -171,9 +171,30 @@ public class bill extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Menu.orderMore = 0;
 				CreditCard cc;
+				
 				try {
 					cc = new CreditCard();
 					cc.setVisible(true);
+					
+					Connection c = Menu.Connect();
+					for (FoodItem t : payFoodList) {
+						String to_delivery = "insert into Delivery (id,name,food,unit,address,date,status,username) values (?,?,?,?,?,?,?,?)";
+						PreparedStatement st = c.prepareStatement(to_delivery);
+						st.setInt(1, i);
+						st.setString(2, user.getName());
+						st.setString(3, t.getName());
+						st.setLong(4, t.getQty());
+						
+						if (user.getTableID() != null) {
+							st.setString(5, user.getTableID());
+						} else
+						st.setString(5, "Delivery");
+						st.setString(6, Menu.getDate());
+						st.setInt(7, 1);
+						st.setString(8, LoginFrame.user.getUsername());
+						st.executeUpdate();
+//						Window.switchPane(new Menu());
+					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
