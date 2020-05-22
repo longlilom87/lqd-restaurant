@@ -25,7 +25,7 @@ public class FoodItem extends JPanel{
 	
 	static int temp = 0;
 	
-	static ArrayList<FoodItem> foodList = new ArrayList<>();
+	public static ArrayList<FoodItem> foodList = new ArrayList<>();
 	
 	
 	Button plusButton = new Button("+");
@@ -48,7 +48,7 @@ public class FoodItem extends JPanel{
 		price = p;
 		this.path = path;
 		
-		JLabel plusButton = new JLabel(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+		JLabel plusButton = new JLabel(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
 		plusButton.setBounds(900, 50, 30, 30);
 		plusButton.addMouseListener(new MouseListener() {
 			
@@ -67,14 +67,14 @@ public class FoodItem extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				plusButton.setBounds(900,50,30,30);
-				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(30,30, java.awt.Image.SCALE_SMOOTH)));
+				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30,30, java.awt.Image.SCALE_SMOOTH)));
 
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				plusButton.setBounds(895, 45, 40, 40);
-				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
+				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
 			}
 			
 			@Override
@@ -89,7 +89,7 @@ public class FoodItem extends JPanel{
 			}
 		});
 
-		JLabel minusButton = new JLabel(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+		JLabel minusButton = new JLabel(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
 		minusButton.setBounds(800, 50, 30, 30);
 		minusButton.addMouseListener(new MouseListener() {
 			
@@ -108,13 +108,13 @@ public class FoodItem extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				minusButton.setBounds(800, 50, 30, 30);
-				minusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+				minusButton.setIcon(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				minusButton.setBounds(795, 45, 40, 40);
-				minusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH)));
+				minusButton.setIcon(new ImageIcon(new ImageIcon("Image/minus.png").getImage().getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH)));
 			}
 			
 			@Override
