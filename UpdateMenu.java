@@ -155,7 +155,7 @@ public class UpdateMenu extends JPanel {
 				try {
 					int check = selectID(textField.getText());
 					if (check == 1) {
-						JOptionPane.showMessageDialog(null, "No food " + textField.getText(), "Alert",
+						JOptionPane.showMessageDialog(null, "No food ID " + textField.getText(), "Alert",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
 
@@ -232,18 +232,18 @@ public class UpdateMenu extends JPanel {
 		add(imageField);
 
 		JLabel bBrowse = new JLabel(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage()
-				.getScaledInstance(60, 40, java.awt.Image.SCALE_SMOOTH)));
+				.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
 		bBrowse.setBounds(imageField.getX() + 200, imageField.getY() - 10, 70, 50);
 		bBrowse.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				bBrowse.setIcon(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage().getScaledInstance(60,
+				bBrowse.setIcon(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage().getScaledInstance(40,
 						40, java.awt.Image.SCALE_SMOOTH)));
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				bBrowse.setIcon(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage().getScaledInstance(70,
+				bBrowse.setIcon(new ImageIcon(new ImageIcon("Image/browseButton.png").getImage().getScaledInstance(50,
 						50, java.awt.Image.SCALE_SMOOTH)));
 			}
 
@@ -272,10 +272,9 @@ public class UpdateMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (txtEnterID.getText().isEmpty() || txtEnterName.getText().isEmpty()
-						|| txtEnterPrice.getText().isEmpty()) {
-
-					JOptionPane.showMessageDialog(null, "You have to input all the fields", "Error",
+				if (txtEnterID.getText().isEmpty() == true || txtEnterName.getText().isEmpty() == true
+						|| txtEnterPrice.getText().isEmpty() == true || imageField.getText().isEmpty() == true) {
+					JOptionPane.showMessageDialog(null, "Please input all the fields", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					System.out.println("txtenter = " + txtEnterID.getText());
@@ -289,17 +288,12 @@ public class UpdateMenu extends JPanel {
 								JOptionPane.showMessageDialog(null, "Food existed. \n You can only update", "Error",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
-								String iFood = "insert into Menu (idFood, name, price) values('" + txtEnterID.getText()
-										+ "','" + txtEnterName.getText() + "','" + txtEnterPrice.getText() + "')";
+
+								String iFood = "insert into Menu (idFood, name, price, imagePath) values('"
+										+ txtEnterID.getText() + "','" + txtEnterName.getText() + "','"
+										+ txtEnterPrice.getText() + "','" + imageField.getText() + "')";
 								PreparedStatement s = c.prepareStatement(iFood);
 								s.executeUpdate();
-
-								if (imageField.getText().isEmpty() == false) {
-									iFood = "UPDATE Menu SET imagePath = '" + imageField.getText()
-											+ "' WHERE idFood = '" + txtEnterID.getText() + "';";
-									s = c.prepareStatement(iFood);
-									s.executeUpdate();
-								}
 
 								menuTable.setModel(createTableModel());
 								refreshHeader();
@@ -340,6 +334,7 @@ public class UpdateMenu extends JPanel {
 						update = ",";
 					}
 					if (imageField.getText().isEmpty() == false) {
+						System.out.println("Image = " + imageField.getText());
 						image = "imagePath = '" + imageField.getText() + "'";
 					}
 					if (imageField.getText().isEmpty() == false && txtEnterPrice.getText().isEmpty() == false) {
@@ -348,15 +343,24 @@ public class UpdateMenu extends JPanel {
 
 					int check = selectID(txtEnterID.getText());
 					if (check == 1) {
-						JOptionPane.showMessageDialog(null, "No food " + textField.getText(), "Alert",
+						JOptionPane.showMessageDialog(null, "No food ID " + textField.getText(), "Alert",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
-						String sql = "update Menu set " + name + update + price + update2 + image + " where idFood = '"
-								+ txtEnterID.getText() + "'";
-						PreparedStatement s = c.prepareStatement(sql);
-						s.executeUpdate();
-						menuTable.setModel(createTableModel());
-						refreshHeader();
+						if (txtEnterPrice.getText().isEmpty() == true && txtEnterName.getText().isEmpty() == true
+								&& txtEnterPrice.getText().isEmpty() == true
+								&& imageField.getText().isEmpty() == true) {
+							JOptionPane.showMessageDialog(null, "You have to input one of the fields", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							String sql = "update Menu set " + name + update + price + update2 + image + " where idFood = '"
+									+ txtEnterID.getText() + "'";
+							PreparedStatement s = c.prepareStatement(sql);
+							s.executeUpdate();
+							menuTable.setModel(createTableModel());
+							refreshHeader();
+						}
+						
 					}
 
 					imageField.setText(null);
