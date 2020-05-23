@@ -51,33 +51,20 @@ public class FoodItem extends JPanel{
 		JLabel plusButton = new JLabel(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
 		plusButton.setBounds(900, 50, 30, 30);
 		plusButton.addMouseListener(new MouseListener() {
-			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-			
-			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-			
-			@Override
 			public void mouseExited(MouseEvent e) {
 				plusButton.setBounds(900,50,30,30);
 				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(30,30, java.awt.Image.SCALE_SMOOTH)));
-
 			}
-			
-			@Override
 			public void mouseEntered(MouseEvent e) {
 				plusButton.setBounds(895, 45, 40, 40);
 				plusButton.setIcon(new ImageIcon(new ImageIcon("Image/plus.png").getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
 			}
-			
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				qty++;
 				for(int i=0; i<foodList.size(); i++) {
@@ -132,11 +119,12 @@ public class FoodItem extends JPanel{
 			}
 		} );
 
-		System.out.println("CHECK BOOLEAN: "+this.name+" "+Menu.bl);
+		System.out.println("CHECK1 BOOLEAN: "+this.name+" "+Menu.bl);
 		if(Menu.bl==true) {
 			add(plusButton);
 			add(minusButton);
 		}
+		System.out.println("CHECK2 BOOLEAN: "+this.name+" "+Menu.bl);
 		
 		setLayout(null);
 		setBounds(20,y, Window.getW() * 3 / 4-50,130);

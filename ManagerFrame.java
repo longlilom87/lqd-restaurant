@@ -173,10 +173,14 @@ public class ManagerFrame extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				Upcustomer upcus;
 				
-				upcus = new Upcustomer();
-				upcus.setUndecorated(true);
-				upcus.setVisible(true);
-
+				try {
+					upcus = new Upcustomer();
+					upcus.setUndecorated(true);
+					upcus.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		up3.setIcon(new ImageIcon(new ImageIcon("Image/computer.png").getImage().getScaledInstance(106, 88,

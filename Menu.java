@@ -42,17 +42,15 @@ public class Menu extends JPanel {
 
 	public static JLayeredPane menuLayer = new JLayeredPane();
 	JLabel btnQuin,bChicken,bBeverage,bPizza;
-	static JPanel chickenPanel = new JPanel();
-	static JPanel beveragePanel = new JPanel();
-	static JPanel burgerPanel = new JPanel();
-	static JPanel pizzaPanel = new JPanel();
-	static JPanel homePanel = new JPanel();
-	private static JPanel searchPanel = new JPanel();
+	static JPanel chickenPanel = new JPanel() ;
+	static JPanel beveragePanel=new JPanel();
+	static JPanel burgerPanel=new JPanel();
+	static JPanel pizzaPanel=new JPanel();
 
 //	Button btnQuin = new Button("Burger");
 //	Button bChicken, bBeverage, bPizza, bBack;
 
-	public Menu() throws SQLException {
+	public Menu() {
 		setLayout(null);
 		setBounds(0, 0, Window.getW(), Window.getH());
 
@@ -111,24 +109,27 @@ public class Menu extends JPanel {
 		});
 
 		namePanel();
-		Layer();
+		try {
+			Layer();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 
 	public void Layer() throws SQLException {
 		// LAYER PANE
-		Connection c = Connect();
-
-		menuLayer.setBounds(Window.getW() / 4, 100, Window.getW() * 3 / 4, Window.getH());
-//		contentPane.add(layerPane);
-		menuLayer.setLayout(new CardLayout(0, 0));
-
+		Connection c;
+		c = Connect();
 		addMenuPanel(c, chickenPanel, "'O%'");
 		addMenuPanel(c, beveragePanel, "'D%'");
 		addMenuPanel(c, burgerPanel, "'B%'");
 		addMenuPanel(c, pizzaPanel, "'P%'");
 
-		setLayeredMenuPanel(searchPanel);
+		menuLayer.setBounds(Window.getW() / 4, 100, Window.getW() * 3 / 4, Window.getH());
+//		contentPane.add(layerPane);
+		menuLayer.setLayout(new CardLayout(0, 0));
 
 	}
 
@@ -288,6 +289,8 @@ public class Menu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Window.switchPane(new Welcome());
+				Window.fr.dispose();
+				new Window();
 			}
 		});
 
@@ -317,7 +320,7 @@ public class Menu extends JPanel {
 		add(lblNewLabel);
 	}
 
-	public static Connection Connect() throws SQLException {
+	public static Connection Connect() {
 		Connection connection = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -334,10 +337,16 @@ public class Menu extends JPanel {
 		return connection;
 	}
 
-	public static void Update(String str) throws SQLException {
+	public static void Update(String str) {
 		Connection c = Connect();
-		PreparedStatement create = c.prepareStatement(str);
-		create.executeUpdate();
+		PreparedStatement create;
+		try {
+			create = c.prepareStatement(str);
+			create.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static ArrayList<String> Select(String select, String tableName) throws SQLException {
@@ -355,6 +364,7 @@ public class Menu extends JPanel {
 	}
 
 	public static void addMenuPanel(Connection c, JPanel panel, String rule) {
+//		panel = new JPanel();
 		JScrollBar scroll = new JScrollBar();
 		setLayeredMenuPanel(panel);
 		PreparedStatement stmt;
@@ -365,7 +375,6 @@ public class Menu extends JPanel {
 			while (result.next()) {
 				FoodItem tFood = new FoodItem(result.getString("idFood"), result.getString("name"),
 						result.getInt("price"), y, result.getString("imagePath"));
-//				tFood.setIcon("Image\\"+result.getString("name")+".png");
 				panel.add(tFood);
 				y += 130;
 				sl++;
@@ -412,12 +421,7 @@ public class Menu extends JPanel {
 
 	public static void restart(JPanel p, String rule) throws SQLException {
 		p = new JPanel();
-		try {
-			addMenuPanel(Connect(), p, "'" + rule + "'");
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		addMenuPanel(Connect(), p, "'" + rule + "'");
 	}
 
 	public void setBackground (JLabel p) {

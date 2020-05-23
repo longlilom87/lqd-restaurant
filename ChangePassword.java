@@ -86,7 +86,7 @@ public class ChangePassword extends JFrame {
 		
 		JButton btnChangePassword = new JButton("Change password");
 		btnChangePassword.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e){
 				int i;
 				if(currentField.getText().equals(LoginFrame.user.getPassword())) i=0;
 				else{
@@ -99,14 +99,9 @@ public class ChangePassword extends JFrame {
 				else JOptionPane.showMessageDialog(null, "Your password and confirm password are different");
 				
 				if(i==1) {
-					try {
-						Menu.Update("UPDATE Authentication_login SET userpassword = '"+newField.getText()+"' WHERE username = '"+LoginFrame.user.getUsername()+"';");
-						JOptionPane.showMessageDialog(null, "Change password finish");
-						dispose();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					Menu.Update("UPDATE Authentication_login SET userpassword = '"+newField.getText()+"' WHERE username = '"+LoginFrame.user.getUsername()+"';");
+					JOptionPane.showMessageDialog(null, "Change password finish");
+					dispose();
 				}
 			}
 		});

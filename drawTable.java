@@ -84,14 +84,9 @@ public class drawTable extends JPanel {
 		bBack.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
-
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -120,7 +115,7 @@ public class drawTable extends JPanel {
 		bBack.setHorizontalAlignment(SwingConstants.CENTER);
 		add(bBack);
 
-		JButton bDelivery = new JButton("Delivery");
+		JButton bDelivery = new JButton("Take away");
 		bDelivery.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -268,12 +263,13 @@ public class drawTable extends JPanel {
 
 	public int lineDevision(int a, int b) {
 		return (int) a / b + 1;
-
 	}
+	
 	private void Menu() {
+		Menu.bl = true;
+		Menu m;
 		try {
-			Menu.bl = true;
-			Menu m = new Menu();
+			m = new Menu();
 			m.Layer();
 			m.menuLayer.removeAll();
 			m.Layer();

@@ -369,7 +369,6 @@ public class customerscreen extends JPanel {
 		} else {
 			label.setVisible(false);
 			field.setVisible(true);
-			button.setText("Close");
 		}
 
 	}
@@ -382,13 +381,8 @@ public class customerscreen extends JPanel {
 					if (textField.getText().equals("")) {
 						i = 0;
 					} else {
-						try {
-							Menu.Update("UPDATE Authentication_Login" + " SET " + column + "= '" + textField.getText()
-									+ "' WHERE username = '" + LoginFrame.user.getUsername() + "';");
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						Menu.Update("UPDATE Authentication_Login" + " SET " + column + "= '" + textField.getText()
+								+ "' WHERE username = '" + LoginFrame.user.getUsername() + "';");
 						label.setText(textField.getText());
 						LoginFrame.user.setName(textField.getText());
 					}

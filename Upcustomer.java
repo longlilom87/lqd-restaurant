@@ -1,4 +1,3 @@
-package main_app;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
@@ -11,11 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import cate_list.User;
-
 import java.sql.*;
-
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -27,6 +22,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 import java.awt.Font;
 import javax.swing.border.SoftBevelBorder;
+
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,27 +42,11 @@ public class Upcustomer extends JFrame {
 	private static Connection c;
 	private JLabel lblNewLabel;
     private JLabel labelback;
-
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) throws SQLException {
 		
-		Connection Conn = Connect();
-		
-		//PreparedStatement create = Conn.prepareStatement("CREATE TABLE IF NOT EXISTS Authentication_Login (" + 
-		//		"     username varchar(100)  Unique,\r\n" + 
-		//		"	 userpassword varchar(14),\r\n" + 
-		//		"	 Login_Role varchar(20 ),"
-		//		+ "name varchar(100),"
-		//		+ "address varchar(100) );");
-		//create.executeUpdate();
-		
-		PreparedStatement stmt = Conn.prepareStatement("SELECT * FROM Authentication_Login;");
-		ResultSet r = stmt.executeQuery();
-		while(r.next()) {
-			System.out.println(r.getString("username")+" "+r.getString("userpassword")+" "+r.getString("Login_Role")+" "+r.getString("name")+" "+r.getString("address"));
-		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -79,26 +61,8 @@ public class Upcustomer extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public static Connection Connect() throws SQLException {
-		Connection connection = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			String url = "jdbc:sqlite:Restaurant.db";
-			connection = DriverManager.getConnection(url);
-			System.out.println("ConnectJDBC");
-		} catch (ClassNotFoundException e) {
-			System.out.println("ERROR :"+e.getMessage()+"/n"+e.getClass()+"/n"+e.getCause());
-			e.printStackTrace();
-		}
-		return connection;
-	}
-	/**
-	 * Create the frame.
-	 */
-	public Upcustomer() {
+	public Upcustomer() throws SQLException {
+		c = Menu.Connect();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(400, 100, 684, 461);
 		contentPane = new JPanel();
@@ -114,6 +78,12 @@ public class Upcustomer extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					checkavailable_1();
+					
+					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Customer';";
+					PreparedStatement stmt = c.prepareStatement(query);
+					ResultSet rs2 = stmt.executeQuery();
+					ManagerFrame.table_2.setModel(DbUtils.resultSetToTableModel(rs2));
+					
 				} catch (SQLException e1) {
 					
 					e1.printStackTrace();
@@ -136,6 +106,11 @@ public class Upcustomer extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					checkavailable_2();
+					
+					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Customer';";
+					PreparedStatement stmt = c.prepareStatement(query);
+					ResultSet rs2 = stmt.executeQuery();
+					ManagerFrame.table_2.setModel(DbUtils.resultSetToTableModel(rs2));
 					} catch (SQLException e1) {
 					
 					e1.printStackTrace();
@@ -159,6 +134,11 @@ public class Upcustomer extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					checkavailable_3();
+					
+					String query = "SELECT * FROM Authentication_Login WHERE Login_Role = 'Customer';";
+					PreparedStatement stmt = c.prepareStatement(query);
+					ResultSet rs2 = stmt.executeQuery();
+					ManagerFrame.table_2.setModel(DbUtils.resultSetToTableModel(rs2));
 				} catch (SQLException e1) {
 					
 					e1.printStackTrace();
@@ -234,7 +214,6 @@ public class Upcustomer extends JFrame {
 			String sql = "UPDATE Authentication_Login\r\n" + 
 					"SET userpassword = '"+userpassword+
 					"' WHERE username = '"+username+"';";
-        Connection  c = Connect();
 		PreparedStatement stmt = c.prepareStatement(sql);
 		
 	   
@@ -244,7 +223,6 @@ public class Upcustomer extends JFrame {
 			String sql = "UPDATE Authentication_Login\r\n" + 
 					"SET name = '"+name+
 					"' WHERE username = '"+username+"';";
-        Connection  c = Connect();
 		PreparedStatement stmt = c.prepareStatement(sql);
 		
 	   
@@ -254,7 +232,6 @@ public class Upcustomer extends JFrame {
 			String sql = "UPDATE Authentication_Login\r\n" + 
 					"SET address = '"+address+
 					"' WHERE username = '"+username+"';";
-        Connection  c = Connect();
 		PreparedStatement stmt = c.prepareStatement(sql);
 	
 	   
@@ -267,7 +244,6 @@ public class Upcustomer extends JFrame {
       		String username = account.getText();
   			String sql = "SELECT username From Authentication_Login where username  ='"+username +"';";
 
-     		Connection c = Connect();
       		PreparedStatement stmt = c.prepareStatement(sql);
       		ResultSet rs = stmt.executeQuery();
       		if (rs.next() == false) {
@@ -287,7 +263,6 @@ public class Upcustomer extends JFrame {
       		String username = account.getText();
   			String sql = "SELECT username From Authentication_Login where username  ='"+username +"';";
 
-     		Connection c = Connect();
       		PreparedStatement stmt = c.prepareStatement(sql);
       		ResultSet rs = stmt.executeQuery();
       		if (rs.next() == false) {
@@ -302,7 +277,6 @@ public class Upcustomer extends JFrame {
       		String username = account.getText();
   			String sql = "SELECT username From Authentication_Login where username  ='"+username +"';";
 
-     		Connection c = Connect();
       		PreparedStatement stmt = c.prepareStatement(sql);
       		ResultSet rs = stmt.executeQuery();
       		if (rs.next() == false) {

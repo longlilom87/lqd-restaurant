@@ -41,22 +41,23 @@ public class Window extends JFrame {
 	public void welcomePanel() {
 		JPanel homePanel = new Welcome();
 		
-		Button menuButton = new Button("Menu");
-		menuButton.setBounds(0,100,50,50);
-		menuButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				CreditCard cc;
-				try {
-					cc = new CreditCard();
-					cc.setVisible(true);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		fr.add(menuButton);
+//		Button menuButton = new Button("Menu");
+//		menuButton.setBounds(0,100,50,50);
+//		menuButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				CreditCard cc;
+//				try {
+//					cc = new CreditCard();
+//					cc.setVisible(true);
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			}
+//		});
+//		fr.add(menuButton);
+
 //		homePanel.add(menuButton);
 		homeLayer.add(homePanel);
 	}
