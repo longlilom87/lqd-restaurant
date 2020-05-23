@@ -324,9 +324,9 @@ public class Menu extends JPanel {
 		Connection connection = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			String url = "jdbc:sqlite:Restaurant.db";
-//			String url = "jdbc:sqlserver://LAPTOP-O9PIICC4\\SQLEXPRESS;"
-//					+ "databaseName=Restaurant;user=sa;password=sa";
+//			String url = "jdbc:sqlite:Restaurant.db";
+			String url = "jdbc:sqlserver://LAPTOP-O9PIICC4\\SQLEXPRESS;"
+					+ "databaseName=Restaurant;user=sa;password=sa";
 			connection = DriverManager.getConnection(url);
 			System.out.println("ConnectJDBC");
 

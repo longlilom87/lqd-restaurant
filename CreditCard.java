@@ -1,5 +1,3 @@
-
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -41,7 +39,6 @@ public class CreditCard extends JFrame {
 	public CreditCard() throws SQLException {
 		setTitle("Credit Card");
 		setVisible(true);
-		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(Window.getW() / 4, 0, 700, 700);
 		getContentPane().setLayout(null);
@@ -182,13 +179,6 @@ public class CreditCard extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				try {
-					Goodbye g = new Goodbye();
-					g.setVisible(true);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				LoginFrame.user.logOutBank();
 			}
 		});
@@ -202,13 +192,14 @@ public class CreditCard extends JFrame {
 			if (usernameField.getText().equals(t)) {
 				check = 1;
 				break;
-			} else
-				check = 0;
+			}
 		}
 		
 		if (check == 0) {
-			JOptionPane.showMessageDialog(null, "Incorrect");
-		} else {
+			JOptionPane.showMessageDialog(null, "Incorrect account");
+			return;
+		}
+		else {
 			for (String t : bankAccount) {
 				PreparedStatement stmt = c
 						.prepareStatement("SELECT password, balance FROM Credit WHERE username = '" + t + "'");
@@ -223,9 +214,11 @@ public class CreditCard extends JFrame {
 						txtrFafw.setText(intro);
 //						JOptionPane.showMessageDialog(null, "OK");
 						switchPane(panel);
+						return;
 					}
 				}
 			}
+			JOptionPane.showMessageDialog(null, "Incorrect password");
 		}
 	}
 
