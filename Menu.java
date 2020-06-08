@@ -288,6 +288,16 @@ public class Menu extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(LoginFrame.user.getRole().equals("Manager")) {
+					try {
+						Window.switchPane(new UpdateMenu());
+						return;
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
 				Window.switchPane(new Welcome());
 				Window.fr.dispose();
 				new Window();
@@ -324,9 +334,9 @@ public class Menu extends JPanel {
 		Connection connection = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-//			String url = "jdbc:sqlite:Restaurant.db";
-			String url = "jdbc:sqlserver://LAPTOP-O9PIICC4\\SQLEXPRESS;"
-					+ "databaseName=Restaurant;user=sa;password=sa";
+			String url = "jdbc:sqlite:Restaurant.db";
+//			String url = "jdbc:sqlserver://LAPTOP-O9PIICC4\\SQLEXPRESS;"
+//					+ "databaseName=Restaurant;user=sa;password=sa";
 			connection = DriverManager.getConnection(url);
 			System.out.println("ConnectJDBC");
 
@@ -380,7 +390,7 @@ public class Menu extends JPanel {
 				sl++;
 				if (sl >= 5) {
 					scroll.setBounds(1000, 0, 20, 605);
-					scroll.setMaximum(100 + (sl - 5) * 130);
+					scroll.setMaximum(100 + (sl - 5) * 130-40);
 				}
 				scroll.addAdjustmentListener(new AdjustmentListener() {
 					int y = tFood.getY();

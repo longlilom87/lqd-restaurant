@@ -70,6 +70,22 @@ public class UpdateMenu extends JPanel {
 		add(instruction);
 		releaseTable();
 
+		JButton bView = new JButton("View Menu");
+//		bView.setBounds(instruction.getX()-400, instruction.getY(), 100, 55);
+		bView.setBounds(instruction.getX()+350,instruction.getY(), 100, 55);
+		bView.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				Window.homeLayer.removeAll();
+				
+				Menu();
+				
+				Window.homeLayer.repaint();
+				Window.homeLayer.revalidate();
+			}
+		});
+		add(bView);
+		
 		JLabel bBack = new JLabel();
 		bBack.setIcon(new ImageIcon(
 				new ImageIcon("Image/back.png").getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH)));
@@ -398,9 +414,9 @@ public class UpdateMenu extends JPanel {
 			break;
 		}
 
-		Connection c = null;
+//		Connection c = null;
 		try {
-			c = Menu.Connect();
+//			c = Menu.Connect();
 			String getMenu = "SELECT * FROM Menu WHERE idFood LIKE " + condition;
 			PreparedStatement s = c.prepareStatement(getMenu);
 			ResultSet result = s.executeQuery();
@@ -408,7 +424,7 @@ public class UpdateMenu extends JPanel {
 				Food tFood = new Food(result.getString("idFood"), result.getString("name"), result.getInt("price"));
 				menu.add(tFood);
 			}
-			c.close();
+//			c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -486,4 +502,19 @@ public class UpdateMenu extends JPanel {
 		return i;
 	}
 
+	private void Menu() {
+		Menu.bl = false;
+		Menu m;
+		try {
+			m = new Menu();
+			m.Layer();
+			m.menuLayer.removeAll();
+			m.Layer();
+			Window.switchPane(m);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
