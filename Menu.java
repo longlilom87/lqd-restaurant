@@ -296,11 +296,11 @@ public class Menu extends JPanel {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+				} else {
+					Window.switchPane(new Welcome());
+					Window.fr.dispose();
+					new Window();
 				}
-				
-				Window.switchPane(new Welcome());
-				Window.fr.dispose();
-				new Window();
 			}
 		});
 
@@ -455,6 +455,18 @@ public class Menu extends JPanel {
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
 		return strDate;
+	}
+	
+	public void repaint() {
+		Connection c = Connect();
+		chickenPanel.removeAll();
+		beveragePanel.removeAll();
+		burgerPanel.removeAll();
+		pizzaPanel.removeAll();
+		addMenuPanel(c, chickenPanel, "'O%'");
+		addMenuPanel(c, beveragePanel, "'D%'");
+		addMenuPanel(c, burgerPanel, "'B%'");
+		addMenuPanel(c, pizzaPanel, "'P%'");
 	}
 
 }
