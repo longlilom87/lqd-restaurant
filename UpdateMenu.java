@@ -182,6 +182,10 @@ public class UpdateMenu extends JPanel {
 							PreparedStatement s2 = c.prepareStatement(sql);
 							s2.executeUpdate();
 							menuTable.setModel(createTableModel());
+							Menu.beveragePanel.repaint();
+							Menu.burgerPanel.repaint();
+							Menu.chickenPanel.repaint();
+							Menu.pizzaPanel.repaint();
 							refreshHeader();
 						}
 
@@ -378,6 +382,10 @@ public class UpdateMenu extends JPanel {
 							PreparedStatement s = c.prepareStatement(sql);
 							s.executeUpdate();
 							menuTable.setModel(createTableModel());
+							Menu.beveragePanel.repaint();
+							Menu.burgerPanel.repaint();
+							Menu.chickenPanel.repaint();
+							Menu.pizzaPanel.repaint();
 							refreshHeader();
 						}
 						
